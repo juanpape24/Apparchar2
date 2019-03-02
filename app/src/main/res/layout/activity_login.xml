@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Vista.LoginActivity">
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.559">
+
+        <TextView
+            android:id="@+id/ver1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/d1"
+            android:textAllCaps="false"
+            android:textStyle="italic" />
+
+        <EditText
+            android:id="@+id/texto1"
+            android:layout_width="338dp"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/ver1"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="42dp"
+            android:layout_marginEnd="32dp"
+            android:ems="10"
+            android:hint="@string/texto1"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/ver2"
+            android:layout_width="82dp"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/boton1"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="93dp"
+            android:fontFamily="sans-serif"
+            android:text="@string/d2"
+            android:textAllCaps="false"
+            android:textStyle="italic" />
+
+        <EditText
+            android:id="@+id/texto2"
+            android:layout_width="338dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ver2"
+            android:layout_alignStart="@+id/ver1"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="32dp"
+            android:ems="10"
+            android:hint="@string/pass"
+            android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/boton1"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="338dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="237dp"
+            android:layout_marginEnd="32dp"
+            android:text="@string/log" />
+
+        <Button
+            android:id="@+id/boton2"
+            style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/boton1"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="32dp"
+            android:text="@string/recordar"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="italic" />
+
+        <CheckBox
+            android:id="@+id/caja1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="157dp"
+            android:text="@string/caja1" />
+
+        <CheckBox
+            android:id="@+id/caja2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="186dp"
+            android:text="@string/caja2" />
+
+        <Button
+            android:id="@+id/boton3"
+            style="@android:style/Widget.DeviceDefault.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="86dp"
+            android:layout_marginTop="338dp"
+            android:layout_marginEnd="88dp"
+            android:onClick="registrar"
+            android:text="@string/signup"
+            android:textAllCaps="true" />
+
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

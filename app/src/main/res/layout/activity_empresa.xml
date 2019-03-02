@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Vista.Empresa">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/nombree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/nempresa" />
+
+            <EditText
+                android:id="@+id/nombree1"
+                android:layout_width="352dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="21dp"
+                android:layout_marginTop="41dp"
+                android:layout_marginEnd="22dp"
+                android:ems="10"
+                android:hint="@string/nempresa1"
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/emaile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="99dp"
+                android:text="@string/correo" />
+
+            <EditText
+                android:id="@+id/emaile1"
+                android:layout_width="352dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="21dp"
+                android:layout_marginTop="120dp"
+                android:layout_marginEnd="22dp"
+                android:ems="10"
+                android:hint="@string/correo1"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/address1"
+                android:layout_width="352dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="21dp"
+                android:layout_marginTop="200dp"
+                android:layout_marginEnd="22dp"
+                android:ems="10"
+                android:hint="@string/address1"
+                android:inputType="textPostalAddress" />
+
+            <TextView
+                android:id="@+id/address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="21dp"
+                android:layout_marginTop="179dp"
+                android:text="@string/address" />
+
+            <TextView
+                android:id="@+id/cele"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="254dp"
+                android:text="@string/cel" />
+
+            <EditText
+                android:id="@+id/cele1"
+                android:layout_width="353dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="274dp"
+                android:layout_marginEnd="22dp"
+                android:ems="10"
+                android:hint="@string/cel1"
+                android:inputType="number" />
+
+            <TextView
+                android:id="@+id/usere"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="332dp"
+                android:text="@string/usuario" />
+
+            <EditText
+                android:id="@+id/usere1"
+                android:layout_width="352dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="21dp"
+                android:layout_marginTop="352dp"
+                android:layout_marginEnd="22dp"
+                android:ems="10"
+                android:hint="@string/usuario1"
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/passe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="21dp"
+                android:layout_marginTop="404dp"
+                android:text="@string/pass1" />
+
+            <EditText
+                android:id="@+id/passe1"
+                android:layout_width="352dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="21dp"
+                android:layout_marginTop="424dp"
+                android:layout_marginEnd="22dp"
+                android:ems="10"
+                android:hint="@string/pass"
+                android:inputType="textPassword" />
+
+            <TextView
+                android:id="@+id/passe2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="21dp"
+                android:layout_marginTop="472dp"
+                android:text="@string/pass2" />
+
+            <EditText
+                android:id="@+id/passe3"
+                android:layout_width="352dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="21dp"
+                android:layout_marginTop="496dp"
+                android:layout_marginEnd="22dp"
+                android:ems="10"
+                android:hint="@string/pass3"
+                android:inputType="textPassword" />
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="95dp"
+                android:layout_marginTop="542dp"
+                android:onClick="rEmpresa"
+                android:text="@string/registrar" />
+        </RelativeLayout>
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>

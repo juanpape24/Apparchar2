@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">Apparchar</string>
+    <string name="d1">Nombre usuario</string>
+    <string name="d2">Contraseña</string>
+    <string name="texto1">Ingrese su nombre de usuario</string>
+    <string name="pass">Ingrese su contraseña</string>
+    <string name="log">Iniciar sesión</string>
+    <string name="recordar">¿Olvidaste tu contraseña?</string>
+    <string name="caja1">Cliente</string>
+    <string name="caja2">Empresa</string>
+    <string name="d3">Seleccione tipo de usuario a registrar:</string>
+    <string name="cliente">Cliente</string>
+    <string name="empresa">Empresa</string>
+    <string name="ib">Imagen</string>
+    <string name="nombre">Nombre</string>
+    <string name="nombre1">Ingrese su nombre</string>
+    <string name="apellido">Apellido</string>
+    <string name="apellido1">Ingrese su apellido</string>
+    <string name="edad">Edad</string>
+    <string name="edad1">Ingrese su edad en años</string>
+    <string name="correo">Correo electrónico</string>
+    <string name="correo1">example@correo.com</string>
+    <string name="cel">Numero de celular</string>
+    <string name="cel1">Ingrese su número de celular</string>
+    <string name="usuario">Usuario</string>
+    <string name="usuario1">Ingrese su nombre de usuario</string>
+    <string name="pass1">Contraseña</string>
+    <string name="pass2">Confirmacion de contraseña</string>
+    <string name="pass3">Ingrese su contraseña nuevamente</string>
+    <string name="registrar">Registrar</string>
+    <string name="nempresa">Nombre de la empresa</string>
+    <string name="nempresa1">Ingrese aquí el nombre de la empresa</string>
+    <string name="address">Dirección</string>
+    <string name="address1">Ingrese aquí su dirección</string>
+    <string name="signup">¿Eres nuevo? Registrate</string>
+
+</resources>
