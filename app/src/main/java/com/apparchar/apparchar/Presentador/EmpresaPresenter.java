@@ -13,7 +13,7 @@ public class EmpresaPresenter implements ContractEmpresa.PresenterE {
     }
     @Override
     public void signUp(String nombre, String correo, String direccion, String cel, String user, String pass,String pass2) {
-        if(nombre.equals("") && correo.equals("") && direccion.equals("") && cel.equals("") && user.equals("") && pass.equals("") && pass2.equals("")){
+        if(nombre.equals("") || correo.equals("") || direccion.equals("") || cel.equals("") || user.equals("") || pass.equals("") || pass2.equals("")){
             vista.showResultE("Llene todos los campos");
         }
         else{
@@ -28,7 +28,7 @@ public class EmpresaPresenter implements ContractEmpresa.PresenterE {
                 empresa.setUsuario(user);
                 empresa.setContraseña(pass);
                 vista.cambiar();
-                vista.showResultE("Registro realizado");
+                vista.showResultE(empresa.toString());
             }
 
         }

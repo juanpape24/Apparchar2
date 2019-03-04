@@ -85,6 +85,7 @@
             android:layout_marginStart="25dp"
             android:layout_marginTop="237dp"
             android:layout_marginEnd="32dp"
+            android:onClick="logIn"
             android:text="@string/log" />
 
         <Button
