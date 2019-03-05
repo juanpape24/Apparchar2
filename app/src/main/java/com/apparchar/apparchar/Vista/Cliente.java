@@ -51,7 +51,7 @@ public class Cliente extends AppCompatActivity implements ContractClient.View {
 
     @Override
     public void showResult(String info) {
-        Toast.makeText(this, info, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, info, Toast.LENGTH_LONG).show();
     }
 
     public void swap() {

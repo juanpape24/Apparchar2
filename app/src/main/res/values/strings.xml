@@ -33,5 +33,6 @@
     <string name="address">Dirección</string>
     <string name="address1">Ingrese aquí su dirección</string>
     <string name="signup">¿Eres nuevo? Registrate</string>
+    <string name="image">Imagen</string>
 
 </resources>

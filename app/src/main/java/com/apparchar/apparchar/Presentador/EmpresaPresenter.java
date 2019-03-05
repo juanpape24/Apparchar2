@@ -1,7 +1,11 @@
 package com.apparchar.apparchar.Presentador;
 
 import com.apparchar.apparchar.Contract.ContractEmpresa;
+import com.apparchar.apparchar.Modelo.MyATaskCliente;
+import com.apparchar.apparchar.Modelo.Token;
 import com.apparchar.apparchar.Modelo.UserEmpresa;
+
+import java.util.concurrent.ExecutionException;
 
 public class EmpresaPresenter implements ContractEmpresa.PresenterE {
 
@@ -23,12 +27,28 @@ public class EmpresaPresenter implements ContractEmpresa.PresenterE {
             else{
                 empresa.setNombre(nombre);
                 empresa.setCorreo(correo);
-                empresa.setDireccion(direccion);
-                empresa.setCelular(cel);
+                empresa.setUbicacion(direccion);
+                empresa.setTelefono(cel);
                 empresa.setUsuario(user);
-                empresa.setContraseña(pass);
+                empresa.setContrasenia(pass);
+                int x= (int) (Math.random()*9999+1);
+                empresa.setNitEmpresa(String.valueOf(x));
+                empresa.setDescripcion("sasas");
                 vista.cambiar();
-                vista.showResultE(empresa.toString());
+
+                String resultado="s";
+                String sql="insert into empresa values ('"+empresa.getNitEmpresa()+"','"+empresa.getNombre()+"','"+empresa.getUbicacion()+"','"+empresa.getTelefono()+"','"+empresa.getCorreo()+"','"+empresa.getDescripcion()+"','"+empresa.getUsuario()+"','"+empresa.getContrasenia()+"')";
+                Token token=new Token("generico","update",new String(sql));
+                MyATaskCliente myCliente=new MyATaskCliente(token);
+                try {
+                    resultado= myCliente.execute(resultado).get();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                vista.showResultE("Registro realizado: "+resultado);
             }
 
         }

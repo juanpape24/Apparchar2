@@ -6,6 +6,6 @@ public interface ContractLogin {
         void showResult(String info);
     }
     interface PresenterL{
-        void validar(String user,String pass);
+        void validar(String user,String pass,String type);
     }
 }

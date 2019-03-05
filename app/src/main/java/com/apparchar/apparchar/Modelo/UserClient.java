@@ -5,9 +5,24 @@ public class UserClient {
     private String apellido;
     private int edad;
     private String correo;
-    private String celular;
-    private String User;
-    private String pass;
+    private String telefono;
+    private String usuario;
+    private String contrasenia;
+    private int id;
+
+    public UserClient(int id, String nombre, int edad, String correo, String celular, String user, String pass) {
+        this.nombre = nombre;
+        this.edad = edad;
+        this.correo = correo;
+        this.telefono = celular;
+        this.usuario = user;
+        this.contrasenia = pass;
+        this.id = id;
+    }
+
+    public UserClient() {
+
+    }
 
     public String getApellido() {
         return apellido;
@@ -15,6 +30,14 @@ public class UserClient {
 
     public void setApellido(String apellido) {
         this.apellido = apellido;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getEdad() {
@@ -33,36 +56,36 @@ public class UserClient {
         this.correo = correo;
     }
 
-    public String getCelular() {
-        return celular;
-    }
-
-    public void setCelular(String celular) {
-        this.celular = celular;
-    }
-
-    public String getUser() {
-        return User;
-    }
-
-    public void setUser(String user) {
-        User = user;
-    }
-
-    public String getPass() {
-        return pass;
-    }
-
-    public void setPass(String pass) {
-        this.pass = pass;
-    }
-
     public String getNombre() {
         return nombre;
     }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getContrasenia() {
+        return contrasenia;
+    }
+
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
     }
 
     @Override
@@ -72,9 +95,10 @@ public class UserClient {
                 ", apellido='" + apellido + '\'' +
                 ", edad=" + edad +
                 ", correo='" + correo + '\'' +
-                ", celular='" + celular + '\'' +
-                ", User='" + User + '\'' +
-                ", pass='" + pass + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", usuario='" + usuario + '\'' +
+                ", contrasenia='" + contrasenia + '\'' +
+                ", id=" + id +
                 '}';
     }
 }

@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +19,8 @@ public class LoginActivity extends AppCompatActivity implements ContractLogin.Vi
     private TextView ver1, ver2;
     private EditText texto1, texto2;
     private ContractLogin.PresenterL presenter;
+    private CheckBox caja1,caja2;
+    private ImageView image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,15 +30,26 @@ public class LoginActivity extends AppCompatActivity implements ContractLogin.Vi
         ver2 = findViewById(R.id.ver2);
         texto1 = findViewById(R.id.texto1);
         texto2 = findViewById(R.id.texto2);
+        caja1=findViewById(R.id.caja1);
+        caja2=findViewById(R.id.caja2);
+        image=findViewById(R.id.image);
         presenter=new LoginPresenter(this);
+
     }
 
     public void logIn(View view) {
-        presenter.validar(texto1.getText().toString(),texto2.getText().toString());
-    }
-
-    public void recordar(View view) {
-
+        String usuario=texto1.getText().toString();
+        String pass=texto2.getText().toString();
+        String cajita="";
+        if(caja1.isChecked()) {
+            cajita=caja1.getText().toString();
+            caja2.setChecked(false);
+        }
+        else if(caja2.isChecked()){
+            cajita=caja2.getText().toString();
+            caja1.setChecked(false);
+        }
+        presenter.validar(usuario,pass,cajita);
     }
 
     public void registrar(View view) {

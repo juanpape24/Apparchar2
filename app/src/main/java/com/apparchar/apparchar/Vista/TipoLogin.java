@@ -20,7 +20,7 @@ public class TipoLogin extends AppCompatActivity {
     }
 
     public void cliente(View view){
-        Intent next=new Intent(this,Cliente.class);
+        Intent next=new Intent(this, Cliente.class);
         startActivity(next);
     }
     public void empresa(View view){

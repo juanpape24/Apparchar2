@@ -1,7 +1,21 @@
 package com.apparchar.apparchar.Modelo;
 
 public class UserEmpresa {
-    private String nombre,correo,direccion, celular, usuario, contraseña;
+    private String nitEmpresa,nombre,correo,ubicacion, telefono, usuario, contrasenia,descripcion;
+    public UserEmpresa(){
+
+    }
+    public UserEmpresa(String nitEmpresa, String nombre, String correo, String ubicacion, String telefono, String usuario, String contrasenia, String descripcion) {
+        this.nitEmpresa = nitEmpresa;
+        this.nombre = nombre;
+        this.correo = correo;
+        this.ubicacion = ubicacion;
+        this.telefono = telefono;
+        this.usuario = usuario;
+        this.contrasenia = contrasenia;
+        this.descripcion = descripcion;
+    }
+
     public String getNombre() {
         return nombre;
     }
@@ -18,20 +32,16 @@ public class UserEmpresa {
         this.correo = correo;
     }
 
-    public String getDireccion() {
-        return direccion;
+    public String getUbicacion() {
+        return ubicacion;
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
+    public void setUbicacion(String direccion) {
+        this.ubicacion = direccion;
     }
 
-    public String getCelular() {
-        return celular;
-    }
-
-    public void setCelular(String celular) {
-        this.celular = celular;
+    public String getTelefono() {
+        return telefono;
     }
 
     public String getUsuario() {
@@ -42,23 +52,45 @@ public class UserEmpresa {
         this.usuario = usuario;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasenia() {
+        return contrasenia;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
+    }
+
+    public String getNitEmpresa() {
+        return nitEmpresa;
+    }
+
+    public void setNitEmpresa(String nitEmpresa) {
+        this.nitEmpresa = nitEmpresa;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     @Override
     public String toString() {
         return "UserEmpresa{" +
-                "nombre='" + nombre + '\'' +
+                "nitEmpresa='" + nitEmpresa + '\'' +
+                ", nombre='" + nombre + '\'' +
                 ", correo='" + correo + '\'' +
-                ", direccion='" + direccion + '\'' +
-                ", celular='" + celular + '\'' +
+                ", ubicacion='" + ubicacion + '\'' +
+                ", telefono='" + telefono + '\'' +
                 ", usuario='" + usuario + '\'' +
-                ", contraseña='" + contraseña + '\'' +
+                ", contraseña='" + contrasenia + '\'' +
+                ", descripcion='" + descripcion + '\'' +
                 '}';
     }
 }

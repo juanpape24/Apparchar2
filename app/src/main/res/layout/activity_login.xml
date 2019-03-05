@@ -9,7 +9,7 @@
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="602dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -27,8 +27,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="158dp"
             android:text="@string/d1"
             android:textAllCaps="false"
             android:textStyle="italic" />
@@ -41,8 +41,8 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="0dp"
-            android:layout_marginTop="42dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginTop="177dp"
+            android:layout_marginEnd="27dp"
             android:ems="10"
             android:hint="@string/texto1"
             android:inputType="textPersonName" />
@@ -54,7 +54,7 @@
             android:layout_alignStart="@+id/boton1"
             android:layout_alignParentTop="true"
             android:layout_marginStart="0dp"
-            android:layout_marginTop="93dp"
+            android:layout_marginTop="228dp"
             android:fontFamily="sans-serif"
             android:text="@string/d2"
             android:textAllCaps="false"
@@ -68,8 +68,8 @@
             android:layout_alignStart="@+id/ver1"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="0dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginTop="-7dp"
+            android:layout_marginEnd="27dp"
             android:ems="10"
             android:hint="@string/pass"
             android:inputType="textPassword" />
@@ -82,9 +82,9 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="237dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="369dp"
+            android:layout_marginEnd="31dp"
             android:onClick="logIn"
             android:text="@string/log" />
 
@@ -96,9 +96,9 @@
             android:layout_below="@+id/boton1"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="25dp"
+            android:layout_marginStart="26dp"
             android:layout_marginTop="0dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginEnd="31dp"
             android:text="@string/recordar"
             android:textAllCaps="false"
             android:textColor="@color/colorPrimary"
@@ -110,8 +110,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="157dp"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="289dp"
             android:text="@string/caja1" />
 
         <CheckBox
@@ -120,8 +120,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="26dp"
-            android:layout_marginTop="186dp"
+            android:layout_marginStart="27dp"
+            android:layout_marginTop="318dp"
             android:text="@string/caja2" />
 
         <Button
@@ -132,9 +132,9 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="86dp"
-            android:layout_marginTop="338dp"
-            android:layout_marginEnd="88dp"
+            android:layout_marginStart="87dp"
+            android:layout_marginTop="470dp"
+            android:layout_marginEnd="87dp"
             android:onClick="registrar"
             android:text="@string/signup"
             android:textAllCaps="true" />
