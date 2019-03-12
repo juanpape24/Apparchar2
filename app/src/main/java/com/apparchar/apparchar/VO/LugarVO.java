@@ -1,6 +1,6 @@
-package com.apparchar.apparchar.Modelo;
+package com.apparchar.apparchar.VO;
 
-public class Lugar {
+public class LugarVO {
 
     public String direccion;
     public String nombre;

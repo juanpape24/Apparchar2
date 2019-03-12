@@ -1,6 +1,10 @@
-package com.apparchar.apparchar.Modelo;
+package com.apparchar.apparchar.VO;
 
-public class EventoEmpresa {
+/**
+ *
+ * @author jeffe
+ */
+public class EventoEmpresaVO {
 
     public int nitEmpresa;
     public int idEvento;
@@ -8,16 +12,12 @@ public class EventoEmpresa {
     public String horaF;
     public String fechaE;
 
-    public EventoEmpresa(int nitEmpresa, int idEvento, String horaI, String horaF, String fechaE) {
+    public EventoEmpresaVO(int nitEmpresa, int idEvento, String horaI, String horaF, String fechaE) {
         this.nitEmpresa = nitEmpresa;
         this.idEvento = idEvento;
         this.horaI = horaI;
         this.horaF = horaF;
         this.fechaE = fechaE;
-    }
-
-    public EventoEmpresa() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public int getNitEmpresa() {
@@ -60,14 +60,4 @@ public class EventoEmpresa {
         this.fechaE = fechaE;
     }
 
-    @Override
-    public String toString() {
-        return "EventoEmpresa{" +
-                "nitEmpresa=" + nitEmpresa +
-                ", idEvento=" + idEvento +
-                ", horaI='" + horaI + '\'' +
-                ", horaF='" + horaF + '\'' +
-                ", fechaE='" + fechaE + '\'' +
-                '}';
-    }
 }

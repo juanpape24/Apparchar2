@@ -1,12 +1,6 @@
-package com.apparchar.apparchar.Modelo;
+package com.apparchar.apparchar.VO;
 
-import java.util.ArrayList;
-
-/**
- *
- * @author jeffe
- */
-public class Empresa {
+public class EmpresaVO {
 
     public int nitEmpresa;
     public String nombre;
@@ -16,7 +10,17 @@ public class Empresa {
     public String descripcion;
     public String usuario;
     public String contrasenia;
-    public ArrayList<Evento> EventoEmpresa;
+
+    public EmpresaVO(int nitEmpresa, String nombre, String ubicacion, String telefono, String correo, String descripcion, String usuario, String contrasenia) {
+        this.nitEmpresa = nitEmpresa;
+        this.nombre = nombre;
+        this.ubicacion = ubicacion;
+        this.telefono = telefono;
+        this.correo = correo;
+        this.descripcion = descripcion;
+        this.usuario = usuario;
+        this.contrasenia = contrasenia;
+    }
 
     public int getNitEmpresa() {
         return nitEmpresa;
@@ -82,16 +86,9 @@ public class Empresa {
         this.contrasenia = contrasenia;
     }
 
-    public ArrayList<Evento> getEventoEmpresa() {
-        return EventoEmpresa;
-    }
-
-    public void setEventoEmpresa(ArrayList<Evento> EventoEmpresa) {
-        this.EventoEmpresa = EventoEmpresa;
-    }
-
     @Override
     public String toString() {
-        return "Empresa{" + "nitEmpresa=" + nitEmpresa + ", nombre=" + nombre + ", ubicacion=" + ubicacion + ", telefono=" + telefono + ", correo=" + correo + ", descripcion=" + descripcion + ", usuario=" + usuario + ", contrasenia=" + contrasenia + ", EventoEmpresa=" + EventoEmpresa + '}';
+        return "Empresa{" + "nitEmpresa=" + nitEmpresa + ", nombre=" + nombre + ", ubicacion=" + ubicacion + ", telefono=" + telefono + ", correo=" + correo + ", descripcion=" + descripcion + ", usuario=" + usuario + ", contrasenia=" + contrasenia + '}';
     }
+
 }

@@ -1,8 +1,6 @@
 package com.apparchar.apparchar.Presentador;
 
 import com.apparchar.apparchar.Contract.ContractLogin;
-import com.apparchar.apparchar.Modelo.MyATaskCliente;
-import com.apparchar.apparchar.Modelo.Token;
 import com.apparchar.apparchar.Modelo.UserClient;
 
 import java.util.concurrent.ExecutionException;
@@ -28,31 +26,15 @@ public class LoginPresenter implements ContractLogin.PresenterL {
         else {
             if (type.equals("Cliente")) {
                 sql1 = "select count(*) from cliente where usuario='" + usuario + "' and contrasenia='" + contrasenia + "'";
-                Token token = new Token("generico", "login", sql1);
-                MyATaskCliente myCliente = new MyATaskCliente(token);
-                try {
-                    resultado = myCliente.execute(resultado).get();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+
             } else {
                 sql1 = "select count(*) from empresa where usuario='" + usuario + "' and contrasenia='" + contrasenia + "'";
-                Token token = new Token("generico", "login", sql1);
-                MyATaskCliente myCliente = new MyATaskCliente(token);
-                try {
-                    resultado = myCliente.execute(resultado).get();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
 
 
             }
+            resultado = "1";
             if (Integer.parseInt(resultado) >= 1)
-                vista.showResult("Realizado");
+                vista.crearEvento();
             else
                 vista.showResult("Usuario y/o contraseña incorrectos ");
         }

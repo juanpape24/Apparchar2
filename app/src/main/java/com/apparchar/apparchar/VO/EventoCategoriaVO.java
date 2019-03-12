@@ -1,6 +1,10 @@
-package com.apparchar.apparchar.Modelo;
+package com.apparchar.apparchar.VO;
 
-public class EventoCategoria {
+/**
+ *
+ * @author jeffe
+ */
+public class EventoCategoriaVO {
 
     public int idEento;
     public int idCategoria;
@@ -8,16 +12,12 @@ public class EventoCategoria {
     public String horaF;
     public String fechaE;
 
-    public EventoCategoria(int idEento, int idCategoria, String horaI, String horaF, String fechaE) {
+    public EventoCategoriaVO(int idEento, int idCategoria, String horaI, String horaF, String fechaE) {
         this.idEento = idEento;
         this.idCategoria = idCategoria;
         this.horaI = horaI;
         this.horaF = horaF;
         this.fechaE = fechaE;
-    }
-
-    public EventoCategoria() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public int getIdEento() {

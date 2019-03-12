@@ -1,27 +1,23 @@
 package com.apparchar.apparchar.Modelo;
 
+import java.util.ArrayList;
+
 public class Evento {
+    private int idEvento;
+    private String nombre;
+    private String horaInicio;
+    private String horaFinal;
+    private String direccion;
+    private String descripcion;
+    private ArrayList categorias;
+    private String fecha;
 
-    public String nombre;
-    public String hora_Inicio;
-    public String hora_Final;
-    public String direccion;
-    public String descripcion;
-    public int idEvento;
-    public String fecha;
-
-    public Evento(String nombre, String hora_Inicio, String hora_Final, String direccion, String descripcion, int idEvento, String fecha) {
-        this.nombre = nombre;
-        this.hora_Inicio = hora_Inicio;
-        this.hora_Final = hora_Final;
-        this.direccion = direccion;
-        this.descripcion = descripcion;
-        this.idEvento = idEvento;
-        this.fecha = fecha;
+    public int getIdEvento() {
+        return idEvento;
     }
 
-    public Evento() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void setIdEvento(int idEvento) {
+        this.idEvento = idEvento;
     }
 
     public String getNombre() {
@@ -32,20 +28,20 @@ public class Evento {
         this.nombre = nombre;
     }
 
-    public String getHora_Inicio() {
-        return hora_Inicio;
+    public String getHoraInicio() {
+        return horaInicio;
     }
 
-    public void setHora_Inicio(String hora_Inicio) {
-        this.hora_Inicio = hora_Inicio;
+    public void setHoraInicio(String horaInicio) {
+        this.horaInicio = horaInicio;
     }
 
-    public String getHora_Final() {
-        return hora_Final;
+    public String getHoraFinal() {
+        return horaFinal;
     }
 
-    public void setHora_Final(String hora_Final) {
-        this.hora_Final = hora_Final;
+    public void setHoraFinal(String horaFinal) {
+        this.horaFinal = horaFinal;
     }
 
     public String getDireccion() {
@@ -64,12 +60,12 @@ public class Evento {
         this.descripcion = descripcion;
     }
 
-    public int getIdEvento() {
-        return idEvento;
+    public ArrayList getCategorias() {
+        return categorias;
     }
 
-    public void setIdEvento(int idEvento) {
-        this.idEvento = idEvento;
+    public void setCategorias(ArrayList categorias) {
+        this.categorias = categorias;
     }
 
     public String getFecha() {
@@ -82,7 +78,15 @@ public class Evento {
 
     @Override
     public String toString() {
-        return "Evento{" + "nombre=" + nombre + ", hora_Inicio=" + hora_Inicio + ", hora_Final=" + hora_Final + ", direccion=" + direccion + ", descripcion=" + descripcion + ", idEvento=" + idEvento + ", fecha=" + fecha + '}';
+        return "Evento{" +
+                "idEvento=" + idEvento +
+                ", nombre='" + nombre + '\'' +
+                ", horaInicio='" + horaInicio + '\'' +
+                ", horaFinal='" + horaFinal + '\'' +
+                ", direccion='" + direccion + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", categorias=" + categorias +
+                ", fecha='" + fecha + '\'' +
+                '}';
     }
-
 }

@@ -12,6 +12,8 @@ import com.apparchar.apparchar.Contract.ContractClient;
 import com.apparchar.apparchar.R;
 import com.apparchar.apparchar.Presentador.RegistrarPresenter;
 
+import org.json.JSONException;
+
 public class Cliente extends AppCompatActivity implements ContractClient.View {
     private TextView nombre, apellido, edad, email, cel, user, pass, pass2;
     private EditText nombre1, apellido1, edad1, email1, cel1, user1, pass1, pass3;
@@ -45,7 +47,7 @@ public class Cliente extends AppCompatActivity implements ContractClient.View {
     }
 
 
-    public void registrar(View view) {
+    public void registrar(View view) throws JSONException {
         presenter.enviar(nombre1.getText().toString(), apellido1.getText().toString(), edad1.getText().toString(), email1.getText().toString(), cel1.getText().toString(), user1.getText().toString(), pass1.getText().toString(), pass3.getText().toString());
     }
 

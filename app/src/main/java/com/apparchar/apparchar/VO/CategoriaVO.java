@@ -1,12 +1,12 @@
-package com.apparchar.apparchar.Modelo;
+package com.apparchar.apparchar.VO;
 
-public class Categoria {
+public class CategoriaVO {
 
     public int id;
     public String nombre;
-    public byte[] icono;
+    public String icono;
 
-    public Categoria(int id, String nombre, byte[] icono) {
+    public CategoriaVO(int id, String nombre, String icono) {
         this.id = id;
         this.nombre = nombre;
         this.icono = icono;
@@ -28,11 +28,11 @@ public class Categoria {
         this.nombre = nombre;
     }
 
-    public byte[] getIcono() {
+    public String getIcono() {
         return icono;
     }
 
-    public void setIcono(byte[] icono) {
+    public void setIcono(String icono) {
         this.icono = icono;
     }
 
