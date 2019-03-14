@@ -24,6 +24,10 @@ public class ClienteVO {
         this.contrasenia = contrasenia;
     }
 
+    public ClienteVO() {
+
+    }
+
     public int getId() {
         return id;
     }

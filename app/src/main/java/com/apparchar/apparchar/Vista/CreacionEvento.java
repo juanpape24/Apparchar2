@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.apparchar.apparchar.Modelo.Lugar;
 import com.apparchar.apparchar.Presentador.CreacionEventoPresenter;
 import com.apparchar.apparchar.R;
 
@@ -31,7 +32,8 @@ public class CreacionEvento extends AppCompatActivity implements DatePickerDialo
     int horaF2, minutoF2;
     EditText idEvento, direccion, descripcion, horaInicio, horaFinal, fecha,nombre;
     String timeI,timeF,date;
-    ArrayList a,cat,categoriasCheck;
+    ArrayList a,categoriasCheck;
+    ArrayList<String> cat;
     LinearLayout categorias;
     CreacionEventoPresenter presentador;
 
@@ -40,7 +42,7 @@ public class CreacionEvento extends AppCompatActivity implements DatePickerDialo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vista_creacion_evento);
-        Toast.makeText(this,getIntent().getExtras().get("nit").toString(),Toast.LENGTH_SHORT).show();
+
         horaI = (Button) findViewById(R.id.horaI);
         bhoraF = (Button) findViewById(R.id.horaF);
         guardar = (Button) findViewById(R.id.guardar);
@@ -56,15 +58,9 @@ public class CreacionEvento extends AppCompatActivity implements DatePickerDialo
 
         presentador=new CreacionEventoPresenter(this);
         a = new ArrayList();
-        cat= new ArrayList();
+        cat= new ArrayList<>();
+        cat= getIntent().getStringArrayListExtra("cat");
         categoriasCheck=new ArrayList();
-        cat.add("Trago");
-        cat.add("Rumba");
-        cat.add("comedia");
-        cat.add("comida");
-        cat.add("lectura");
-        cat.add("musica");
-        cat.add("deporte");
         for (int i=0;i<cat.size();i++){
             CheckBox checkBox=new CheckBox(this);
             checkBox.setId(i);
@@ -74,7 +70,8 @@ public class CreacionEvento extends AppCompatActivity implements DatePickerDialo
                 public void onClick(View v) {
                     boolean check= ((CheckBox) v).isChecked();
                     if (check){
-                        categoriasCheck.add(cat.get(v.getId()));
+                        int indice= v.getId();
+                        categoriasCheck.add((indice+1));
                     }
                 }
             });
@@ -89,9 +86,11 @@ public class CreacionEvento extends AppCompatActivity implements DatePickerDialo
             public void onClick(View v) {
                 int idEventos = Integer.parseInt(idEvento.getText().toString());
                 String direccions = direccion.getText().toString();
+                Lugar direccion= new Lugar();
+                direccion.setDireccion(direccions);
                 String descripcions = descripcion.getText().toString();
                 String nombres= nombre.getText().toString();
-                presentador.CrearEvento(idEventos,nombres,timeI,timeF,direccions,descripcions,categoriasCheck,date);
+                presentador.CrearEvento(idEventos,nombres,timeI,timeF,direccion,descripcions,categoriasCheck,date,getIntent().getExtras().getString("nit"));
 
 
                 a.add(idEventos);
@@ -103,15 +102,18 @@ public class CreacionEvento extends AppCompatActivity implements DatePickerDialo
                 a.add(descripcions);
                 a.add(categoriasCheck);
 
-                Intent i = new Intent(CreacionEvento.this, EventoCreado.class);
-                i.putExtra("datos", a);
-                startActivity(i);
+
             }
         });
 
 
     }
-
+    public void onBackPressed() {
+        Intent intent=new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
     public void horaI(View vista) {
         Calendar c = Calendar.getInstance();
         hora = c.get(Calendar.HOUR_OF_DAY);

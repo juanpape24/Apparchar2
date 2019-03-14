@@ -12,6 +12,10 @@ public class Categoria {
         this.icono = icono;
     }
 
+    public Categoria() {
+
+    }
+
     public int getId() {
         return id;
     }

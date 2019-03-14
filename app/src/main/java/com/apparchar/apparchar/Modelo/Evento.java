@@ -1,23 +1,35 @@
 package com.apparchar.apparchar.Modelo;
 
+import com.apparchar.apparchar.VO.EmpresaVO;
+
 import java.util.ArrayList;
 
 public class Evento {
-    private int idEvento;
     private String nombre;
     private String horaInicio;
     private String horaFinal;
-    private String direccion;
+    private Lugar direccion;
     private String descripcion;
-    private ArrayList categorias;
+    private int idEvento;
     private String fecha;
+    private ArrayList<Categoria> EventoCategoria;
+    private ArrayList<Calificacion> calificaciones;
+    public EmpresaVO empresa;
 
-    public int getIdEvento() {
-        return idEvento;
+    public Evento(String nombre, String horaInicio, String horaFinal, Lugar direccion, String descripcion, int idEvento, String fecha, ArrayList<Categoria> eventoCategoria, ArrayList<Calificacion> calificaciones, EmpresaVO empresa) {
+        this.nombre = nombre;
+        this.horaInicio = horaInicio;
+        this.horaFinal = horaFinal;
+        this.direccion = direccion;
+        this.descripcion = descripcion;
+        this.idEvento = idEvento;
+        this.fecha = fecha;
+        EventoCategoria = eventoCategoria;
+        this.calificaciones = calificaciones;
+        this.empresa = empresa;
     }
 
-    public void setIdEvento(int idEvento) {
-        this.idEvento = idEvento;
+    public Evento() {
     }
 
     public String getNombre() {
@@ -44,11 +56,11 @@ public class Evento {
         this.horaFinal = horaFinal;
     }
 
-    public String getDireccion() {
+    public Lugar getDireccion() {
         return direccion;
     }
 
-    public void setDireccion(String direccion) {
+    public void setDireccion(Lugar direccion) {
         this.direccion = direccion;
     }
 
@@ -60,12 +72,12 @@ public class Evento {
         this.descripcion = descripcion;
     }
 
-    public ArrayList getCategorias() {
-        return categorias;
+    public int getIdEvento() {
+        return idEvento;
     }
 
-    public void setCategorias(ArrayList categorias) {
-        this.categorias = categorias;
+    public void setIdEvento(int idEvento) {
+        this.idEvento = idEvento;
     }
 
     public String getFecha() {
@@ -76,17 +88,27 @@ public class Evento {
         this.fecha = fecha;
     }
 
-    @Override
-    public String toString() {
-        return "Evento{" +
-                "idEvento=" + idEvento +
-                ", nombre='" + nombre + '\'' +
-                ", horaInicio='" + horaInicio + '\'' +
-                ", horaFinal='" + horaFinal + '\'' +
-                ", direccion='" + direccion + '\'' +
-                ", descripcion='" + descripcion + '\'' +
-                ", categorias=" + categorias +
-                ", fecha='" + fecha + '\'' +
-                '}';
+    public ArrayList<Categoria> getEventoCategoria() {
+        return EventoCategoria;
+    }
+
+    public void setEventoCategoria(ArrayList<Categoria> eventoCategoria) {
+        EventoCategoria = eventoCategoria;
+    }
+
+    public ArrayList<Calificacion> getCalificaciones() {
+        return calificaciones;
+    }
+
+    public void setCalificaciones(ArrayList<Calificacion> calificaciones) {
+        this.calificaciones = calificaciones;
+    }
+
+    public EmpresaVO getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(EmpresaVO empresa) {
+        this.empresa = empresa;
     }
 }

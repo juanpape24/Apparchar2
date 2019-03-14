@@ -14,6 +14,11 @@ public class EmpresaVO {
     public EmpresaVO(){
 
     }
+
+    public EmpresaVO(String nitEmpresa) {
+        this.nitEmpresa = nitEmpresa;
+    }
+
     public EmpresaVO(String nitEmpresa, String nombre, String ubicacion, String telefono, String correo, String descripcion, String usuario, String contrasenia) {
         this.nitEmpresa = nitEmpresa;
         this.nombre = nombre;

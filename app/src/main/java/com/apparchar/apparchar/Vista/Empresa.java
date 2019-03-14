@@ -39,6 +39,7 @@ public class Empresa extends AppCompatActivity implements ContractEmpresa.ViewE 
 
     }
 
+
     public void rEmpresa(View view) {
         presentador.signUp(nombree1.getText().toString(), emaile1.getText().toString(), address1.getText().toString(), cele1.getText().toString(), usere1.getText().toString(), passe1.getText().toString(), passe3.getText().toString());
 
