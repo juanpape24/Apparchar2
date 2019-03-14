@@ -12,6 +12,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.apparchar.apparchar.Presentador.CreacionEventoPresenter;
 import com.apparchar.apparchar.R;
@@ -39,6 +40,7 @@ public class CreacionEvento extends AppCompatActivity implements DatePickerDialo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vista_creacion_evento);
+        Toast.makeText(this,getIntent().getExtras().get("nit").toString(),Toast.LENGTH_SHORT).show();
         horaI = (Button) findViewById(R.id.horaI);
         bhoraF = (Button) findViewById(R.id.horaF);
         guardar = (Button) findViewById(R.id.guardar);
@@ -52,7 +54,7 @@ public class CreacionEvento extends AppCompatActivity implements DatePickerDialo
         categorias=(LinearLayout) findViewById(R.id.categoriasCheck);
 
 
-        presentador=new CreacionEventoPresenter(new View(this));
+        presentador=new CreacionEventoPresenter(this);
         a = new ArrayList();
         cat= new ArrayList();
         categoriasCheck=new ArrayList();
@@ -140,6 +142,10 @@ public class CreacionEvento extends AppCompatActivity implements DatePickerDialo
         DatePickerDialog datePickerDialog = new DatePickerDialog(CreacionEvento.this, CreacionEvento.this, year, mes, dia);
         datePickerDialog.show();
 
+    }
+    public void change(ArrayList lista){
+        Intent intent=new Intent(this,CreacionEvento.class);
+        intent.putExtra("lista",lista);
     }
 
 

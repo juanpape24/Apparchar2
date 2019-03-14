@@ -56,8 +56,9 @@ public class LoginActivity extends AppCompatActivity implements ContractLogin.Vi
         Intent next=new Intent(this, TipoLogin.class);
         startActivity(next);
     }
-    public void crearEvento(){
+    public void crearEvento(String nit){
         Intent intent=new Intent(this,CreacionEvento.class);
+        intent.putExtra("nit",nit);
         startActivity(intent);
     }
 
