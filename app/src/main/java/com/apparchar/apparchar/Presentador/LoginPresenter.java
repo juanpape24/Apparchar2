@@ -82,7 +82,6 @@ public class LoginPresenter implements ContractLogin.PresenterL, OnLoopjComplete
 
 
         ArrayList<String> eventos= new ArrayList<>();
-        ArrayList<String> cat= new ArrayList<>();
         JsonParser jsonParser = new JsonParser();
         JsonObject jo = (JsonObject) jsonParser.parse(results);
         JsonElement tipoE= jo.get("tipo");
@@ -111,24 +110,17 @@ public class LoginPresenter implements ContractLogin.PresenterL, OnLoopjComplete
             }
         }
         else {
-            JsonElement categoria = jo.get("categoria");
             JsonElement nit = jo.get("nit");
             JsonElement count = jo.get("count");
 
             String nitR = nit.getAsString();
             int countR = count.getAsInt();
-            String r = categoria.getAsString();
-            Type listType = new TypeToken<ArrayList<CategoriaVO>>() {
-            }.getType();
-            Gson a = new Gson();
-            ArrayList<CategoriaVO> arrayList = a.fromJson(r, listType);
-            for (int i = 0; i < arrayList.size(); i++) {
-                cat.add(arrayList.get(i).getNombre());
-            }
+
+
 
 
             if (countR >= 1) {
-                vista.crearEvento(nitR, cat);
+                vista.crearEvento(nitR);
             } else {
                 vista.showResult("Usuario y/o contraseña incorrectos");
             }

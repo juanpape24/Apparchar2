@@ -20,7 +20,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.apparchar.apparchar.Contract.ContractCalificacion;
 import com.apparchar.apparchar.Presentador.CalificacionPresenter;
 import com.apparchar.apparchar.R;
 
@@ -31,7 +33,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class CalificacionEvento extends AppCompatActivity {
+public class CalificacionEvento extends AppCompatActivity implements ContractCalificacion.ViewC {
     TextView info;
     EditText comentario;
     ImageButton comentar;
@@ -40,12 +42,13 @@ public class CalificacionEvento extends AppCompatActivity {
     LinearLayout imagenes;
     RatingBar porcentaje;
     Button submit;
+    ImageButton recargar;
     final int codFoto = 20;
     final int codCarga = 10;
     private final String carpetaRaiz = "Apparchar/";
-    private final String rutaImagen = carpetaRaiz + "misFotos";
+    private final String rutaImagen = carpetaRaiz + "Apparchar";
     String ruta = "";
-    CalificacionPresenter calificacionPresenter;
+    ContractCalificacion.PresenterC calificacionPresenter;
     ArrayList a=new ArrayList();
 
     @Override
@@ -60,14 +63,14 @@ public class CalificacionEvento extends AppCompatActivity {
         imagenes = (LinearLayout) findViewById(R.id.imagenes);
         porcentaje = (RatingBar) findViewById(R.id.porcentajeStar);
         submit = (Button) findViewById(R.id.submit);
-        calificacionPresenter=new CalificacionPresenter(new View(this));
+        recargar = (ImageButton) findViewById(R.id.reload);
+        calificacionPresenter=new CalificacionPresenter(this);
         a = (ArrayList) getIntent().getExtras().get("datos");
         String inf1 = "IdEvento: " + a.get(0) + "\tNombre: " + a.get(1) + "\tFecha: " + a.get(2) + "\nHora de Inicio: " + a.get(3) + "\tHora Final: " + a.get(4) + "\tDireccion: " + a.get(5) + "\nDescripcion: " + a.get(6);
         info.setText(inf1);
         comentar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 TextView c = new TextView(CalificacionEvento.this);
                 String mensaje = comentario.getText().toString();
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
@@ -81,16 +84,16 @@ public class CalificacionEvento extends AppCompatActivity {
                 String time=hour+":"+minutos;
                 String h=fechac+" "+time;
                 c.setText(mensaje+"                       "+h);
-
-
-
-
-
-
                 comentarios.addView(c);
                 comentario.setText("");
-                calificacionPresenter.CrearCalificacion(-1,mensaje,time,fechac,String.valueOf(a.get(3)),String.valueOf(a.get(4)),String.valueOf(a.get(2)),null,1,(int)a.get(0));
+                calificacionPresenter.crearComentario(mensaje,time,1,1,fechac,"","","");
 
+            }
+        });
+        recargar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                calificacionPresenter.actualizar();
             }
         });
         submit.setOnClickListener(new View.OnClickListener() {
@@ -106,8 +109,9 @@ public class CalificacionEvento extends AppCompatActivity {
                 String hour=currentDateandTime.substring(9,11);
                 String minutos=currentDateandTime.substring(11,13);
                 String time=hour+":"+minutos;
+                calificacionPresenter.crearCalificacion(pcr,"",1,1,"","","","");
 
-                calificacionPresenter.CrearCalificacion(pcr,"",time,fechac,String.valueOf(a.get(3)),String.valueOf(a.get(4)),String.valueOf(a.get(2)),null,1,(int)a.get(0));
+
             }
 
         });
@@ -175,7 +179,6 @@ public class CalificacionEvento extends AppCompatActivity {
 
             switch (requestCode) {
                 case codCarga:
-                    int alto = 180;
                     Uri pathh = data.getData();
                     ImageView img = new ImageView(this);
                     img.setImageURI(pathh);
@@ -197,7 +200,7 @@ public class CalificacionEvento extends AppCompatActivity {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    calificacionPresenter.CrearCalificacion(-1,"",time,fechac,String.valueOf(a.get(3)),String.valueOf(a.get(4)),String.valueOf(a.get(2)),readFile(bitmap1),1,(int)a.get(0));
+                    calificacionPresenter.crearMultimedia(readFile(bitmap1),time,1,1,fechac,"","","");
 
                     break;
                 case codFoto:
@@ -224,7 +227,7 @@ public class CalificacionEvento extends AppCompatActivity {
                     String minutos2=currentDateandTime2.substring(11,13);
                     String time2=hour2+":"+minutos2;
 
-                    calificacionPresenter.CrearCalificacion(-1,"",time2,fechac2,String.valueOf(a.get(3)),String.valueOf(a.get(4)),String.valueOf(a.get(2)),readFile(bitmap),1,(int)a.get(0));
+                    calificacionPresenter.crearMultimedia(readFile(bitmap),time2,1,1,fechac2,"","","");
 
                     break;
             }
@@ -232,5 +235,56 @@ public class CalificacionEvento extends AppCompatActivity {
 
         }
     }
+
+    @Override
+    public void showResult(String mensaje) {
+        Toast.makeText(this,mensaje,Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void swap() {
+
+    }
+
+    @Override
+    public void mostrarFotos(ArrayList<byte[]> fotos) {
+        for (int i=0;i<fotos.size();i++){
+            ImageView img = new ImageView(this);
+            img.setImageBitmap(getImage(fotos.get(i)));
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(800, 500);
+            img.setLayoutParams(params);
+            imagenes.addView(img);
+        }
+
+    }
+
+    @Override
+    public void mostrarComentarios(ArrayList<String> com) {
+        for (int i=0;i<com.size();i++){
+            TextView c = new TextView(CalificacionEvento.this);
+            c.setText(com.get(i));
+            comentarios.addView(c);
+        }
+
+
+    }
+
+    @Override
+    public void mostrarCalificacion(ArrayList<Float> calificacion) {
+        float suma=0;
+        for (int i=0;i<calificacion.size();i++){
+            suma=suma+calificacion.get(i);
+        }
+        float promedio= suma/calificacion.size();
+        porcentaje.setRating(promedio);
+
+    }
+    public Bitmap getImage(byte[] byteArray){
+       ArrayList<Bitmap> a=new ArrayList<>();
+        Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+        return bmp;
+    }
+
+
 }
 

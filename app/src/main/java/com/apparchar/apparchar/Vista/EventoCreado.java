@@ -23,6 +23,7 @@ public class EventoCreado extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.vista_evento_creado);
         linearLayout=(LinearLayout) findViewById(R.id.vistaEventos);
         Button btn= new Button(this);

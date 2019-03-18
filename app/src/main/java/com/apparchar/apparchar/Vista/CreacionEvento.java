@@ -14,14 +14,16 @@ import android.widget.LinearLayout;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.apparchar.apparchar.Contract.ContractCreacionEvento;
 import com.apparchar.apparchar.Modelo.Lugar;
 import com.apparchar.apparchar.Presentador.CreacionEventoPresenter;
-import com.apparchar.apparchar.R;
+
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import com.apparchar.apparchar.*;
 
-public class CreacionEvento extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+public class CreacionEvento extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, ContractCreacionEvento.ViewCE {
     Button horaI;
     Button bhoraF;
     Button guardar;
@@ -35,7 +37,7 @@ public class CreacionEvento extends AppCompatActivity implements DatePickerDialo
     ArrayList a,categoriasCheck;
     ArrayList<String> cat;
     LinearLayout categorias;
-    CreacionEventoPresenter presentador;
+    ContractCreacionEvento.PresenterCE presentador;
 
 
     @Override
@@ -59,7 +61,7 @@ public class CreacionEvento extends AppCompatActivity implements DatePickerDialo
         presentador=new CreacionEventoPresenter(this);
         a = new ArrayList();
         cat= new ArrayList<>();
-        cat= getIntent().getStringArrayListExtra("cat");
+        cat=presentador.getCategorias();
         categoriasCheck=new ArrayList();
         for (int i=0;i<cat.size();i++){
             CheckBox checkBox=new CheckBox(this);
@@ -90,17 +92,8 @@ public class CreacionEvento extends AppCompatActivity implements DatePickerDialo
                 direccion.setDireccion(direccions);
                 String descripcions = descripcion.getText().toString();
                 String nombres= nombre.getText().toString();
-                presentador.CrearEvento(idEventos,nombres,timeI,timeF,direccion,descripcions,categoriasCheck,date,getIntent().getExtras().getString("nit"));
+                presentador.crearEvento(idEventos,nombres,timeI,timeF,direccion,descripcions,categoriasCheck,date,getIntent().getExtras().getString("nit"));
 
-
-                a.add(idEventos);
-                a.add(nombres);
-                a.add(date);
-                a.add(timeI);
-                a.add(timeF);
-                a.add(direccions);
-                a.add(descripcions);
-                a.add(categoriasCheck);
 
 
             }
@@ -214,5 +207,19 @@ public class CreacionEvento extends AppCompatActivity implements DatePickerDialo
     }
 
 
+    @Override
+    public void showResult(String info) {
+        Toast.makeText(this,info,Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void mostrarCategorias(ArrayList cat) {
+
+    }
+
+    @Override
+    public void swap() {
+
+    }
 }
 
