@@ -33,6 +33,7 @@ public class LoginPresenter implements ContractLogin.PresenterL, OnLoopjComplete
     private String sql = "", sql1;
     private UserClient cliente;
     private Empresa empresa;
+    String usuarioF="";
 
 
     public LoginPresenter(ContractLogin.ViewL vista) {
@@ -55,6 +56,7 @@ public class LoginPresenter implements ContractLogin.PresenterL, OnLoopjComplete
                 ClienteVO clienteV = new ClienteVO();
                 clienteV.setContrasenia(contrasenia);
                 clienteV.setUsuario(usuario);
+                usuarioF=usuario;
                 String envio = g.toJson(clienteV);
                 params.put("login", envio);
                 String nameServlet = "SERVCliente";
@@ -104,7 +106,7 @@ public class LoginPresenter implements ContractLogin.PresenterL, OnLoopjComplete
 
 
             if (countR >= 1) {
-                vista.eventc(eventos);
+                vista.eventc(arrayList,usuarioF);
             } else {
                 vista.showResult("Usuario y/o contraseña incorrectos");
             }

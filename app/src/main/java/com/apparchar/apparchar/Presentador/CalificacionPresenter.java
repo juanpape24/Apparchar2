@@ -26,6 +26,7 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC, O
     ArrayList<String> comentarios;
     ArrayList<Float> porcentaje;
     ArrayList<byte[]> fotos;
+    String infoEvento="";
     int opc=0;
 
     public CalificacionPresenter(ContractCalificacion.ViewC vista) {
@@ -55,6 +56,7 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC, O
         String nameServlet = "SERVCategoria";
         MyLoopjTask loopjTask = new MyLoopjTask(params, nameServlet, (Context) vista, this);
         loopjTask.executeLoopjCall();
+        opc=2;
     }
 
     @Override
@@ -73,6 +75,7 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC, O
         String nameServlet = "SERVCategoria";
         MyLoopjTask loopjTask = new MyLoopjTask(params, nameServlet, (Context) vista, this);
         loopjTask.executeLoopjCall();
+        opc=2;
     }
 
     @Override
@@ -91,6 +94,19 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC, O
         String nameServlet = "SERVCategoria";
         MyLoopjTask loopjTask = new MyLoopjTask(params, nameServlet, (Context) vista, this);
         loopjTask.executeLoopjCall();
+        opc=2;
+    }
+
+    @Override
+    public String obtenerInfoEvento() {
+        params = new RequestParams();
+        Gson g = new Gson();
+        params.put("listar", vista.getIdEvento());
+        String nameServlet = "SERVCategoria";
+        MyLoopjTask loopjTask = new MyLoopjTask(params, nameServlet, (Context) vista, this);
+        loopjTask.executeLoopjCall();
+        opc=3;
+        return infoEvento;
     }
 
     @Override
@@ -102,6 +118,8 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC, O
         MyLoopjTask loopjTask = new MyLoopjTask(params, nameServlet, (Context) vista, this);
         loopjTask.executeLoopjCall();
         opc=1;
+
+
     vista.mostrarCalificacion(porcentaje);
     vista.mostrarComentarios(comentarios);
     vista.mostrarFotos(fotos);
@@ -133,7 +151,7 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC, O
             }.getType();
             Gson a3 = new Gson();
             fotos = a3.fromJson(mltR, listType3);
-        } else{
+        } else if(opc==2){
             JsonElement c = jo.get("respuesta");
             String r = c.getAsString();
             if (r.equals("true")) {
@@ -141,6 +159,10 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC, O
             } else {
                 vista.showResult("No se realizó correctamente");
             }
+        } else if(opc==3){
+            JsonElement c = jo.get("evento");
+            infoEvento = c.getAsString();
+
         }
 
     }

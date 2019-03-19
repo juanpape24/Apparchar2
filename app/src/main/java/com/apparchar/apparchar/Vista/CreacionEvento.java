@@ -43,19 +43,20 @@ public class CreacionEvento extends AppCompatActivity implements DatePickerDialo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.vista_creacion_evento);
 
-        horaI = (Button) findViewById(R.id.horaI);
-        bhoraF = (Button) findViewById(R.id.horaF);
-        guardar = (Button) findViewById(R.id.guardar);
-        horaInicio = (EditText) findViewById(R.id.horaInicio);
-        horaFinal = (EditText) findViewById(R.id.horaFinal);
-        idEvento = (EditText) findViewById(R.id.idEvento);
-        direccion = (EditText) findViewById(R.id.direccion);
-        descripcion = (EditText) findViewById(R.id.descripcion);
-        fecha = (EditText) findViewById(R.id.fechaEvento);
-        nombre=(EditText) findViewById(R.id.nombre);
-        categorias=(LinearLayout) findViewById(R.id.categoriasCheck);
+        horaI = findViewById(R.id.horaI);
+        bhoraF = findViewById(R.id.horaF);
+        guardar = findViewById(R.id.guardar);
+        horaInicio = findViewById(R.id.horaInicio);
+        horaFinal = findViewById(R.id.horaFinal);
+        idEvento = findViewById(R.id.idEvento);
+        direccion = findViewById(R.id.direccion);
+        descripcion = findViewById(R.id.descripcion);
+        fecha = findViewById(R.id.fechaEvento);
+        nombre= findViewById(R.id.nombre);
+        categorias= findViewById(R.id.categoriasCheck);
 
 
         presentador=new CreacionEventoPresenter(this);

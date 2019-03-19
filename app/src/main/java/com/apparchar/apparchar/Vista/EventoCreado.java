@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.apparchar.apparchar.Conexion.MyLoopjTask;
 import com.apparchar.apparchar.Conexion.OnLoopjCompleted;
 import com.apparchar.apparchar.R;
+import com.apparchar.apparchar.VO.CategoriaVO;
 import com.google.gson.Gson;
 import com.loopj.android.http.RequestParams;
 
@@ -25,13 +26,25 @@ public class EventoCreado extends AppCompatActivity{
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.vista_evento_creado);
-        linearLayout=(LinearLayout) findViewById(R.id.vistaEventos);
-        Button btn= new Button(this);
-        final ArrayList a= (ArrayList) getIntent().getExtras().get("datos");
+        linearLayout= findViewById(R.id.vistaEventos);
+        final ArrayList<CategoriaVO> a= (ArrayList<CategoriaVO>) getIntent().getExtras().get("datos");
         for (int i=0;i<a.size();i++){
-            TextView txt = new TextView(this);
-            txt.setText(String.valueOf(a.get(i)));
-            linearLayout.addView(txt);
+
+            Button evento = new Button(this);
+            int id=a.get(i).getId();
+            evento.setText(String.valueOf(a.get(i).getNombre()));
+            evento.setId(id);
+            evento.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent intent= new Intent(EventoCreado.this,CalificacionEvento.class);
+                    intent.putExtra("idEvento",evento.getId());
+                    intent.putExtra("usuario",getIntent().getExtras().getString("usuario"));
+                    startActivity(intent);
+                }
+            });
+            linearLayout.addView(evento);
         }
 
 

@@ -55,19 +55,18 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vista_calificacion);
-        info = (TextView) findViewById(R.id.infoEvento);
-        comentario = (EditText) findViewById(R.id.comentario);
-        comentar = (ImageButton) findViewById(R.id.comentar);
-        comentarios = (LinearLayout) findViewById(R.id.comentarios);
-        takePhoto = (ImageButton) findViewById(R.id.takePhoto);
-        imagenes = (LinearLayout) findViewById(R.id.imagenes);
-        porcentaje = (RatingBar) findViewById(R.id.porcentajeStar);
-        submit = (Button) findViewById(R.id.submit);
-        recargar = (ImageButton) findViewById(R.id.reload);
+        info = findViewById(R.id.infoEvento);
+        comentario = findViewById(R.id.comentario);
+        comentar = findViewById(R.id.comentar);
+        comentarios = findViewById(R.id.comentarios);
+        takePhoto = findViewById(R.id.takePhoto);
+        imagenes = findViewById(R.id.imagenes);
+        porcentaje = findViewById(R.id.porcentajeStar);
+        submit = findViewById(R.id.submit);
+        recargar = findViewById(R.id.reload);
         calificacionPresenter=new CalificacionPresenter(this);
-        a = (ArrayList) getIntent().getExtras().get("datos");
-        String inf1 = "IdEvento: " + a.get(0) + "\tNombre: " + a.get(1) + "\tFecha: " + a.get(2) + "\nHora de Inicio: " + a.get(3) + "\tHora Final: " + a.get(4) + "\tDireccion: " + a.get(5) + "\nDescripcion: " + a.get(6);
-        info.setText(inf1);
+        info.setText(calificacionPresenter.obtenerInfoEvento());      //Muestra la informacion del evento en un TextView
+        calificacionPresenter.actualizar();  //Coloca toda la informacion inicial, tanto comentarios, multimedia y calificaciones
         comentar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,7 +157,7 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
                     if (opc[i].equals("Cargar Imagen")) {
                         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                         intent.setType("image/");
-                        startActivityForResult(intent.createChooser(intent, "Seleccione la aplicacion"), codCarga);
+                        startActivityForResult(Intent.createChooser(intent, "Seleccione la aplicacion"), codCarga);
 
 
                     } else {
@@ -279,6 +278,13 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
         porcentaje.setRating(promedio);
 
     }
+
+    @Override
+    public String getIdEvento() {
+        String idEvento=getIntent().getExtras().getString("idEvento");
+        return idEvento;
+    }
+
     public Bitmap getImage(byte[] byteArray){
        ArrayList<Bitmap> a=new ArrayList<>();
         Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
