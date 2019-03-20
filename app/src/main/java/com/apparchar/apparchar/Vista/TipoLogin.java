@@ -19,6 +19,9 @@ public class TipoLogin extends AppCompatActivity {
         d3=findViewById(R.id.d3);
     }
 
+
+
+
     public void cliente(View view){
         Intent next=new Intent(this, Cliente.class);
         startActivity(next);

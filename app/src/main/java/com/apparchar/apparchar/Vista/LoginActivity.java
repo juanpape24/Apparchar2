@@ -14,6 +14,8 @@ import com.apparchar.apparchar.Contract.ContractLogin;
 import com.apparchar.apparchar.Presentador.LoginPresenter;
 import com.apparchar.apparchar.R;
 
+import java.util.ArrayList;
+
 public class LoginActivity extends AppCompatActivity implements ContractLogin.ViewL {
 
     private TextView ver1, ver2;
@@ -50,6 +52,21 @@ public class LoginActivity extends AppCompatActivity implements ContractLogin.Vi
             caja1.setChecked(false);
         }
         presenter.validar(usuario,pass,cajita);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent=new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    public void eventc(ArrayList a, String usuarioF){
+        Intent i = new Intent(this, EventoCreado.class);
+        i.putExtra("datos", a);
+        i.putExtra("usuario",usuarioF);
+        startActivity(i);
     }
 
     public void registrar(View view) {

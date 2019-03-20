@@ -42,7 +42,7 @@ public class RegistrarPresenter implements ContractClient.Presenter, OnLoopjComp
     }
 
     @Override
-    public void enviar(String nombre, String apellido, String edad, String correo, String cel, String user, String pass, String pass2) throws JSONException {
+    public void enviar(String nombre, String apellido, String edad, String correo, String cel, String user, String pass, String pass2) {
         if (nombre.equals("") || apellido.equals("") || edad.equals("") || correo.equals("") || cel.equals("") || user.equals("") || pass.equals("") || pass2.equals("")) {
             vista.showResult("Llene todos los campos");
         } else {

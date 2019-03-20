@@ -5,6 +5,8 @@ import android.text.Editable;
 
 import org.json.JSONException;
 
+import java.util.ArrayList;
+
 public interface ContractClient {
 
     interface View{
