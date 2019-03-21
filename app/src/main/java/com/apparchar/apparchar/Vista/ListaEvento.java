@@ -1,10 +1,12 @@
-package com.apparchar.apparchar;
+package com.apparchar.apparchar.Vista;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.apparchar.apparchar.R;
+import com.apparchar.apparchar.RecyclerViewAdapter;
 import com.apparchar.apparchar.VO.EventoVO;
 
 import java.util.ArrayList;
