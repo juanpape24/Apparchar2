@@ -11,6 +11,10 @@ import com.apparchar.apparchar.Contract.ContractClient;
 import com.apparchar.apparchar.Modelo.UserClient;
 import com.apparchar.apparchar.VO.ClienteVO;
 import com.apparchar.apparchar.Vista.Cliente;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.loopj.android.http.RequestParams;
 
 import org.json.JSONException;
@@ -34,11 +38,11 @@ public class RegistrarPresenter implements ContractClient.Presenter, OnLoopjComp
     public RegistrarPresenter(ContractClient.View vista) {
         this.vista = vista;
         cliente = new UserClient();
-        this.context=context;
+        this.context = context;
     }
 
     @Override
-    public void enviar(String nombre, String apellido, String edad, String correo, String cel, String user, String pass, String pass2) throws JSONException {
+    public void enviar(String nombre, String apellido, String edad, String correo, String cel, String user, String pass, String pass2) {
         if (nombre.equals("") || apellido.equals("") || edad.equals("") || correo.equals("") || cel.equals("") || user.equals("") || pass.equals("") || pass2.equals("")) {
             vista.showResult("Llene todos los campos");
         } else {
@@ -51,22 +55,22 @@ public class RegistrarPresenter implements ContractClient.Presenter, OnLoopjComp
                 cliente.setTelefono(cel);
                 cliente.setUsuario(user);
                 cliente.setContrasenia(pass);
-                cliente.setId((int) (Math.random()*99999+1));
+                cliente.setId((int) (Math.random() * 99999 + 1));
                 vista.swap();
-                ClienteVO client=new ClienteVO(cliente.getId(),cliente.getNombre(),cliente.getEdad(),cliente.getCorreo(),cliente.getTelefono(),cliente.getUsuario(),cliente.getContrasenia());
-                params=new RequestParams();
-                JSONObject x=new JSONObject();
-
-                x.putOpt("cliente",client);
-                String envio=x.toString();
-                params.put("insertar","pailas");
-                params.put("k1",envio);
-                String nameServlet = "SERVRegister";
+                ClienteVO client = new ClienteVO(cliente.getId(), cliente.getNombre(), cliente.getEdad(), cliente.getCorreo(), cliente.getTelefono(), cliente.getUsuario(), cliente.getContrasenia());
+                params = new RequestParams();
+                Gson g = new Gson();
 
 
-                MyLoopjTask loopjTask = new MyLoopjTask(params, nameServlet,(Context)vista,this);
+                String envio = g.toJson(client);
+
+                params.put("insertar", envio);
+                String nameServlet = "SERVCliente";
+
+
+                MyLoopjTask loopjTask = new MyLoopjTask(params, nameServlet, (Context) vista, this);
                 loopjTask.executeLoopjCall();
-                vista.showResult("Registro op: ");
+                //vista.showResult("Registro op: ");
             }
 
         }
@@ -75,7 +79,16 @@ public class RegistrarPresenter implements ContractClient.Presenter, OnLoopjComp
 
     @Override
     public void taskCompleted(String results) {
-        vista.showResult("Registro op: "+results);
+        JsonParser jsonParser = new JsonParser();
+        JsonObject jo = (JsonObject) jsonParser.parse(results);
+        JsonElement c = jo.get("respuesta");
+        String r = c.getAsString();
+        vista.showResult(r);
+        if (r.equals("true")) {
+            vista.showResult("Se registró correctamente");
+        } else {
+            vista.showResult("No se pudo hacer el registro");
+        }
     }
 }
 

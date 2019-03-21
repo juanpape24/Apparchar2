@@ -12,14 +12,18 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
+import com.apparchar.apparchar.Contract.ContractCreacionEvento;
+import com.apparchar.apparchar.Modelo.Lugar;
 import com.apparchar.apparchar.Presentador.CreacionEventoPresenter;
-import com.apparchar.apparchar.R;
+
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import com.apparchar.apparchar.*;
 
-public class CreacionEvento extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+public class CreacionEvento extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, ContractCreacionEvento.ViewCE {
     Button horaI;
     Button bhoraF;
     Button guardar;
@@ -30,39 +34,36 @@ public class CreacionEvento extends AppCompatActivity implements DatePickerDialo
     int horaF2, minutoF2;
     EditText idEvento, direccion, descripcion, horaInicio, horaFinal, fecha,nombre;
     String timeI,timeF,date;
-    ArrayList a,cat,categoriasCheck;
+    ArrayList a,categoriasCheck;
+    ArrayList<String> cat;
     LinearLayout categorias;
-    CreacionEventoPresenter presentador;
+    ContractCreacionEvento.PresenterCE presentador;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.vista_creacion_evento);
-        horaI = (Button) findViewById(R.id.horaI);
-        bhoraF = (Button) findViewById(R.id.horaF);
-        guardar = (Button) findViewById(R.id.guardar);
-        horaInicio = (EditText) findViewById(R.id.horaInicio);
-        horaFinal = (EditText) findViewById(R.id.horaFinal);
-        idEvento = (EditText) findViewById(R.id.idEvento);
-        direccion = (EditText) findViewById(R.id.direccion);
-        descripcion = (EditText) findViewById(R.id.descripcion);
-        fecha = (EditText) findViewById(R.id.fechaEvento);
-        nombre=(EditText) findViewById(R.id.nombre);
-        categorias=(LinearLayout) findViewById(R.id.categoriasCheck);
+
+        horaI = findViewById(R.id.horaI);
+        bhoraF = findViewById(R.id.horaF);
+        guardar = findViewById(R.id.guardar);
+        horaInicio = findViewById(R.id.horaInicio);
+        horaFinal = findViewById(R.id.horaFinal);
+        idEvento = findViewById(R.id.idEvento);
+        direccion = findViewById(R.id.direccion);
+        descripcion = findViewById(R.id.descripcion);
+        fecha = findViewById(R.id.fechaEvento);
+        nombre= findViewById(R.id.nombre);
+        categorias= findViewById(R.id.categoriasCheck);
 
 
-        presentador=new CreacionEventoPresenter(new View(this));
+        presentador=new CreacionEventoPresenter(this);
         a = new ArrayList();
-        cat= new ArrayList();
+        cat= new ArrayList<>();
+        cat=presentador.getCategorias();
         categoriasCheck=new ArrayList();
-        cat.add("Trago");
-        cat.add("Rumba");
-        cat.add("comedia");
-        cat.add("comida");
-        cat.add("lectura");
-        cat.add("musica");
-        cat.add("deporte");
         for (int i=0;i<cat.size();i++){
             CheckBox checkBox=new CheckBox(this);
             checkBox.setId(i);
@@ -72,7 +73,8 @@ public class CreacionEvento extends AppCompatActivity implements DatePickerDialo
                 public void onClick(View v) {
                     boolean check= ((CheckBox) v).isChecked();
                     if (check){
-                        categoriasCheck.add(cat.get(v.getId()));
+                        int indice= v.getId();
+                        categoriasCheck.add((indice+1));
                     }
                 }
             });
@@ -87,29 +89,25 @@ public class CreacionEvento extends AppCompatActivity implements DatePickerDialo
             public void onClick(View v) {
                 int idEventos = Integer.parseInt(idEvento.getText().toString());
                 String direccions = direccion.getText().toString();
+                Lugar direccion= new Lugar();
+                direccion.setDireccion(direccions);
                 String descripcions = descripcion.getText().toString();
                 String nombres= nombre.getText().toString();
-                presentador.CrearEvento(idEventos,nombres,timeI,timeF,direccions,descripcions,categoriasCheck,date);
+                presentador.crearEvento(idEventos,nombres,timeI,timeF,direccion,descripcions,categoriasCheck,date,getIntent().getExtras().getString("nit"));
 
 
-                a.add(idEventos);
-                a.add(nombres);
-                a.add(date);
-                a.add(timeI);
-                a.add(timeF);
-                a.add(direccions);
-                a.add(descripcions);
-                a.add(categoriasCheck);
 
-                Intent i = new Intent(CreacionEvento.this, EventoCreado.class);
-                i.putExtra("datos", a);
-                startActivity(i);
             }
         });
 
 
     }
-
+    public void onBackPressed() {
+        Intent intent=new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
     public void horaI(View vista) {
         Calendar c = Calendar.getInstance();
         hora = c.get(Calendar.HOUR_OF_DAY);
@@ -140,6 +138,10 @@ public class CreacionEvento extends AppCompatActivity implements DatePickerDialo
         DatePickerDialog datePickerDialog = new DatePickerDialog(CreacionEvento.this, CreacionEvento.this, year, mes, dia);
         datePickerDialog.show();
 
+    }
+    public void change(ArrayList lista){
+        Intent intent=new Intent(this,CreacionEvento.class);
+        intent.putExtra("lista",lista);
     }
 
 
@@ -206,5 +208,19 @@ public class CreacionEvento extends AppCompatActivity implements DatePickerDialo
     }
 
 
+    @Override
+    public void showResult(String info) {
+        Toast.makeText(this,info,Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void mostrarCategorias(ArrayList cat) {
+
+    }
+
+    @Override
+    public void swap() {
+
+    }
 }
 
