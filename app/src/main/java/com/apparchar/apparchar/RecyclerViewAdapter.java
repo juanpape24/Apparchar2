@@ -11,36 +11,36 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.apparchar.apparchar.Contract.ContractListaEvento;
+import com.apparchar.apparchar.Presentador.ListaEventoPresenter;
 import com.apparchar.apparchar.VO.EventoVO;
+import com.apparchar.apparchar.Vista.ListaEvento;
 
 import org.w3c.dom.Text;
 
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>{
 
 
+    private List<EventoVO> lista;
     private Context context;
-    private List<EventoVO> dato;
 
-    public RecyclerViewAdapter(Context context, List<EventoVO> dato) {
-        this.context = context;
-        this.dato = dato;
+    public RecyclerViewAdapter(Context context,List<EventoVO> lista) {
+        this.lista=lista;
+        this.context=context;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view;
-        LayoutInflater inflater=LayoutInflater.from(context);
-        view=inflater.inflate(R.layout.cardview_item,viewGroup,false);
+        View view=LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.cardview_item,viewGroup,false);
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final MyViewHolder myViewHolder, int i) {
-
-        myViewHolder.titulo.setText(dato.get(i).getDescripcion());
-        myViewHolder.image.setImageResource(dato.get(i).getIdEvento());
+        myViewHolder.image.setImageResource(lista.get(i).getIdEvento());
+        myViewHolder.titulo.setText(lista.get(i).getDescripcion());
         myViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,8 +53,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemCount() {
-        return dato.size();
+        return lista.size();
     }
+
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
