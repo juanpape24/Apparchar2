@@ -1,6 +1,7 @@
 package com.apparchar.apparchar;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import com.apparchar.apparchar.Contract.ContractListaEvento;
 import com.apparchar.apparchar.Presentador.ListaEventoPresenter;
 import com.apparchar.apparchar.VO.EventoVO;
+import com.apparchar.apparchar.Vista.CalificacionEvento;
 import com.apparchar.apparchar.Vista.ListaEvento;
 
 import org.w3c.dom.Text;
@@ -38,13 +40,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(final MyViewHolder myViewHolder, int i) {
+    public void onBindViewHolder(final MyViewHolder myViewHolder, final int i) {
         myViewHolder.image.setImageResource(lista.get(i).getIdEvento());
         myViewHolder.titulo.setText(lista.get(i).getDescripcion());
         myViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context,myViewHolder.titulo.getText(),Toast.LENGTH_LONG).show();
+                Intent intent=new Intent(context, CalificacionEvento.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("id",lista.get(i).getIdEvento());
+                context.startActivity(intent);
 
             }
         });

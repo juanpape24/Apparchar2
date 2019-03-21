@@ -9,7 +9,8 @@ import java.util.List;
 public interface ContractListaEvento {
 
     interface ViewEvento{
-        void datos(List<EventoVO> lista);
+        void dato(List<EventoVO> lista);
+        void showResult(String mensaje);
     }
     interface EventoPresenter{
         void getEvent();

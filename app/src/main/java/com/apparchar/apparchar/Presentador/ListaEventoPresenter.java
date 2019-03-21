@@ -28,6 +28,9 @@ public class ListaEventoPresenter implements ContractListaEvento.EventoPresenter
 
     @Override
     public void upEvent(List<EventoVO> lista) {
-
+        if(!lista.isEmpty()){
+            vista.dato(lista);
+        }else
+            vista.showResult("No hay eventos disponibles");
     }
 }
