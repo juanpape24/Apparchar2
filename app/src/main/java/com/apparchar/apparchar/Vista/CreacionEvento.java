@@ -2,14 +2,24 @@ package com.apparchar.apparchar.Vista;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.MediaScannerConnection;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -19,8 +29,14 @@ import com.apparchar.apparchar.Modelo.Lugar;
 import com.apparchar.apparchar.Presentador.CreacionEventoPresenter;
 
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+
 import com.apparchar.apparchar.*;
 
 public class CreacionEvento extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, ContractCreacionEvento.ViewCE {
@@ -32,12 +48,16 @@ public class CreacionEvento extends AppCompatActivity implements DatePickerDialo
     int diaF, mesF, yearF, horaI2, minutoI2;
     int horaF, minutoF;
     int horaF2, minutoF2;
-    EditText idEvento, direccion, descripcion, horaInicio, horaFinal, fecha,nombre;
-    String timeI,timeF,date;
-    ArrayList a,categoriasCheck;
+    EditText direccion, descripcion, horaInicio, horaFinal, fecha, nombre;
+    String timeI, timeF, date;
+    ArrayList a, categoriasCheck;
     ArrayList<String> cat;
     LinearLayout categorias;
     ContractCreacionEvento.PresenterCE presentador;
+    Button btnAddFoto;
+    final int codCarga = 10;
+    ImageView foto;
+    Bitmap eventoFoto;
 
 
     @Override
@@ -51,30 +71,30 @@ public class CreacionEvento extends AppCompatActivity implements DatePickerDialo
         guardar = findViewById(R.id.guardar);
         horaInicio = findViewById(R.id.horaInicio);
         horaFinal = findViewById(R.id.horaFinal);
-        idEvento = findViewById(R.id.idEvento);
         direccion = findViewById(R.id.direccion);
         descripcion = findViewById(R.id.descripcion);
         fecha = findViewById(R.id.fechaEvento);
-        nombre= findViewById(R.id.nombre);
-        categorias= findViewById(R.id.categoriasCheck);
+        nombre = findViewById(R.id.nombre);
+        categorias = findViewById(R.id.categoriasCheck);
+        btnAddFoto = findViewById(R.id.btnAddFoto);
+        foto = findViewById(R.id.photoEvento);
 
-
-        presentador=new CreacionEventoPresenter(this);
+        presentador = new CreacionEventoPresenter(this);
         a = new ArrayList();
-        cat= new ArrayList<>();
-        cat=presentador.getCategorias();
-        categoriasCheck=new ArrayList();
-        for (int i=0;i<cat.size();i++){
-            CheckBox checkBox=new CheckBox(this);
+        cat = new ArrayList<>();
+        cat = presentador.getCategorias();
+        categoriasCheck = new ArrayList();
+        for (int i = 0; i < cat.size(); i++) {
+            CheckBox checkBox = new CheckBox(this);
             checkBox.setId(i);
             checkBox.setText(String.valueOf(cat.get(i)));
             checkBox.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    boolean check= ((CheckBox) v).isChecked();
-                    if (check){
-                        int indice= v.getId();
-                        categoriasCheck.add((indice+1));
+                    boolean check = ((CheckBox) v).isChecked();
+                    if (check) {
+                        int indice = v.getId();
+                        categoriasCheck.add((indice + 1));
                     }
                 }
             });
@@ -82,32 +102,36 @@ public class CreacionEvento extends AppCompatActivity implements DatePickerDialo
         }
 
 
-
-
         guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int idEventos = Integer.parseInt(idEvento.getText().toString());
                 String direccions = direccion.getText().toString();
-                Lugar direccion= new Lugar();
+                Lugar direccion = new Lugar();
                 direccion.setDireccion(direccions);
                 String descripcions = descripcion.getText().toString();
-                String nombres= nombre.getText().toString();
-                presentador.crearEvento(idEventos,nombres,timeI,timeF,direccion,descripcions,categoriasCheck,date,getIntent().getExtras().getString("nit"));
+                String nombres = nombre.getText().toString();
+                presentador.crearEvento(nombres, timeI, timeF, direccion, descripcions, categoriasCheck, date, getIntent().getExtras().getString("nit"),readFile(eventoFoto));
 
 
-
+            }
+        });
+        btnAddFoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ingresarFoto();
             }
         });
 
 
     }
+
     public void onBackPressed() {
-        Intent intent=new Intent(Intent.ACTION_MAIN);
+        Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
+
     public void horaI(View vista) {
         Calendar c = Calendar.getInstance();
         hora = c.get(Calendar.HOUR_OF_DAY);
@@ -139,9 +163,10 @@ public class CreacionEvento extends AppCompatActivity implements DatePickerDialo
         datePickerDialog.show();
 
     }
-    public void change(ArrayList lista){
-        Intent intent=new Intent(this,CreacionEvento.class);
-        intent.putExtra("lista",lista);
+
+    public void change(ArrayList lista) {
+        Intent intent = new Intent(this, CreacionEvento.class);
+        intent.putExtra("lista", lista);
     }
 
 
@@ -210,7 +235,7 @@ public class CreacionEvento extends AppCompatActivity implements DatePickerDialo
 
     @Override
     public void showResult(String info) {
-        Toast.makeText(this,info,Toast.LENGTH_LONG).show();
+        Toast.makeText(this, info, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -222,5 +247,47 @@ public class CreacionEvento extends AppCompatActivity implements DatePickerDialo
     public void swap() {
 
     }
+
+    @Override
+    public void ingresarFoto() {
+        String nombreImagen = "";
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("image/");
+        startActivityForResult(Intent.createChooser(intent, "Seleccione la aplicacion"), codCarga);
+    }
+
+    public Bitmap getImage(byte[] byteArray) {
+        ArrayList<Bitmap> a = new ArrayList<>();
+        Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+        return bmp;
+    }
+
+    private byte[] readFile(Bitmap bmp) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        return byteArray;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+
+            Uri pathh = data.getData();
+            foto.setImageURI(pathh);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(800, 500);
+            foto.setLayoutParams(params);
+            try {
+                eventoFoto = MediaStore.Images.Media.getBitmap(this.getContentResolver(), pathh);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+    }
+
 }
+
 

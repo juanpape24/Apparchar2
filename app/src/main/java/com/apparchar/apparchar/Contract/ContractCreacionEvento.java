@@ -10,9 +10,10 @@ public interface ContractCreacionEvento {
         void showResult(String info);
         void mostrarCategorias(ArrayList cat);
         void swap();
+        void ingresarFoto();
     }
     interface PresenterCE{
-        void crearEvento(int id, String nombre, String horaInicio, String horaFinal, Lugar direccion, String descripcion, ArrayList categorias, String fecha, String nit);
+        void crearEvento(String nombre, String horaInicio, String horaFinal, Lugar direccion, String descripcion, ArrayList categorias, String fecha, String nit, byte[] foto);
         ArrayList<String> getCategorias();
     }
 }
