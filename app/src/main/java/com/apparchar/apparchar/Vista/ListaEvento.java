@@ -11,6 +11,7 @@ import com.apparchar.apparchar.Contract.ContractListaEvento;
 import com.apparchar.apparchar.Presentador.ListaEventoPresenter;
 import com.apparchar.apparchar.R;
 import com.apparchar.apparchar.RecyclerViewAdapter;
+import com.apparchar.apparchar.VO.CategoriaVO;
 import com.apparchar.apparchar.VO.EventoVO;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class ListaEvento extends AppCompatActivity implements ContractListaEvent
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_evento);
+        final ArrayList<CategoriaVO> a= (ArrayList<CategoriaVO>) getIntent().getExtras().get("datos");
         presenter=new ListaEventoPresenter(this);
         presenter.getEvent();
 
