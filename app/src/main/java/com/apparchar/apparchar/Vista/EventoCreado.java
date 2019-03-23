@@ -30,7 +30,7 @@ public class EventoCreado extends AppCompatActivity{
         final ArrayList<CategoriaVO> a= (ArrayList<CategoriaVO>) getIntent().getExtras().get("datos");
         for (int i=0;i<a.size();i++){
 
-            Button evento = new Button(this);
+            final Button evento = new Button(this);
             int id=a.get(i).getId();
             evento.setText(String.valueOf(a.get(i).getNombre()));
             evento.setId(id);
