@@ -15,18 +15,27 @@ public class Evento {
     private ArrayList<Categoria> EventoCategoria;
     private ArrayList<Calificacion> calificaciones;
     public EmpresaVO empresa;
+    private byte[] foto;
 
-    public Evento(String nombre, String horaInicio, String horaFinal, Lugar direccion, String descripcion, int idEvento, String fecha, ArrayList<Categoria> eventoCategoria, ArrayList<Calificacion> calificaciones, EmpresaVO empresa) {
+    public Evento(String nombre, String horaInicio, String horaFinal, Lugar direccion, String descripcion, String fecha, ArrayList<Categoria> eventoCategoria, ArrayList<Calificacion> calificaciones, EmpresaVO empresa, byte[] foto) {
         this.nombre = nombre;
         this.horaInicio = horaInicio;
         this.horaFinal = horaFinal;
         this.direccion = direccion;
         this.descripcion = descripcion;
-        this.idEvento = idEvento;
         this.fecha = fecha;
         EventoCategoria = eventoCategoria;
         this.calificaciones = calificaciones;
         this.empresa = empresa;
+        this.foto=foto;
+    }
+
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
     }
 
     public Evento() {
