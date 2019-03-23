@@ -29,27 +29,21 @@
                 android:shrinkColumns="1"
                 >
 
+                <ImageView
+                    android:id="@+id/photoEvento"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    app:srcCompat="@mipmap/picture_default" />
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
 
-                    <TextView
-                        android:id="@+id/LabelIdEvento"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/idEvento" />
+                <Button
+                    android:id="@+id/btnAddFoto"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Agregar foto" />
 
-                    <EditText
-                        android:id="@+id/idEvento"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_span="2"
-                        android:ems="10"
-                        android:hint="001"
-                        android:inputType="number" />
-
-                </TableRow>
 
                 <TableRow>
 

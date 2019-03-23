@@ -21,18 +21,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="100dp" />
 
-            <HorizontalScrollView
+            <ImageView
+                android:id="@+id/multimedia"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:id="@+id/imagenes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                </LinearLayout>
-            </HorizontalScrollView>
+                android:layout_height="wrap_content"
+                app:srcCompat="@mipmap/picture_default" />
 
             <LinearLayout
                 android:layout_width="match_parent"

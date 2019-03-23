@@ -88,16 +88,18 @@ public class CreacionEventoPresenter implements OnLoopjCompleted, ContractCreaci
 
 
     @Override
-    public void crearEvento(int id, String nombre, String horaInicio, String horaFinal, Lugar direccion, String descripcion, ArrayList categorias, String fecha, String nit) {
+    public void crearEvento(String nombre, String horaInicio, String horaFinal, Lugar direccion, String descripcion, ArrayList categorias, String fecha, String nit, byte[] foto) {
         if (nombre.equals("") || horaInicio.equals("") || horaFinal.equals("") || descripcion.equals("") || categorias.isEmpty() || fecha.equals("")) {
             vista.showResult("Llene todos los campos");
         } else {
-            evento.setIdEvento(id);
             evento.setNombre(nombre);
             evento.setHoraInicio(horaInicio);
             evento.setHoraFinal(horaFinal);
             evento.setDireccion(direccion);
             evento.setDescripcion(descripcion);
+            if (evento!=null){
+                evento.setFoto(foto);
+            }
             for (int i = 0; i < categorias.size(); i++) {
                 Categoria c = new Categoria();
                 c.setId((int) categorias.get(i));
@@ -125,5 +127,7 @@ public class CreacionEventoPresenter implements OnLoopjCompleted, ContractCreaci
 
 
     }
+
+
 }
 
