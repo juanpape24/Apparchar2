@@ -13,14 +13,16 @@ import com.apparchar.apparchar.Presentador.EmpresaPresenter;
 import com.apparchar.apparchar.R;
 
 public class Empresa extends AppCompatActivity implements ContractEmpresa.ViewE {
-    private TextView nombree, emaile, address, cele, usere, passe, passe2;
-    private EditText nombree1, emaile1, address1, cele1, usere1, passe1, passe3;
+    private TextView nit,nombree, emaile, address, cele, usere, passe, passe2;
+    private EditText nitT,nombree1, emaile1, address1, cele1, usere1, passe1, passe3;
     private ContractEmpresa.PresenterE presentador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_empresa);
+        nit=findViewById(R.id.nit);
+        nitT=findViewById(R.id.nitT);
         nombree = findViewById(R.id.nombree);
         nombree1 = findViewById(R.id.nombree1);
         emaile = findViewById(R.id.emaile);
@@ -41,7 +43,7 @@ public class Empresa extends AppCompatActivity implements ContractEmpresa.ViewE 
 
 
     public void rEmpresa(View view) {
-        presentador.signUp(nombree1.getText().toString(), emaile1.getText().toString(), address1.getText().toString(), cele1.getText().toString(), usere1.getText().toString(), passe1.getText().toString(), passe3.getText().toString());
+        presentador.signUp(nitT.getText().toString(),nombree1.getText().toString(), emaile1.getText().toString(), address1.getText().toString(), cele1.getText().toString(), usere1.getText().toString(), passe1.getText().toString(), passe3.getText().toString());
 
     }
 

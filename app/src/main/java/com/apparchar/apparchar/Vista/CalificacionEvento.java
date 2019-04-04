@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
@@ -29,27 +30,35 @@ import com.apparchar.apparchar.R;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class CalificacionEvento extends AppCompatActivity implements ContractCalificacion.ViewC {
+    final int codFoto = 20;
+    final int codCarga = 10;
+    private final String carpetaRaiz = "Apparchar/";
+    private final String rutaImagen = carpetaRaiz + "Apparchar";
     TextView info;
     EditText comentario;
     ImageButton comentar;
     LinearLayout comentarios;
     ImageButton takePhoto;
-    LinearLayout imagenes;
     RatingBar porcentaje;
     Button submit;
     ImageButton recargar;
-    final int codFoto = 20;
-    final int codCarga = 10;
-    private final String carpetaRaiz = "Apparchar/";
-    private final String rutaImagen = carpetaRaiz + "Apparchar";
     String ruta = "";
     ContractCalificacion.PresenterC calificacionPresenter;
-    ArrayList a=new ArrayList();
+    ArrayList a = new ArrayList();
+
+    ImageView imagenes;
+    String user;
+    String horaFinal;
+    String horaInicio;
+    String fecha;
+
+    int j = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,13 +69,19 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
         comentar = findViewById(R.id.comentar);
         comentarios = findViewById(R.id.comentarios);
         takePhoto = findViewById(R.id.takePhoto);
-        imagenes = findViewById(R.id.imagenes);
         porcentaje = findViewById(R.id.porcentajeStar);
         submit = findViewById(R.id.submit);
         recargar = findViewById(R.id.reload);
-        calificacionPresenter=new CalificacionPresenter(this);
-        info.setText(calificacionPresenter.obtenerInfoEvento());      //Muestra la informacion del evento en un TextView
-        calificacionPresenter.actualizar();  //Coloca toda la informacion inicial, tanto comentarios, multimedia y calificaciones
+        imagenes = findViewById(R.id.multimedia);
+        user = getIntent().getExtras().getString("user");
+
+        horaFinal = getIntent().getExtras().getString("final");
+        horaInicio = getIntent().getExtras().getString("inicio");
+        fecha = getIntent().getExtras().getString("fecha");
+        calificacionPresenter = new CalificacionPresenter(this);
+        // info.setText(calificacionPresenter.obtenerInfoEvento());      //Muestra la informacion del evento en un TextView
+        int id = getIntent().getExtras().getInt("id");
+        calificacionPresenter.actualizar(id);  //Coloca toda la informacion inicial, tanto comentarios, multimedia y calificaciones
         comentar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,41 +89,44 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
                 String mensaje = comentario.getText().toString();
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
                 String currentDateandTime = sdf.format(new Date());
-                String year=currentDateandTime.substring(0,4);
-                String month=currentDateandTime.substring(4,6);
-                String day=currentDateandTime.substring(6,8);
-                String fechac=day+"/"+month+"/"+year;
-                String hour=currentDateandTime.substring(9,11);
-                String minutos=currentDateandTime.substring(11,13);
-                String time=hour+":"+minutos;
-                String h=fechac+" "+time;
-                c.setText(mensaje+"                       "+h);
+                String year = currentDateandTime.substring(0, 4);
+                String month = currentDateandTime.substring(4, 6);
+                String day = currentDateandTime.substring(6, 8);
+                String fechac = day + "/" + month + "/" + year;
+                String hour = currentDateandTime.substring(9, 11);
+                String minutos = currentDateandTime.substring(11, 13);
+                String time = hour + ":" + minutos;
+                String h = fechac + " " + time;
+                c.setText(mensaje + "                       " + h);
                 comentarios.addView(c);
                 comentario.setText("");
-                calificacionPresenter.crearComentario(mensaje,time,1,1,fechac,"","","");
+                int id = getIntent().getExtras().getInt("id");
+                calificacionPresenter.crearComentario(mensaje, time, user, id, fechac, horaInicio, horaFinal, fecha);
 
             }
         });
         recargar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                calificacionPresenter.actualizar();
+                int id = getIntent().getExtras().getInt("id");
+                calificacionPresenter.actualizar(id);
             }
         });
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                float pcr=porcentaje.getRating();
+                float pcr = porcentaje.getRating();
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
                 String currentDateandTime = sdf.format(new Date());
-                String year=currentDateandTime.substring(0,4);
-                String month=currentDateandTime.substring(4,6);
-                String day=currentDateandTime.substring(6,8);
-                String fechac=day+"/"+month+"/"+year;
-                String hour=currentDateandTime.substring(9,11);
-                String minutos=currentDateandTime.substring(11,13);
-                String time=hour+":"+minutos;
-                calificacionPresenter.crearCalificacion(pcr,"",1,1,"","","","");
+                String year = currentDateandTime.substring(0, 4);
+                String month = currentDateandTime.substring(4, 6);
+                String day = currentDateandTime.substring(6, 8);
+                String fechac = day + "/" + month + "/" + year;
+                String hour = currentDateandTime.substring(9, 11);
+                String minutos = currentDateandTime.substring(11, 13);
+                String time = hour + ":" + minutos;
+                int id = getIntent().getExtras().getInt("id");
+                calificacionPresenter.crearCalificacion(pcr, time, user, id, fechac, horaInicio, horaFinal, fecha);
 
 
             }
@@ -183,23 +201,24 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
                     img.setImageURI(pathh);
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(800, 500);
                     img.setLayoutParams(params);
-                    imagenes.addView(img);
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
                     String currentDateandTime = sdf.format(new Date());
-                    String year=currentDateandTime.substring(0,4);
-                    String month=currentDateandTime.substring(4,6);
-                    String day=currentDateandTime.substring(6,8);
-                    String fechac=day+"/"+month+"/"+year;
-                    String hour=currentDateandTime.substring(9,11);
-                    String minutos=currentDateandTime.substring(11,13);
-                    String time=hour+":"+minutos;
+                    String year = currentDateandTime.substring(0, 4);
+                    String month = currentDateandTime.substring(4, 6);
+                    String day = currentDateandTime.substring(6, 8);
+                    String fechac = day + "/" + month + "/" + year;
+                    String hour = currentDateandTime.substring(9, 11);
+                    String minutos = currentDateandTime.substring(11, 13);
+                    String time = hour + ":" + minutos;
                     Bitmap bitmap1 = null;
                     try {
                         bitmap1 = MediaStore.Images.Media.getBitmap(this.getContentResolver(), pathh);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    calificacionPresenter.crearMultimedia(readFile(bitmap1),time,1,1,fechac,"","","");
+
+                    int id = getIntent().getExtras().getInt("id");
+                    calificacionPresenter.crearMultimedia(readFile(bitmap1), time, user, id, fechac, horaInicio, horaFinal, fecha);
 
                     break;
                 case codFoto:
@@ -215,18 +234,17 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
                     picture.setImageBitmap(bitmap);
                     LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(800, 500);
                     picture.setLayoutParams(params1);
-                    imagenes.addView(picture);
                     SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMdd_HHmmss");
                     String currentDateandTime2 = sdf2.format(new Date());
-                    String year2=currentDateandTime2.substring(0,4);
-                    String month2=currentDateandTime2.substring(4,6);
-                    String day2=currentDateandTime2.substring(6,8);
-                    String fechac2=day2+"/"+month2+"/"+year2;
-                    String hour2=currentDateandTime2.substring(9,11);
-                    String minutos2=currentDateandTime2.substring(11,13);
-                    String time2=hour2+":"+minutos2;
-
-                    calificacionPresenter.crearMultimedia(readFile(bitmap),time2,1,1,fechac2,"","","");
+                    String year2 = currentDateandTime2.substring(0, 4);
+                    String month2 = currentDateandTime2.substring(4, 6);
+                    String day2 = currentDateandTime2.substring(6, 8);
+                    String fechac2 = day2 + "/" + month2 + "/" + year2;
+                    String hour2 = currentDateandTime2.substring(9, 11);
+                    String minutos2 = currentDateandTime2.substring(11, 13);
+                    String time2 = hour2 + ":" + minutos2;
+                    id = getIntent().getExtras().getInt("id");
+                    calificacionPresenter.crearMultimedia(readFile(bitmap), time2, user, id, fechac2, horaInicio, horaFinal, fecha);
 
                     break;
             }
@@ -237,7 +255,7 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
 
     @Override
     public void showResult(String mensaje) {
-        Toast.makeText(this,mensaje,Toast.LENGTH_LONG).show();
+        Toast.makeText(this, mensaje, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -246,51 +264,78 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
     }
 
     @Override
-    public void mostrarFotos(ArrayList<byte[]> fotos) {
-        for (int i=0;i<fotos.size();i++){
-            ImageView img = new ImageView(this);
-            img.setImageBitmap(getImage(fotos.get(i)));
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(800, 500);
-            img.setLayoutParams(params);
-            imagenes.addView(img);
+    public void mostrarFotos(final ArrayList<byte[]> fotos) {
+        if (fotos.isEmpty()) {
+
+        } else {
+            showResult(String.valueOf(fotos.size()));
+            CountDownTimer count;
+            if (imagenes != null) {
+
+                count = new CountDownTimer(5000, 1000) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        imagenes.setImageBitmap(getImage(fotos.get(j)));
+                        j++;
+                        if (j == fotos.size() - 1) j = 0;
+                        start();
+                    }
+                }.start();
+
+
+            }
         }
+
 
     }
 
     @Override
     public void mostrarComentarios(ArrayList<String> com) {
-        for (int i=0;i<com.size();i++){
-            TextView c = new TextView(CalificacionEvento.this);
-            c.setText(com.get(i));
-            comentarios.addView(c);
-        }
+        comentarios.removeAllViewsInLayout();
+        if (com.isEmpty()) {
 
+        } else {
+            for (int i = 0; i < com.size(); i++) {
+                TextView c = new TextView(CalificacionEvento.this);
+                c.setText(com.get(i));
+                comentarios.addView(c);
+            }
+        }
 
     }
 
     @Override
-    public void mostrarCalificacion(ArrayList<Float> calificacion) {
-        float suma=0;
-        for (int i=0;i<calificacion.size();i++){
-            suma=suma+calificacion.get(i);
+    public void mostrarCalificacion(ArrayList<Double> calificacion) {
+        if (calificacion.isEmpty()) {
+        } else {
+            double suma = 0;
+            for (int i = 0; i < calificacion.size(); i++) {
+                suma = suma + calificacion.get(i);
+            }
+            double promedio = suma / calificacion.size();
+            String s = String.valueOf(promedio);
+            porcentaje.setRating(Float.valueOf(s));
         }
-        float promedio= suma/calificacion.size();
-        porcentaje.setRating(promedio);
-
     }
 
     @Override
     public String getIdEvento() {
-        String idEvento=getIntent().getExtras().getString("idEvento");
+        String idEvento = getIntent().getExtras().getString("idEvento");
         return idEvento;
     }
 
-    public Bitmap getImage(byte[] byteArray){
-       ArrayList<Bitmap> a=new ArrayList<>();
+    public Bitmap getImage(byte[] byteArray) {
+        ArrayList<Bitmap> a = new ArrayList<>();
         Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
         return bmp;
     }
 
 
 }
+
 

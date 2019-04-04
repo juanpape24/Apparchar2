@@ -9,3 +9,16 @@
 /build
 /captures
 .externalNativeBuild
+.idea/caches
+.idea/misc.xml
+.idea/vcs.xml
+*.apk
+*.ap_
+*.dex
+*.class
+/bin/
+/gen/
+/.gradle/
+/.idea/tasks.xml
+/.idea/workspace.xml
+/.idea/

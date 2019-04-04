@@ -6,7 +6,7 @@ public interface ContractEmpresa {
         void cambiar();
     }
     interface PresenterE{
-        void signUp(String nombre,String correo,String direccion,String cel, String user, String pass,String pass2);
+        void signUp(String nit,String nombre,String correo,String direccion,String cel, String user, String pass,String pass2);
     }
 
 }
