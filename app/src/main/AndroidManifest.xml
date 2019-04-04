@@ -21,8 +21,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/Google_API_KEY"/>
@@ -30,6 +28,8 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+
 
 
 
@@ -49,13 +49,13 @@
         <activity android:name=".Vista.LoginActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".Vista.TipoLogin" android:screenOrientation="portrait"/>
         <activity android:name=".MapActivity" android:screenOrientation="portrait"/>
         <activity android:name=".RealTimeActivity" />
+
     </application>
 
 </manifest>
