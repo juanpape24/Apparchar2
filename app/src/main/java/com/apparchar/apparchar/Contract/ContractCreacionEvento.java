@@ -1,7 +1,7 @@
 package com.apparchar.apparchar.Contract;
 
 
-import com.apparchar.apparchar.Modelo.Lugar;
+import com.apparchar.apparchar.Modelo.LugarM;
 
 import java.util.ArrayList;
 
@@ -11,9 +11,11 @@ public interface ContractCreacionEvento {
         void mostrarCategorias(ArrayList cat);
         void swap();
         void ingresarFoto();
+        void salir();
+
     }
     interface PresenterCE{
-        void crearEvento(String nombre, String horaInicio, String horaFinal, Lugar direccion, String descripcion, ArrayList categorias, String fecha, String nit, byte[] foto);
+        void crearEvento(String nombre, String horaInicio, String horaFinal, LugarM direccion, String descripcion, ArrayList categorias, String fecha, String nit, byte[] foto, String usuario);
         ArrayList<String> getCategorias();
     }
 }
