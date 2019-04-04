@@ -1,14 +1,14 @@
 package com.apparchar.apparchar.Presentador;
 
 import android.content.Context;
-import android.view.View;
-import android.widget.Toast;
 
 import com.apparchar.apparchar.Conexion.MyLoopjTask;
 import com.apparchar.apparchar.Conexion.OnLoopjCompleted;
 import com.apparchar.apparchar.Contract.ContractCalificacion;
-import com.apparchar.apparchar.Modelo.Calificacion;
-import com.apparchar.apparchar.VO.CategoriaVO;
+import com.apparchar.apparchar.Modelo.CalificacionM;
+import com.apparchar.apparchar.Modelo.CalificacionPKM;
+import com.apparchar.apparchar.Modelo.EventoM;
+import com.apparchar.apparchar.Modelo.EventoPKM;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -21,80 +21,113 @@ import java.util.ArrayList;
 
 public class CalificacionPresenter implements ContractCalificacion.PresenterC, OnLoopjCompleted {
     ContractCalificacion.ViewC vista;
-    Calificacion calificacion;
+    CalificacionM calificacion;
     RequestParams params;
     ArrayList<String> comentarios;
-    ArrayList<Float> porcentaje;
+    ArrayList<Double> porcentaje;
     ArrayList<byte[]> fotos;
-    String infoEvento="";
-    int opc=0;
+    ArrayList<CalificacionM> calificaciones;
+    String infoEvento = "";
+    int opc = 0;
+    CalificacionPKM calificacionPKM;
+    EventoPKM eventoPKM;
+    EventoM eventoM;
+
 
     public CalificacionPresenter(ContractCalificacion.ViewC vista) {
         this.vista = vista;
-        calificacion= new Calificacion();
-        comentarios=new ArrayList<>();
-        porcentaje=new ArrayList<>();
-        fotos=new ArrayList<>();
+        calificacion = new CalificacionM();
+        comentarios = new ArrayList<>();
+        porcentaje = new ArrayList<>();
+        fotos = new ArrayList<>();
+        calificacionPKM = new CalificacionPKM();
+        eventoM = new EventoM();
+        eventoPKM = new EventoPKM();
     }
 
 
-
-
     @Override
-    public void crearComentario(String comentario, String hora, int idUser, int idEvento, String fecha, String horaI, String horaF, String fechaE) {
+    public void crearComentario(String comentario, String hora, String user, int idEvento, String fecha, String horaI, String horaF, String fechaE) {
+        calificacion = new CalificacionM();
+        calificacionPKM = new CalificacionPKM();
+        eventoPKM = new EventoPKM();
+        eventoM = new EventoM();
         calificacion.setHora(hora);
         calificacion.setFecha(fecha);
-        calificacion.setHoraI(horaI);
-        calificacion.setHoraF(horaF);
-        calificacion.setFechaE(fechaE);
-        calificacion.setIdUser(idUser);
-        calificacion.setIdEvento(idEvento);
+        calificacionPKM.setUsuariocliente(user);
+        calificacionPKM.setIdevento(idEvento);
+        eventoPKM.setHoraInicio(horaI);
+        eventoPKM.setHoraFinal(horaF);
+        eventoPKM.setFecha(fechaE);
+        eventoPKM.setIdevento(idEvento);
+        eventoM.setEventoPK(eventoPKM);
+        calificacion.setEvento(eventoM);
+        calificacion.setCalificacionPK(calificacionPKM);
         calificacion.setComentario(comentario);
         params = new RequestParams();
         Gson g = new Gson();
-        params.put("listar", "xd");
-        String nameServlet = "SERVCategoria";
+        String alv = g.toJson(calificacion);
+        params.put("insertar", alv);
+        String nameServlet = "SERVCalificacion";
         MyLoopjTask loopjTask = new MyLoopjTask(params, nameServlet, (Context) vista, this);
         loopjTask.executeLoopjCall();
-        opc=2;
+        opc = 2;
     }
 
     @Override
-    public void crearCalificacion(float porcentaje, String hora, int idUser, int idEvento, String fecha, String horaI, String horaF, String fechaE) {
+    public void crearCalificacion(double porcentaje, String hora, String user, int idEvento, String fecha, String horaI, String horaF, String fechaE) {
+        calificacion = new CalificacionM();
+        calificacionPKM = new CalificacionPKM();
+        eventoPKM = new EventoPKM();
+        eventoM = new EventoM();
         calificacion.setHora(hora);
         calificacion.setFecha(fecha);
-        calificacion.setHoraI(horaI);
-        calificacion.setHoraF(horaF);
-        calificacion.setFechaE(fechaE);
-        calificacion.setIdUser(idUser);
-        calificacion.setIdEvento(idEvento);
+        calificacionPKM.setUsuariocliente(user);
+        calificacionPKM.setIdevento(idEvento);
+        eventoPKM.setHoraInicio(horaI);
+        eventoPKM.setHoraFinal(horaF);
+        eventoPKM.setFecha(fechaE);
+        eventoPKM.setIdevento(idEvento);
+        eventoM.setEventoPK(eventoPKM);
+        calificacion.setEvento(eventoM);
+        calificacion.setCalificacionPK(calificacionPKM);
         calificacion.setPorcentaje(porcentaje);
         params = new RequestParams();
         Gson g = new Gson();
-        params.put("listar", "xd");
-        String nameServlet = "SERVCategoria";
+        String alv = g.toJson(calificacion);
+        params.put("insertar", alv);
+        String nameServlet = "SERVCalificacion";
         MyLoopjTask loopjTask = new MyLoopjTask(params, nameServlet, (Context) vista, this);
         loopjTask.executeLoopjCall();
-        opc=2;
+        opc = 2;
     }
 
     @Override
-    public void crearMultimedia(byte[] multimedia, String hora, int idUser, int idEvento, String fecha, String horaI, String horaF, String fechaE) {
+    public void crearMultimedia(byte[] multimedia, String hora, String user, int idEvento, String fecha, String horaI, String horaF, String fechaE) {
+        calificacion = new CalificacionM();
+        calificacionPKM = new CalificacionPKM();
+        eventoPKM = new EventoPKM();
+        eventoM = new EventoM();
         calificacion.setHora(hora);
         calificacion.setFecha(fecha);
-        calificacion.setHoraI(horaI);
-        calificacion.setHoraF(horaF);
-        calificacion.setFechaE(fechaE);
-        calificacion.setIdUser(idUser);
-        calificacion.setIdEvento(idEvento);
+        calificacionPKM.setUsuariocliente(user);
+        calificacionPKM.setIdevento(idEvento);
+        eventoPKM.setHoraInicio(horaI);
+        eventoPKM.setHoraFinal(horaF);
+        eventoPKM.setFecha(fechaE);
+        eventoPKM.setIdevento(idEvento);
+        eventoM.setEventoPK(eventoPKM);
+        calificacion.setEvento(eventoM);
+        calificacion.setCalificacionPK(calificacionPKM);
         calificacion.setMultimedia(multimedia);
         params = new RequestParams();
         Gson g = new Gson();
-        params.put("listar", "xd");
-        String nameServlet = "SERVCategoria";
+        String alv = g.toJson(calificacion);
+        params.put("insertar", alv);
+        String nameServlet = "SERVCalificacion";
         MyLoopjTask loopjTask = new MyLoopjTask(params, nameServlet, (Context) vista, this);
         loopjTask.executeLoopjCall();
-        opc=2;
+        opc = 2;
     }
 
     @Override
@@ -105,53 +138,59 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC, O
         String nameServlet = "SERVCategoria";
         MyLoopjTask loopjTask = new MyLoopjTask(params, nameServlet, (Context) vista, this);
         loopjTask.executeLoopjCall();
-        opc=3;
+        opc = 3;
         return infoEvento;
     }
 
     @Override
-    public void actualizar() {
+    public void actualizar(int idEvento) {
         params = new RequestParams();
         Gson g = new Gson();
-        params.put("listar", "xd");
-        String nameServlet = "SERVCategoria";
+        params.put("listar", String.valueOf(idEvento));
+        String nameServlet = "SERVCalificacion";
         MyLoopjTask loopjTask = new MyLoopjTask(params, nameServlet, (Context) vista, this);
         loopjTask.executeLoopjCall();
-        opc=1;
+        opc = 1;
 
-
-    vista.mostrarCalificacion(porcentaje);
-    vista.mostrarComentarios(comentarios);
-    vista.mostrarFotos(fotos);
+        if (!porcentaje.isEmpty()) {
+            vista.mostrarCalificacion(porcentaje);
+            porcentaje = new ArrayList<>();
+        }
+        if (!comentarios.isEmpty()) {
+            vista.mostrarComentarios(comentarios);
+            comentarios = new ArrayList<>();
+        }
+        if (!fotos.isEmpty()) {
+            vista.mostrarFotos(fotos);
+            fotos = new ArrayList<>();
+        }
     }
 
     @Override
     public void taskCompleted(String results) {
         JsonParser jsonParser = new JsonParser();
         JsonObject jo = (JsonObject) jsonParser.parse(results);
-        if (opc==1){
-            JsonElement com = jo.get("respuesta");
-            JsonElement mlt = jo.get("respuesta");
-            JsonElement pcr = jo.get("respuesta");
+        if (opc == 1) {
+            JsonElement lista = jo.get("respuesta");
 
-            String comR = com.getAsString();
-            Type listType = new TypeToken<ArrayList<String>>() {
+
+            String listaR = lista.getAsString();
+            Type listType = new TypeToken<ArrayList<CalificacionM>>() {
             }.getType();
             Gson a = new Gson();
-            comentarios = a.fromJson(comR, listType);
+            calificaciones = a.fromJson(listaR, listType);
+            for (int i = 0; i < calificaciones.size(); i++) {
+                if (calificaciones.get(i).getComentario() != null)
+                    comentarios.add(calificaciones.get(i).getComentario());
+                if (calificaciones.get(i).getPorcentaje() != null)
+                    porcentaje.add(calificaciones.get(i).getPorcentaje());
 
-            String pcrR = pcr.getAsString();
-            Type listType2 = new TypeToken<ArrayList<Float>>() {
-            }.getType();
-            Gson a2 = new Gson();
-            porcentaje = a2.fromJson(pcrR, listType2);
+                if (calificaciones.get(i).getMultimedia() != null)
+                    fotos.add(calificaciones.get(i).getMultimedia());
+            }
 
-            String mltR = mlt.getAsString();
-            Type listType3 = new TypeToken<ArrayList<byte[]>>() {
-            }.getType();
-            Gson a3 = new Gson();
-            fotos = a3.fromJson(mltR, listType3);
-        } else if(opc==2){
+
+        } else if (opc == 2) {
             JsonElement c = jo.get("respuesta");
             String r = c.getAsString();
             if (r.equals("true")) {
@@ -159,15 +198,13 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC, O
             } else {
                 vista.showResult("No se realizó correctamente");
             }
-        } else if(opc==3){
+        } else if (opc == 3) {
             JsonElement c = jo.get("evento");
             infoEvento = c.getAsString();
 
         }
 
     }
-
-
 
 
 }

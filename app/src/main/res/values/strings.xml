@@ -41,5 +41,6 @@
     <string name="idEvento">Id Evento</string>
     <string name="categorias">Categorias</string>
     <string name="fecha">Fecha</string>
+    <string name="Google_API_KEY">AIzaSyBR0X9E8C-9Cbxpxih5tnShis5lkiWbjGg</string>
 
 </resources>
