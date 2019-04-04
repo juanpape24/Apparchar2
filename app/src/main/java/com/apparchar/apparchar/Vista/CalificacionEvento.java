@@ -30,11 +30,16 @@ import com.apparchar.apparchar.R;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class CalificacionEvento extends AppCompatActivity implements ContractCalificacion.ViewC {
+    final int codFoto = 20;
+    final int codCarga = 10;
+    private final String carpetaRaiz = "Apparchar/";
+    private final String rutaImagen = carpetaRaiz + "Apparchar";
     TextView info;
     EditText comentario;
     ImageButton comentar;
@@ -43,15 +48,16 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
     RatingBar porcentaje;
     Button submit;
     ImageButton recargar;
-    final int codFoto = 20;
-    final int codCarga = 10;
-    private final String carpetaRaiz = "Apparchar/";
-    private final String rutaImagen = carpetaRaiz + "Apparchar";
     String ruta = "";
     ContractCalificacion.PresenterC calificacionPresenter;
     ArrayList a = new ArrayList();
-    CountDownTimer count;
+
     ImageView imagenes;
+    String user;
+    String horaFinal;
+    String horaInicio;
+    String fecha;
+
     int j = 0;
 
     @Override
@@ -66,11 +72,16 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
         porcentaje = findViewById(R.id.porcentajeStar);
         submit = findViewById(R.id.submit);
         recargar = findViewById(R.id.reload);
-        imagenes=findViewById(R.id.multimedia);
+        imagenes = findViewById(R.id.multimedia);
+        user = getIntent().getExtras().getString("user");
 
+        horaFinal = getIntent().getExtras().getString("final");
+        horaInicio = getIntent().getExtras().getString("inicio");
+        fecha = getIntent().getExtras().getString("fecha");
         calificacionPresenter = new CalificacionPresenter(this);
-        info.setText(calificacionPresenter.obtenerInfoEvento());      //Muestra la informacion del evento en un TextView
-        calificacionPresenter.actualizar();  //Coloca toda la informacion inicial, tanto comentarios, multimedia y calificaciones
+        // info.setText(calificacionPresenter.obtenerInfoEvento());      //Muestra la informacion del evento en un TextView
+        int id = getIntent().getExtras().getInt("id");
+        calificacionPresenter.actualizar(id);  //Coloca toda la informacion inicial, tanto comentarios, multimedia y calificaciones
         comentar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,14 +100,16 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
                 c.setText(mensaje + "                       " + h);
                 comentarios.addView(c);
                 comentario.setText("");
-                calificacionPresenter.crearComentario(mensaje, time, 1, 1, fechac, "", "", "");
+                int id = getIntent().getExtras().getInt("id");
+                calificacionPresenter.crearComentario(mensaje, time, user, id, fechac, horaInicio, horaFinal, fecha);
 
             }
         });
         recargar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                calificacionPresenter.actualizar();
+                int id = getIntent().getExtras().getInt("id");
+                calificacionPresenter.actualizar(id);
             }
         });
         submit.setOnClickListener(new View.OnClickListener() {
@@ -112,7 +125,8 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
                 String hour = currentDateandTime.substring(9, 11);
                 String minutos = currentDateandTime.substring(11, 13);
                 String time = hour + ":" + minutos;
-                calificacionPresenter.crearCalificacion(pcr, "", 1, 1, "", "", "", "");
+                int id = getIntent().getExtras().getInt("id");
+                calificacionPresenter.crearCalificacion(pcr, time, user, id, fechac, horaInicio, horaFinal, fecha);
 
 
             }
@@ -202,7 +216,9 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    calificacionPresenter.crearMultimedia(readFile(bitmap1), time, 1, 1, fechac, "", "", "");
+
+                    int id = getIntent().getExtras().getInt("id");
+                    calificacionPresenter.crearMultimedia(readFile(bitmap1), time, user, id, fechac, horaInicio, horaFinal, fecha);
 
                     break;
                 case codFoto:
@@ -227,8 +243,8 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
                     String hour2 = currentDateandTime2.substring(9, 11);
                     String minutos2 = currentDateandTime2.substring(11, 13);
                     String time2 = hour2 + ":" + minutos2;
-
-                    calificacionPresenter.crearMultimedia(readFile(bitmap), time2, 1, 1, fechac2, "", "", "");
+                    id = getIntent().getExtras().getInt("id");
+                    calificacionPresenter.crearMultimedia(readFile(bitmap), time2, user, id, fechac2, horaInicio, horaFinal, fecha);
 
                     break;
             }
@@ -252,40 +268,35 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
         if (fotos.isEmpty()) {
 
         } else {
-            /*for (int i = 0; i < fotos.size(); i++) {
-                ImageView img = new ImageView(this);
-                img.setImageBitmap(getImage(fotos.get(i)));
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(800, 500);
-                img.setLayoutParams(params);
-                imagenes.addView(img);
-            }*/
+            showResult(String.valueOf(fotos.size()));
+            CountDownTimer count;
+            if (imagenes != null) {
 
-            count = new CountDownTimer(8000, 1000) {
-                @Override
-                public void onTick(long millisUntilFinished) {
+                count = new CountDownTimer(5000, 1000) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
 
-                }
+                    }
 
-                @Override
-                public void onFinish() {
-                    imagenes.setImageBitmap(getImage(fotos.get(j)));
-                    j++;
-                    if (j == fotos.size()-1) j = 0;
-                    start();
-                }
-            }.start();
+                    @Override
+                    public void onFinish() {
+                        imagenes.setImageBitmap(getImage(fotos.get(j)));
+                        j++;
+                        if (j == fotos.size() - 1) j = 0;
+                        start();
+                    }
+                }.start();
 
+
+            }
         }
-
-
-
-
 
 
     }
 
     @Override
     public void mostrarComentarios(ArrayList<String> com) {
+        comentarios.removeAllViewsInLayout();
         if (com.isEmpty()) {
 
         } else {
@@ -299,15 +310,16 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
     }
 
     @Override
-    public void mostrarCalificacion(ArrayList<Float> calificacion) {
+    public void mostrarCalificacion(ArrayList<Double> calificacion) {
         if (calificacion.isEmpty()) {
         } else {
-            float suma = 0;
+            double suma = 0;
             for (int i = 0; i < calificacion.size(); i++) {
                 suma = suma + calificacion.get(i);
             }
-            float promedio = suma / calificacion.size();
-            porcentaje.setRating(promedio);
+            double promedio = suma / calificacion.size();
+            String s = String.valueOf(promedio);
+            porcentaje.setRating(Float.valueOf(s));
         }
     }
 
@@ -325,4 +337,5 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
 
 
 }
+
 
