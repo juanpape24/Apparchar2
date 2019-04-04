@@ -8,7 +8,10 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="94dp">
 
         <RelativeLayout
             android:id="@+id/relativeLayout3"
@@ -24,13 +27,37 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
+                android:id="@+id/nit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="21dp"
+                android:layout_marginTop="4dp"
+                android:text="Nit" />
+
+            <EditText
+                android:id="@+id/nitT"
+                android:layout_width="352dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="21dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="22dp"
+                android:ems="10"
+                android:hint="Ingrese nit"
+                android:inputType="textPersonName" />
+
+            <TextView
                 android:id="@+id/nombree"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="71dp"
                 android:text="@string/nempresa" />
 
             <EditText
@@ -41,7 +68,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="21dp"
-                android:layout_marginTop="41dp"
+                android:layout_marginTop="92dp"
                 android:layout_marginEnd="22dp"
                 android:ems="10"
                 android:hint="@string/nempresa1"
@@ -54,7 +81,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="99dp"
+                android:layout_marginTop="150dp"
                 android:text="@string/correo" />
 
             <EditText
@@ -65,7 +92,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="21dp"
-                android:layout_marginTop="120dp"
+                android:layout_marginTop="171dp"
                 android:layout_marginEnd="22dp"
                 android:ems="10"
                 android:hint="@string/correo1"
@@ -79,7 +106,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="21dp"
-                android:layout_marginTop="200dp"
+                android:layout_marginTop="251dp"
                 android:layout_marginEnd="22dp"
                 android:ems="10"
                 android:hint="@string/address1"
@@ -92,7 +119,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="21dp"
-                android:layout_marginTop="179dp"
+                android:layout_marginTop="230dp"
                 android:text="@string/address" />
 
             <TextView
@@ -102,7 +129,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="254dp"
+                android:layout_marginTop="305dp"
                 android:text="@string/cel" />
 
             <EditText
@@ -113,7 +140,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="274dp"
+                android:layout_marginTop="325dp"
                 android:layout_marginEnd="22dp"
                 android:ems="10"
                 android:hint="@string/cel1"
@@ -126,7 +153,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="332dp"
+                android:layout_marginTop="383dp"
                 android:text="@string/usuario" />
 
             <EditText
@@ -137,7 +164,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="21dp"
-                android:layout_marginTop="352dp"
+                android:layout_marginTop="403dp"
                 android:layout_marginEnd="22dp"
                 android:ems="10"
                 android:hint="@string/usuario1"
@@ -150,7 +177,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="21dp"
-                android:layout_marginTop="404dp"
+                android:layout_marginTop="455dp"
                 android:text="@string/pass1" />
 
             <EditText
@@ -161,7 +188,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="21dp"
-                android:layout_marginTop="424dp"
+                android:layout_marginTop="475dp"
                 android:layout_marginEnd="22dp"
                 android:ems="10"
                 android:hint="@string/pass"
@@ -174,7 +201,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="21dp"
-                android:layout_marginTop="472dp"
+                android:layout_marginTop="525dp"
                 android:text="@string/pass2" />
 
             <EditText
@@ -184,9 +211,9 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginStart="21dp"
-                android:layout_marginTop="496dp"
-                android:layout_marginEnd="22dp"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="545dp"
+                android:layout_marginEnd="21dp"
                 android:ems="10"
                 android:hint="@string/pass3"
                 android:inputType="textPassword" />
@@ -197,8 +224,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginStart="95dp"
-                android:layout_marginTop="542dp"
+                android:layout_marginStart="146dp"
+                android:layout_marginTop="592dp"
                 android:onClick="rEmpresa"
                 android:text="@string/registrar" />
         </RelativeLayout>

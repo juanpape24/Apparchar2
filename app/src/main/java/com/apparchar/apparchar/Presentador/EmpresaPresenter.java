@@ -5,29 +5,28 @@ import android.content.Context;
 import com.apparchar.apparchar.Conexion.MyLoopjTask;
 import com.apparchar.apparchar.Conexion.OnLoopjCompleted;
 import com.apparchar.apparchar.Contract.ContractEmpresa;
-import com.apparchar.apparchar.Modelo.UserEmpresa;
-import com.apparchar.apparchar.VO.ClienteVO;
-import com.apparchar.apparchar.VO.EmpresaVO;
+import com.apparchar.apparchar.Modelo.EmpresaM;
+import com.apparchar.apparchar.Modelo.EmpresaPKM;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.loopj.android.http.RequestParams;
 
-import java.util.concurrent.ExecutionException;
-
 public class EmpresaPresenter implements ContractEmpresa.PresenterE, OnLoopjCompleted {
 
     ContractEmpresa.ViewE vista;
-    UserEmpresa empresa;
+    EmpresaM empresa;
+    EmpresaPKM empresaPKM;
     RequestParams params;
     public EmpresaPresenter(ContractEmpresa.ViewE vista){
         this.vista=vista;
-        empresa=new UserEmpresa();
+        empresa=new EmpresaM();
+        empresaPKM=new EmpresaPKM();
     }
     @Override
-    public void signUp(String nombre, String correo, String direccion, String cel, String user, String pass,String pass2) {
-        if(nombre.equals("") || correo.equals("") || direccion.equals("") || cel.equals("") || user.equals("") || pass.equals("") || pass2.equals("")){
+    public void signUp(String nit,String nombre, String correo, String direccion, String cel, String user, String pass,String pass2) {
+        if(nit.equals("") || nombre.equals("") || correo.equals("") || direccion.equals("") || cel.equals("") || user.equals("") || pass.equals("") || pass2.equals("")){
             vista.showResultE("Llene todos los campos");
         }
         else{
@@ -39,13 +38,12 @@ public class EmpresaPresenter implements ContractEmpresa.PresenterE, OnLoopjComp
                 empresa.setCorreo(correo);
                 empresa.setUbicacion(direccion);
                 empresa.setTelefono(cel);
-                empresa.setUsuario(user);
                 empresa.setContrasenia(pass);
-                int x= (int) (Math.random()*9999+1);
-                empresa.setNitEmpresa(String.valueOf(x));
+                empresaPKM.setNitempresa(nit);
                 empresa.setDescripcion("sasas");
                 vista.cambiar();
-                EmpresaVO empresaV = new EmpresaVO(empresa.getNitEmpresa(),empresa.getNombre(),empresa.getUbicacion(),empresa.getTelefono(),empresa.getCorreo(),empresa.getDescripcion(),empresa.getUsuario(),empresa.getContrasenia());
+                empresa.setEmpresaPK(empresaPKM);
+                empresaPKM.setUsuario(user);
                 params = new RequestParams();
                 Gson g = new Gson();
                 String envio = g.toJson(empresa);

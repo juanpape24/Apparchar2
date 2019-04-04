@@ -2,30 +2,21 @@ package com.apparchar.apparchar.Presentador;
 
 
 import android.content.Context;
-import android.widget.Toast;
 
 import com.apparchar.apparchar.Conexion.MyLoopjTask;
 import com.apparchar.apparchar.Conexion.OnLoopjCompleted;
 import com.apparchar.apparchar.Contract.ContractClient;
 
-import com.apparchar.apparchar.Modelo.UserClient;
-import com.apparchar.apparchar.VO.ClienteVO;
-import com.apparchar.apparchar.Vista.Cliente;
+import com.apparchar.apparchar.Modelo.ClienteM;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.loopj.android.http.RequestParams;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.concurrent.ExecutionException;
-
 
 public class RegistrarPresenter implements ContractClient.Presenter, OnLoopjCompleted {
-    UserClient cliente;
-    Context context;
+    ClienteM cliente;
     RequestParams params;
 
     private ContractClient.View vista;
@@ -37,8 +28,7 @@ public class RegistrarPresenter implements ContractClient.Presenter, OnLoopjComp
 
     public RegistrarPresenter(ContractClient.View vista) {
         this.vista = vista;
-        cliente = new UserClient();
-        this.context = context;
+        cliente = new ClienteM();
     }
 
     @Override
@@ -55,14 +45,12 @@ public class RegistrarPresenter implements ContractClient.Presenter, OnLoopjComp
                 cliente.setTelefono(cel);
                 cliente.setUsuario(user);
                 cliente.setContrasenia(pass);
-                cliente.setId((int) (Math.random() * 99999 + 1));
                 vista.swap();
-                ClienteVO client = new ClienteVO(cliente.getId(), cliente.getNombre(), cliente.getEdad(), cliente.getCorreo(), cliente.getTelefono(), cliente.getUsuario(), cliente.getContrasenia());
                 params = new RequestParams();
                 Gson g = new Gson();
 
 
-                String envio = g.toJson(client);
+                String envio = g.toJson(cliente);
 
                 params.put("insertar", envio);
                 String nameServlet = "SERVCliente";
@@ -87,7 +75,7 @@ public class RegistrarPresenter implements ContractClient.Presenter, OnLoopjComp
         if (r.equals("true")) {
             vista.showResult("Se registró correctamente");
         } else {
-            vista.showResult("No se pudo hacer el registro");
+            vista.showResult("El usuario ya existe");
         }
     }
 }
