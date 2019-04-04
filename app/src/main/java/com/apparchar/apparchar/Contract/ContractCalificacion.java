@@ -10,15 +10,15 @@ public interface ContractCalificacion {
         void swap();
         void mostrarFotos(ArrayList<byte[]> fotos);
         void mostrarComentarios(ArrayList<String> comentarios);
-        void mostrarCalificacion(ArrayList<Float> calificacion);
+        void mostrarCalificacion(ArrayList<Double> calificacion);
         String getIdEvento();
 
     }
     interface PresenterC{
-        void crearComentario(String comentario,String hora,int idUser,int idEvento,String fecha,String horaI,String horaF,String fechaE);
-        void crearCalificacion(float porcentaje,String hora,int idUser,int idEvento,String fecha,String horaI,String horaF,String fechaE);
-        void crearMultimedia(byte[] multimedia,String hora,int idUser,int idEvento,String fecha,String horaI,String horaF,String fechaE);
+        void crearComentario(String comentario,String hora,String user,int idEvento,String fecha,String horaI,String horaF,String fechaE);
+        void crearCalificacion(double porcentaje,String hora,String user,int idEvento,String fecha,String horaI,String horaF,String fechaE);
+        void crearMultimedia(byte[] multimedia,String hora,String user,int idEvento,String fecha,String horaI,String horaF,String fechaE);
         String obtenerInfoEvento();
-        void actualizar();
+        void actualizar(int idEvento);
     }
 }
