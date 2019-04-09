@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity implements ContractLogin.Vi
     }
 
     public void eventc(String usuarioF){
-        Intent i = new Intent(this, ListaEvento.class);
+        Intent i = new Intent(this, ListaCategoria.class);
         i.putExtra("user",usuarioF);
         startActivity(i);
     }
