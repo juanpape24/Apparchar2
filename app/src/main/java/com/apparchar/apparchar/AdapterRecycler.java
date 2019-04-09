@@ -44,12 +44,14 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.MyView
         if(lista.get(i).equals("cine")){
             myViewHolder.image.setImageResource(R.drawable.cine);
             myViewHolder.texto.setText(lista.get(i));
-        }else if(lista.get(i).equals("deporte")){
-            myViewHolder.image.setImageResource(R.drawable.deporte);
+        }else if(lista.get(i).equals("lectura")){
+            myViewHolder.image.setImageResource(R.drawable.lectura);
             myViewHolder.texto.setText(lista.get(i));
         }else if(lista.get(i).equals("rumba")){
-
             myViewHolder.image.setImageResource(R.drawable.rumba);
+            myViewHolder.texto.setText(lista.get(i));
+        }else{
+            myViewHolder.image.setImageResource(R.drawable.foto);
             myViewHolder.texto.setText(lista.get(i));
         }
         myViewHolder.cardView.setOnClickListener(new View.OnClickListener() {

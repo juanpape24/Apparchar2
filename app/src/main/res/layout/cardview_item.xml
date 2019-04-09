@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="cursive"
             android:gravity="center"
-            android:text="Marimondazo"
+            android:text="Título"
             android:textColor="@color/colorPrimary"
             android:textSize="13sp"
             android:textStyle="bold" />
@@ -37,26 +37,32 @@
                 android:id="@+id/img_marimondazo"
                 android:layout_width="150dp"
                 android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
+                android:layout_margin="5dp"
                 android:background="#2d2d2d"
                 android:scaleType="centerCrop" />
 
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/descripcione"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="sans-serif-smallcaps"
-                    android:textAlignment="viewStart"
-                    android:textColor="@color/quantum_cyan800"
-                    android:textStyle="italic" />
+                    android:orientation="vertical">
 
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/descripcione"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="5dp"
+                        android:fontFamily="sans-serif-smallcaps"
+                        android:text="@string/descripcion"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/quantum_cyan800"
+                        android:textStyle="italic" />
+
+                </LinearLayout>
+            </ScrollView>
 
 
         </LinearLayout>

@@ -29,15 +29,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListaEvento extends AppCompatActivity implements ContractListaEvento.ViewEvento {
+    private static final String TAG = "LISTA EVENTO";
+    private static final int ERROR_DIALOG_REQUEST = 9001;
+    GridLayoutManager gridLayoutManager;
     private RecyclerView rv;
     private RecyclerViewAdapter adapter;
     private ContractListaEvento.EventoPresenter presenter;
-    private String idUser="",cat="";
+    private String idUser = "", cat = "";
     private TextView event;
     private ArrayList<EventoM> eventos;
-    GridLayoutManager gridLayoutManager;
-    private static final String TAG = "LISTA EVENTO";
-    private static final int ERROR_DIALOG_REQUEST = 9001;
 
     //Widgets
 
@@ -67,52 +67,56 @@ public class ListaEvento extends AppCompatActivity implements ContractListaEvent
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_evento);
-        event=findViewById(R.id.event);
+        event = findViewById(R.id.event);
         getSupportActionBar().hide();
-        idUser=getIntent().getExtras().getString("user");
-        cat=getIntent().getExtras().getString("categoria");
-        presenter=new ListaEventoPresenter(this);
+        idUser = getIntent().getExtras().getString("user");
+        cat = getIntent().getExtras().getString("categoria");
+        presenter = new ListaEventoPresenter(this);
 
     }
 
 
     @Override
     public void dato(List<EventoM> lista) {
-        ArrayList<CategoriaM> listica=new ArrayList<>();
-        //for (int i=0;i<lista.size();i++){
-        //showResult(l);
-        //}
-        Log.i("info",lista.toString());
-        rv= findViewById(R.id.recycler);
-        rv.setLayoutManager(new GridLayoutManager(this,1));
-        adapter=new RecyclerViewAdapter(getApplicationContext(),lista,idUser);
+        ArrayList<EventoM> listica = new ArrayList<>();
+        for (int i = 0; i < lista.size(); i++) {
+            if (lista.get(i).getCategoriaCollection().contains(cat)) {
+                listica.add(lista.get(i));
+            }
+        }
+        Log.i("info", listica.toString());
+        rv = findViewById(R.id.recycler);
+        rv.setLayoutManager(new GridLayoutManager(this, 1));
+        adapter = new RecyclerViewAdapter(getApplicationContext(), listica, idUser);
         rv.setAdapter(adapter);
-        eventos= (ArrayList<EventoM>) lista;
+        eventos = (ArrayList<EventoM>) listica;
 
     }
 
     @Override
     public void showResult(String mensaje) {
-        Toast.makeText(this,mensaje,Toast.LENGTH_LONG).show();
-    }
-    public void actualizar(View view){
-        presenter=new ListaEventoPresenter(this);
+        Toast.makeText(this, mensaje, Toast.LENGTH_LONG).show();
     }
 
-    public void mapa(View view){
+    public void actualizar(View view) {
+        presenter = new ListaEventoPresenter(this);
+    }
 
-        if(servicesOk()) {
+    public void mapa(View view) {
+
+        if (servicesOk()) {
             Intent intent = new Intent(this, RealTimeActivity.class);
-            ArrayList<String> dirrecion=new ArrayList<>();
-            for (int i=0;i<eventos.size();i++){
-                dirrecion.add(eventos.get(i).getDireccion().getDireccion()+" Bogotá");
+            ArrayList<String> dirrecion = new ArrayList<>();
+            for (int i = 0; i < eventos.size(); i++) {
+                dirrecion.add(eventos.get(i).getDireccion().getDireccion() + " Bogotá");
             }
-            intent.putStringArrayListExtra("direcciones",dirrecion);
+            intent.putStringArrayListExtra("direcciones", dirrecion);
             startActivity(intent);
         }
     }
-    public void cSesion(View view){
-        Intent intent=new Intent(this,LoginActivity.class);
+
+    public void cSesion(View view) {
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 }
