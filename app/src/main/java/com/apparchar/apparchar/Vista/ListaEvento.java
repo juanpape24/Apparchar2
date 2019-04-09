@@ -80,11 +80,14 @@ public class ListaEvento extends AppCompatActivity implements ContractListaEvent
     public void dato(List<EventoM> lista) {
         ArrayList<EventoM> listica = new ArrayList<>();
         for (int i = 0; i < lista.size(); i++) {
-            if (lista.get(i).getCategoriaCollection().contains(cat)) {
-                listica.add(lista.get(i));
+            ArrayList<CategoriaM> cate=(ArrayList<CategoriaM>) lista.get(i).getCategoriaCollection();
+            for (int j=0;j<cate.size();j++) {
+                if (cate.get(j).getNombre().equals(cat.toLowerCase())) {
+                    listica.add(lista.get(i));
+                    //showResult(listica.toString());
+                }
             }
         }
-        Log.i("info", listica.toString());
         rv = findViewById(R.id.recycler);
         rv.setLayoutManager(new GridLayoutManager(this, 1));
         adapter = new RecyclerViewAdapter(getApplicationContext(), listica, idUser);
