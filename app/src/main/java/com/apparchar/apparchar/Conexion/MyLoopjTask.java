@@ -18,7 +18,7 @@ public class MyLoopjTask {
     AsyncHttpClient client;
     RequestParams params;
     //String MYURL = "http://192.168.137.1:8080/ServerApparchar/SERVRegister";
-    String MYURL ="http://192.168.137.1:8080/ServerApparchar/"; //"http://ec2-54-146-23-68.compute-1.amazonaws.com:8080/ServerApparchar-1.0-SNAPSHOT/";
+    String MYURL ="http://ec2-54-146-23-68.compute-1.amazonaws.com:8080/ServerApparchar-1.0-SNAPSHOT/"; //"http://ec2-54-146-23-68.compute-1.amazonaws.com:8080/ServerApparchar-1.0-SNAPSHOT/";
     String jsonResponse;
 
     public MyLoopjTask(RequestParams parametros, String nameServlet, Context context, OnLoopjCompleted listener) {

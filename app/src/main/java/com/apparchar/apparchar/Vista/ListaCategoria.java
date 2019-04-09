@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Toast;
 
 import com.apparchar.apparchar.AdapterRecycler;
@@ -45,7 +46,13 @@ public class ListaCategoria extends AppCompatActivity implements ContractListaCa
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
-
+    public void refresh(View view){
+        presenter=new CategoriaPresenter(this);
+    }
+    public void finished(View view){
+        Intent intent=new Intent(this,LoginActivity.class);
+        startActivity(intent);
+    }
     @Override
     public void datos(ArrayList<String> categoria) {
         rv = findViewById(R.id.recycler2);
