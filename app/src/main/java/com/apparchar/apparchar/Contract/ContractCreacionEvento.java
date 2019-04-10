@@ -6,6 +6,7 @@ import com.apparchar.apparchar.Modelo.LugarM;
 import java.util.ArrayList;
 
 public interface ContractCreacionEvento {
+
     interface ViewCE{
         void showResult(String info);
         void mostrarCategorias(ArrayList cat);

@@ -26,6 +26,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.apparchar.apparchar.Conexion.MyLoopjTask;
+import com.apparchar.apparchar.Conexion.OnLoopjCompleted;
+import com.apparchar.apparchar.Modelo.EventoM;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -37,12 +40,19 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
+import com.loopj.android.http.RequestParams;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RealTimeActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class RealTimeActivity extends AppCompatActivity implements OnMapReadyCallback , OnLoopjCompleted {
 
     private static final String TAG = "RealTimeActivity";
     private GoogleMap mMap; // Mapa
@@ -60,7 +70,9 @@ public class RealTimeActivity extends AppCompatActivity implements OnMapReadyCal
     private Button boton;
     private TextView titulo;
 
-    private ArrayList<String> direccion;
+
+    List<EventoM> lista ;
+    RequestParams params;
 
 
 
@@ -68,13 +80,19 @@ public class RealTimeActivity extends AppCompatActivity implements OnMapReadyCal
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.realtime_activity);
-        getSupportActionBar().hide();
-        direccion=getIntent().getStringArrayListExtra("direcciones");
         titulo = (TextView) findViewById(R.id.RealTimeTittle);
-        titulo.setTypeface(Typeface.createFromAsset(RealTimeActivity.this.getAssets(),"Fonts/Avae_Regular.ttf"));
+        titulo.setTypeface(Typeface.createFromAsset(RealTimeActivity.this.getAssets(),"Fonts/Abel_Regular.ttf"));
         boton = (Button) findViewById(R.id.Parchame);
-        boton.setTypeface(Typeface.createFromAsset(RealTimeActivity.this.getAssets(),"Fonts/Avae_Regular.ttf"));
+        boton.setTypeface(Typeface.createFromAsset(RealTimeActivity.this.getAssets(),"Fonts/Abel_Regular.ttf"));
         getLocationPermission();
+        params=new RequestParams();
+        lista = new ArrayList<>();
+
+        params = new RequestParams();
+        params.put("realtime", "gg");
+        String nameServlet = "SERVEvento";
+        MyLoopjTask loopjTask = new MyLoopjTask(params, nameServlet,getApplicationContext(),RealTimeActivity.this);
+        loopjTask.executeLoopjCall();
     }
 
 
@@ -214,10 +232,18 @@ public class RealTimeActivity extends AppCompatActivity implements OnMapReadyCal
             public void onClick(View v) {
                 CleanInterface(); //Limpia la interfaz
                // getDeviceLocation();
-
-                for (int i =0 ; i <direccion.size();i++){
-                    AddMarker(Geocoder(direccion.get(i)),"EVENTO "+ i,"PERREO",false);
+//Request
+                Log.e(TAG,"LISTA :"+lista.size());
+                //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lista.get(0).getDireccion().getCoordenadaX(),lista.get(0).getDireccion().getCoordenadaY()),15f));
+                for (int i = 0;i<lista.size();i++){
+                    EventoM event = lista.get(i);
+                    Double x =event.getDireccion().getCoordenadaX();
+                    Double y = event.getDireccion().getCoordenadaY();
+                    Log.e(TAG,"COORD :"+x+" "+y);
+                    AddMarker(new LatLng(x,y),event.getNombre(),event.getDescripcion(),false);
                 }
+
+
             }
         });
 
@@ -263,10 +289,9 @@ public class RealTimeActivity extends AppCompatActivity implements OnMapReadyCal
             MarkerOptions mark = new MarkerOptions();
             mark.position(point);
             mark.title(tittle);
-            mark.title(info);
+            mark.snippet(info);
             mark.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
             mMap.addMarker(mark);
-
         }
     }
 
@@ -314,4 +339,20 @@ public class RealTimeActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
 
+    @Override
+    public void taskCompleted(String results) {
+
+        JsonParser jsonParser = new JsonParser();
+        JsonObject jo = (JsonObject) jsonParser.parse(results);
+        JsonElement c = jo.get("respuesta");
+        String r = c.getAsString();
+        Type listType = new TypeToken<ArrayList<EventoM>>() {
+        }.getType();
+        Gson a = new Gson();
+        ArrayList<EventoM> arrayList = a.fromJson(r, listType);
+
+        for (int i = 0; i < arrayList.size(); i++) {
+            lista.add(arrayList.get(i));
+        }
+    }
 }

@@ -3,4 +3,16 @@
     <color name="colorPrimary">#F29C07</color>
     <color name="colorPrimaryDark">#00574b</color>
     <color name="colorAccent">#EDF79F06</color>
+
+ <!--detail
+    Cambio de diseño en la aplicacion , se utiliza una nueva paleta de colores
+ </detail-->
+
+    <color name="Cerulean">#4484CE</color>
+    <color name="Amarello">#F9CF00</color>
+    <color name="Tangarine">#F19F4D</color>
+    <color name="Aluminium">#D9D9D9</color>
+    <color name="Bluex">#4ABDAC</color>
+    <color name="Blancox">#FFF</color>
+
 </resources>
