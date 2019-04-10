@@ -13,6 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.apparchar.apparchar.Contract.ContractLogin;
+import com.apparchar.apparchar.FragmentCategoria;
+import com.apparchar.apparchar.Main;
 import com.apparchar.apparchar.Presentador.LoginPresenter;
 import com.apparchar.apparchar.R;
 
@@ -64,7 +66,7 @@ public class LoginActivity extends AppCompatActivity implements ContractLogin.Vi
     }
 
     public void eventc(String usuarioF){
-        Intent i = new Intent(this, ListaCategoria.class);
+        Intent i = new Intent(this, Main.class);
         i.putExtra("user",usuarioF);
         startActivity(i);
     }
