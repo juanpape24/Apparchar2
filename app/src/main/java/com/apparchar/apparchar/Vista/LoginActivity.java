@@ -84,7 +84,7 @@ public class LoginActivity extends AppCompatActivity implements ContractLogin.Vi
 
     @Override
     public void crearEvento(String nit, String usuario) {
-        Intent intent=new Intent(this,CreacionEvento.class);
+        Intent intent=new Intent(this,crearEvento1.class);
         intent.putExtra("nit",nit);
         intent.putExtra("user", usuario);
         startActivity(intent);

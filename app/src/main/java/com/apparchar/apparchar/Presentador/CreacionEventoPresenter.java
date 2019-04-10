@@ -126,6 +126,7 @@ public class CreacionEventoPresenter implements OnLoopjCompleted, ContractCreaci
             params = new RequestParams();
             Gson g = new Gson();
             String envio = g.toJson(evento);
+            vista.showResult(envio);
             params.put("insertar", envio);
             params.put("horai", horaInicio);
             params.put("horaf", horaFinal);
