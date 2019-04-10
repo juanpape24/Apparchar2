@@ -10,49 +10,50 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.apparchar.apparchar.Contract.ContractListaCategoria;
-import com.apparchar.apparchar.Presentador.CategoriaPresenter;
+import com.apparchar.apparchar.Contract.ContractListaEvento;
+import com.apparchar.apparchar.Modelo.EventoM;
+import com.apparchar.apparchar.Presentador.ListaEventoPresenter;
 import com.apparchar.apparchar.Vista.LoginActivity;
 
-import org.checkerframework.framework.qual.Bottom;
-
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link FragmentCategoria.OnFragmentInteractionListener} interface
+ * {@link FragmentEventos.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link FragmentCategoria#newInstance} factory method to
+ * Use the {@link FragmentEventos#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentCategoria extends Fragment implements ContractListaCategoria.viewCategoria {
+public class FragmentEventos extends Fragment implements ContractListaEvento.ViewEvento {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String TAG = "LISTA EVENTO";
+    private static final int ERROR_DIALOG_REQUEST = 9001;
+    GridLayoutManager gridLayoutManager;
+    private RecyclerView rv;
+    private RecyclerViewAdapter adapter;
+    private ContractListaEvento.EventoPresenter presenter;
+    private String idUser = "", cat = "";
+    private TextView event;
+    private ArrayList<EventoM> eventos;
+    private View vista;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private RecyclerView rv;
-    private AdapterRecycler adapter;
-    private ContractListaCategoria.presenterCategoria presenter;
-    private String idUser = "";
-    private ArrayList<String> categoria;
-    private Bottom boton1,boton2;
-    View vista;
 
     private OnFragmentInteractionListener mListener;
 
-    public FragmentCategoria() {
+    public FragmentEventos() {
         // Required empty public constructor
-    }
-    public void setIdUser(String idUser){
-        this.idUser=idUser;
     }
 
     /**
@@ -61,16 +62,19 @@ public class FragmentCategoria extends Fragment implements ContractListaCategori
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentCategoria.
+     * @return A new instance of fragment FragmentEventos.
      */
     // TODO: Rename and change types and number of parameters
-    public static FragmentCategoria newInstance(String param1, String param2) {
-        FragmentCategoria fragment = new FragmentCategoria();
+    public static FragmentEventos newInstance(String param1, String param2) {
+        FragmentEventos fragment = new FragmentEventos();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
+    }
+    public void setIdUser(String idUser){
+        this.idUser=idUser;
     }
 
     @Override
@@ -85,28 +89,24 @@ public class FragmentCategoria extends Fragment implements ContractListaCategori
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        vista=inflater.inflate(R.layout.fragment_fragment_categoria, container, false);
-//        boton1=vista.findViewById(R.id.button);// Inflate the layout for this fragment
+        // Inflate the layout for this fragment
+        vista= inflater.inflate(R.layout.fragment_fragment_eventos, container, false);
+        event=vista.findViewById(R.id.textEvento);
         return vista;
     }
     @Override
     public void onResume(){
         super.onResume();
-        presenter = new CategoriaPresenter(this,getActivity());
+        presenter = new ListaEventoPresenter(this,getContext());
     }
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
     }
-    public void refresh(View view){
-        presenter=new CategoriaPresenter(this,getActivity());
-    }
-    public void finished(View view){
-        Intent intent=new Intent(getContext(), LoginActivity.class);
-        getActivity().startActivity(intent);
-    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -125,18 +125,25 @@ public class FragmentCategoria extends Fragment implements ContractListaCategori
     }
 
     @Override
-    public void datos(ArrayList<String> categoria) {
-        rv = vista.findViewById(R.id.recycler2);
-        rv.setLayoutManager(new GridLayoutManager(getContext(),2));
-        adapter = new AdapterRecycler(getActivity().getApplicationContext(), categoria, idUser);
+    public void dato(List<EventoM> lista) {
+        rv = vista.findViewById(R.id.recycler);
+        rv.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+        adapter = new RecyclerViewAdapter(getActivity(), lista, idUser);
         rv.setAdapter(adapter);
-        this.categoria = categoria;
+        eventos = (ArrayList<EventoM>) lista;
 
     }
 
     @Override
     public void showResult(String mensaje) {
-        Toast.makeText(getContext(), mensaje, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), mensaje, Toast.LENGTH_LONG).show();
+    }
+    public void actualizar(View view){
+        presenter = new ListaEventoPresenter(this,getActivity());
+    }
+    public void cSesion(View view) {
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        startActivity(intent);
     }
 
     /**

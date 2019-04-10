@@ -67,15 +67,18 @@ public class ListaEvento extends AppCompatActivity implements ContractListaEvent
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_evento);
-        event = findViewById(R.id.event);
         getSupportActionBar().hide();
         idUser = getIntent().getExtras().getString("user");
         cat = getIntent().getExtras().getString("categoria");
-        presenter = new ListaEventoPresenter(this);
+        presenter = new ListaEventoPresenter(this,getApplicationContext());
 
     }
 
-
+    @Override
+    public void onResume(){
+        super.onResume();
+        presenter = new ListaEventoPresenter(this,getApplicationContext());
+    }
     @Override
     public void dato(List<EventoM> lista) {
         ArrayList<EventoM> listica = new ArrayList<>();
@@ -102,7 +105,7 @@ public class ListaEvento extends AppCompatActivity implements ContractListaEvent
     }
 
     public void actualizar(View view) {
-        presenter = new ListaEventoPresenter(this);
+        presenter = new ListaEventoPresenter(this,getApplicationContext());
     }
 
     public void mapa(View view) {

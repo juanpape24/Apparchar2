@@ -21,13 +21,15 @@ public class CategoriaPresenter implements ContractListaCategoria.presenterCateg
     ContractListaCategoria.viewCategoria vista;
     ArrayList<String> categoria=new ArrayList<>();
     RequestParams params;
-    public CategoriaPresenter(ContractListaCategoria.viewCategoria vista){
+    Context context;
+    public CategoriaPresenter(ContractListaCategoria.viewCategoria vista, Context context){
         this.vista=vista;
+        this.context=context;
         params = new RequestParams();
         Gson g = new Gson();
         params.put("listar", "xd");
         String nameServlet = "SERVCategoria";
-        MyLoopjTask loopjTask = new MyLoopjTask(params, nameServlet, (Context) vista, this);
+        MyLoopjTask loopjTask = new MyLoopjTask(params, nameServlet, context, this);
         loopjTask.executeLoopjCall();
     }
 

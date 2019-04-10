@@ -20,7 +20,7 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
-public class Main extends AppCompatActivity implements FragmentCategoria.OnFragmentInteractionListener {
+public class Main extends AppCompatActivity implements FragmentCategoria.OnFragmentInteractionListener, FragmentEventos.OnFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -36,6 +36,7 @@ public class Main extends AppCompatActivity implements FragmentCategoria.OnFragm
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private String idUser="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,11 @@ public class Main extends AppCompatActivity implements FragmentCategoria.OnFragm
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        idUser=getIntent().getExtras().getString("user");
+        FragmentCategoria fragmentCategoria=new FragmentCategoria();
+        FragmentEventos fragmentEventos=new FragmentEventos();
+        fragmentCategoria.setIdUser(idUser);
+        fragmentEventos.setIdUser(idUser);
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -57,14 +63,14 @@ public class Main extends AppCompatActivity implements FragmentCategoria.OnFragm
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
+        });*/
 
     }
 
@@ -117,6 +123,9 @@ public class Main extends AppCompatActivity implements FragmentCategoria.OnFragm
             Fragment fragment=null;
             switch (sectionNumber){
                 case 1:fragment=new FragmentCategoria();
+                break;
+                case 2:fragment=new FragmentEventos();
+                break;
             }
             return fragment;
         }
@@ -151,7 +160,7 @@ public class Main extends AppCompatActivity implements FragmentCategoria.OnFragm
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 1;
+            return 2;
         }
         @Override
         public CharSequence getPageTitle(int position){

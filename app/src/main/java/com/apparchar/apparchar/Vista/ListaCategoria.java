@@ -21,12 +21,12 @@ import com.apparchar.apparchar.RecyclerViewAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListaCategoria extends AppCompatActivity implements ContractListaCategoria.viewCategoria {
+public class ListaCategoria extends AppCompatActivity{
     private static final String TAG = "LISTA EVENTO";
     GridLayoutManager gridLayoutManager;
     private RecyclerView rv;
     private AdapterRecycler adapter;
-    private ContractListaCategoria.presenterCategoria presenter;
+    //private ContractListaCategoria.presenterCategoria presenter;
     private String idUser = "";
     private ArrayList<String> categoria;
 
@@ -35,8 +35,8 @@ public class ListaCategoria extends AppCompatActivity implements ContractListaCa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_categoria);
         getSupportActionBar().hide();
-        idUser = getIntent().getExtras().getString("user");
-        presenter = new CategoriaPresenter(this);
+        //idUser = getIntent().getExtras().getString("user");
+        //presenter = new CategoriaPresenter(this);
     }
 
     @Override
@@ -47,13 +47,13 @@ public class ListaCategoria extends AppCompatActivity implements ContractListaCa
         startActivity(intent);
     }
     public void refresh(View view){
-        presenter=new CategoriaPresenter(this);
+        //presenter=new CategoriaPresenter(this);
     }
     public void finished(View view){
         Intent intent=new Intent(this,LoginActivity.class);
         startActivity(intent);
     }
-    @Override
+   /* @Override
     public void datos(ArrayList<String> categoria) {
         rv = findViewById(R.id.recycler2);
         rv.setLayoutManager(new GridLayoutManager(this, 2));
@@ -66,5 +66,5 @@ public class ListaCategoria extends AppCompatActivity implements ContractListaCa
     @Override
     public void showResult(String mensaje) {
         Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
-    }
+    }*/
 }

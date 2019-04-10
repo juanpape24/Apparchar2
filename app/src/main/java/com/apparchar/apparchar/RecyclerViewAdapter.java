@@ -56,7 +56,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             myViewHolder.image.setImageBitmap(bmp);
         }
         myViewHolder.titulo.setText(lista.get(i).getNombre());
-        myViewHolder.descripcion.setText(lista.get(i).getDescripcion()+"\n\n\nDireccion: "+lista.get(i).getDireccion().getDireccion()+"\nFecha: "+lista.get(i).getEventoPK().getFecha());
+        myViewHolder.descripcion.setText(lista.get(i).getDescripcion()+"\n\nDireccion: "+lista.get(i).getDireccion().getDireccion()+"\nFecha: "+lista.get(i).getEventoPK().getFecha());
         myViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
