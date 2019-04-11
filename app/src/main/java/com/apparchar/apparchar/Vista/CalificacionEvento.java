@@ -35,6 +35,7 @@ import android.widget.ViewSwitcher;
 import com.apparchar.apparchar.AdapterComentarios;
 import com.apparchar.apparchar.Contract.ContractCalificacion;
 import com.apparchar.apparchar.Modelo.CalificacionM;
+import com.apparchar.apparchar.Modelo.CalificacionPKM;
 import com.apparchar.apparchar.Modelo.ClienteM;
 import com.apparchar.apparchar.Modelo.EventoM;
 import com.apparchar.apparchar.Presentador.CalificacionPresenter;
@@ -71,7 +72,7 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
     ArrayList a = new ArrayList();
     TextView nombreEvento, horaInicioEvento, horaFinalEvento, fechaEvento, direccionEvento, descripcionEvento;
     ImageView imagenes;
-    String user;
+    String user="";
     String horaFinal;
     String horaInicio;
     String fecha;
@@ -103,6 +104,7 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
         comentarios.setLayoutManager(l);
         comentarios.setAdapter(adapterComentarios);
         user = getIntent().getExtras().getString("user");
+        showResult(user);
         imageSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
 
             public View makeView() {
@@ -121,13 +123,19 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
         horaInicio = getIntent().getExtras().getString("inicio");
         fecha = getIntent().getExtras().getString("fecha");
         calificacionPresenter = new CalificacionPresenter(this);
-        int id = getIntent().getExtras().getInt("id");
+        final int id = getIntent().getExtras().getInt("id");
         calificacionPresenter.obtenerInfoEvento(id, horaInicio, horaFinal, fecha);
         comentar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 CalificacionM calificacionM = new CalificacionM();
                 ClienteM clienteM = new ClienteM();
+                CalificacionPKM calificacionPKM= new CalificacionPKM();
+                calificacionPKM.setIdevento(id);
+                calificacionPKM.setUsuariocliente(user);
+                clienteM.setUsuario(user);
+                calificacionM.setCliente(clienteM);
+                calificacionM.setFecha(fecha);
                 String mensaje = comentario.getText().toString();
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
                 String currentDateandTime = sdf.format(new Date());
@@ -139,14 +147,13 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
                 String minutos = currentDateandTime.substring(11, 13);
                 String time = hour + ":" + minutos;
                 String h = fechac + " " + time;
-                clienteM.setUsuario(user);
-                calificacionM.setCliente(clienteM);
-                calificacionM.setComentario(mensaje);
                 calificacionM.setHora(h);
+                calificacionM.setComentario(mensaje);
+
                 adapterComentarios.addC(calificacionM);
                 int id = getIntent().getExtras().getInt("id");
                 calificacionPresenter.crearComentario(mensaje, time, user, id, fechac, horaInicio, horaFinal, fecha);
-
+                comentario.setText("");
             }
         });
         recargar.setOnClickListener(new View.OnClickListener() {
@@ -177,7 +184,6 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
                 String minutos = currentDateandTime.substring(11, 13);
                 String time = hour + ":" + minutos;
                 int id = getIntent().getExtras().getInt("id");
-                porcentaje.setEnabled(false);
                 calificacionPresenter.crearCalificacion(pcr, time, user, id, fechac, horaInicio, horaFinal, fecha);
             }
         });
@@ -355,7 +361,7 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
     @Override
     public void mostrarComentarios(ArrayList<CalificacionM> com) {
         //comentarios.removeAllViewsInLayout();
-        showResult(com.toString());
+      //  showResult(com.toString());
         if (com.isEmpty()) {
 
         } else {

@@ -39,6 +39,7 @@ public class crearEvento4 extends AppCompatActivity implements ContractCreacionE
     final int codCarga = 10;
     Bitmap eventoFoto;
     ContractCreacionEvento.PresenterCE presentador;
+    ByteArrayOutputStream b = new ByteArrayOutputStream();
 
 
     @Override
@@ -103,7 +104,10 @@ public class crearEvento4 extends AppCompatActivity implements ContractCreacionE
        place.setCoordenadaX(Double.parseDouble(info.get(3)));
        place.setCoordenadaY(Double.parseDouble(info.get(4)));
 
-        presentador.crearEvento(info.get(0),info.get(6),info.get(7),place,info.get(1),categoriasCheck,info.get(5),getIntent().getStringExtra("nit"),readFile(eventoFoto),getIntent().getStringExtra("user"));
+
+        presentador.crearEvento(info.get(0),info.get(6),info.get(7),place,info.get(1),categoriasCheck,info.get(5),getIntent().getStringExtra("nit"),b.toByteArray(),getIntent().getStringExtra("user"));
+        Intent next=new Intent(this,CreacionEvento.class);
+        startActivity(next);
     }
 
 
@@ -131,6 +135,7 @@ public class crearEvento4 extends AppCompatActivity implements ContractCreacionE
             foto.setLayoutParams(params);
             try {
                 eventoFoto = MediaStore.Images.Media.getBitmap(this.getContentResolver(), pathh);
+                eventoFoto.compress(Bitmap.CompressFormat.JPEG, 10, b);
             } catch (IOException e) {
                 e.printStackTrace();
             }

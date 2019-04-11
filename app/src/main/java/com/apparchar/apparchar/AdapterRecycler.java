@@ -61,6 +61,7 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.MyView
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("categoria",lista.get(i));
                 intent.putExtra("user",idUser);
+                Toast.makeText(context,idUser,Toast.LENGTH_SHORT).show();
                /* intent.putExtra("id",lista.get(i).getEventoPK().getIdevento());
                 intent.putExtra("fecha",lista.get(i).getEventoPK().getFecha());
                 intent.putExtra("final",lista.get(i).getEventoPK().getHoraFinal());

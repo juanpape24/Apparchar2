@@ -41,7 +41,7 @@ public class FragmentCategoria extends Fragment implements ContractListaCategori
     private RecyclerView rv;
     private AdapterRecycler adapter;
     private ContractListaCategoria.presenterCategoria presenter;
-    private String idUser = "";
+    //private String idUser = "";
     private ArrayList<String> categoria;
     private Bottom boton1,boton2;
     View vista;
@@ -51,10 +51,13 @@ public class FragmentCategoria extends Fragment implements ContractListaCategori
     public FragmentCategoria() {
         // Required empty public constructor
     }
-    public void setIdUser(String idUser){
+   /* public void setIdUser(String idUser){
         this.idUser=idUser;
     }
-
+    public String getIdUser(){
+        return idUser;
+    }
+*/
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -121,7 +124,7 @@ public class FragmentCategoria extends Fragment implements ContractListaCategori
     public void datos(ArrayList<String> categoria) {
         rv = vista.findViewById(R.id.recycler2);
         rv.setLayoutManager(new GridLayoutManager(getContext(),2));
-        adapter = new AdapterRecycler(getActivity().getApplicationContext(), categoria, idUser);
+        adapter = new AdapterRecycler(getActivity().getApplicationContext(), categoria, Main.idUser);
         rv.setAdapter(adapter);
         this.categoria = categoria;
 

@@ -73,9 +73,9 @@ public class FragmentEventos extends Fragment implements ContractListaEvento.Vie
         fragment.setArguments(args);
         return fragment;
     }
-    public void setIdUser(String idUser){
+   /* public void setIdUser(String idUser){
         this.idUser=idUser;
-    }
+    }*/
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -92,6 +92,7 @@ public class FragmentEventos extends Fragment implements ContractListaEvento.Vie
         // Inflate the layout for this fragment
         vista= inflater.inflate(R.layout.fragment_fragment_eventos, container, false);
         event=vista.findViewById(R.id.textEvento);
+       // Toast.makeText(getActivity(),idUser,Toast.LENGTH_SHORT).show();
         return vista;
     }
     @Override
@@ -128,7 +129,7 @@ public class FragmentEventos extends Fragment implements ContractListaEvento.Vie
     public void dato(List<EventoM> lista) {
         rv = vista.findViewById(R.id.recycler);
         rv.setLayoutManager(new GridLayoutManager(getActivity(), 1));
-        adapter = new RecyclerViewAdapter(getActivity(), lista, idUser);
+        adapter = new RecyclerViewAdapter(getActivity(), lista, Main.idUser);
         rv.setAdapter(adapter);
         eventos = (ArrayList<EventoM>) lista;
 

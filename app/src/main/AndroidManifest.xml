@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.apparchar.apparchar">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -19,11 +20,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".SplashScreen"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".Main"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"></activity>
         <activity android:name=".Vista.ListaCategoria" />
 
         <meta-data
@@ -32,6 +43,17 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.my.package.name.provider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            tools:replace="android:authorities">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"
+                tools:replace="android:resource"/>
+        </provider>
 
         <activity
             android:name=".Vista.ListaEvento"
@@ -52,10 +74,6 @@
         <activity
             android:name=".Vista.LoginActivity"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".Vista.TipoLogin"
@@ -63,12 +81,15 @@
         <activity
             android:name=".MapActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".RealTimeActivity" />
-        <activity android:name=".Vista.crearEvento1">
-        </activity>
-        <activity android:name=".Vista.crearEvento2"/>
-        <activity android:name=".Vista.crearEvento3"/>
-        <activity android:name=".Vista.crearEvento4"/>
+        <!--<activity android:name=".RealTimeActivity" />-->
+        <activity android:name=".Vista.crearEvento1"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".Vista.crearEvento2"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Vista.crearEvento3"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Vista.crearEvento4"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

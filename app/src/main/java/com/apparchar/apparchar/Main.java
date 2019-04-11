@@ -1,5 +1,6 @@
 package com.apparchar.apparchar;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -19,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Main extends AppCompatActivity implements FragmentCategoria.OnFragmentInteractionListener, FragmentEventos.OnFragmentInteractionListener, FragmentRealTime.OnFragmentInteractionListener {
 
@@ -36,7 +38,7 @@ public class Main extends AppCompatActivity implements FragmentCategoria.OnFragm
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-    private String idUser="";
+    public static String idUser="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +53,8 @@ public class Main extends AppCompatActivity implements FragmentCategoria.OnFragm
         idUser=getIntent().getExtras().getString("user");
         FragmentCategoria fragmentCategoria=new FragmentCategoria();
         FragmentEventos fragmentEventos=new FragmentEventos();
-        FragmentRealTime fragmentRealTime=new FragmentRealTime();
-        fragmentCategoria.setIdUser(idUser);
-        fragmentEventos.setIdUser(idUser);
+        //fragmentCategoria.setIdUser(idUser);
+        //fragmentEventos.setIdUser(idUser);
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -101,6 +102,13 @@ public class Main extends AppCompatActivity implements FragmentCategoria.OnFragm
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     /**

@@ -128,6 +128,13 @@ public class FragmentRealTime extends Fragment implements OnMapReadyCallback, On
         titulo.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),"Fonts/Abel_Regular.ttf"));
         boton = (Button) vista.findViewById(R.id.Parchame);
         boton.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),"Fonts/Abel_Regular.ttf"));
+        // Inflate the layout for this fragment
+        return vista;
+    }
+    @Override
+    public void onResume(){
+
+        super.onResume();
         getLocationPermission();
         params=new RequestParams();
         lista = new ArrayList<>();
@@ -137,8 +144,6 @@ public class FragmentRealTime extends Fragment implements OnMapReadyCallback, On
         String nameServlet = "SERVEvento";
         MyLoopjTask loopjTask = new MyLoopjTask(params, nameServlet,getActivity(),this);
         loopjTask.executeLoopjCall();
-        // Inflate the layout for this fragment
-        return vista;
     }
     private void initMap() {
         SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager()
@@ -345,7 +350,7 @@ public class FragmentRealTime extends Fragment implements OnMapReadyCallback, On
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
-        Toast.makeText(getActivity(), "Carga Exitosa", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), "Carga Exitosa", Toast.LENGTH_SHORT).show();
         //moveCamera(new LatLng(4.6097102,-74.081749),15f);
         mMap = googleMap;
 

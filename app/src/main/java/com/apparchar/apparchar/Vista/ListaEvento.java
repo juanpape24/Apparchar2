@@ -18,7 +18,6 @@ import com.apparchar.apparchar.Modelo.CategoriaM;
 import com.apparchar.apparchar.Modelo.EventoM;
 import com.apparchar.apparchar.Presentador.ListaEventoPresenter;
 import com.apparchar.apparchar.R;
-import com.apparchar.apparchar.RealTimeActivity;
 import com.apparchar.apparchar.RecyclerViewAdapter;
 import com.apparchar.apparchar.Utils;
 import com.google.android.gms.common.ConnectionResult;
@@ -40,27 +39,6 @@ public class ListaEvento extends AppCompatActivity implements ContractListaEvent
     private ArrayList<EventoM> eventos;
 
     //Widgets
-
-    public boolean servicesOk() {
-        Log.d(TAG, "SERVICIOS OK");
-
-        int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
-
-        if (available == ConnectionResult.SUCCESS) {
-            //Todo esta bien entonces conecta
-            Log.d(TAG, "CONEXION EXITOSA CON PLAY SERVICES");
-            return true;
-        } else if (GoogleApiAvailability.getInstance().isUserResolvableError(available)) {
-            // Hay un error pero se puede arreglar
-            Log.d(TAG, "HAY ERRORES PERO SE PUEDEN SOLUCIONAR");
-            Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(this, available, ERROR_DIALOG_REQUEST);
-            dialog.show();
-        } else {
-            Toast.makeText(this, "NO SE PUEDE CONECTAR CON PLAY SERVICES", Toast.LENGTH_SHORT);
-        }
-        return false;
-
-    }
 
 
     @Override
@@ -89,11 +67,15 @@ public class ListaEvento extends AppCompatActivity implements ContractListaEvent
                 }
             }
         }
-        rv = findViewById(R.id.recycler);
-        rv.setLayoutManager(new GridLayoutManager(this, 1));
-        adapter = new RecyclerViewAdapter(getApplicationContext(), listica, idUser);
-        rv.setAdapter(adapter);
-        eventos = (ArrayList<EventoM>) listica;
+        if(listica.isEmpty()){
+            showResult("No hay eventos disponibles para esta categoria");
+        }
+            rv = findViewById(R.id.recycler);
+            rv.setLayoutManager(new GridLayoutManager(this, 1));
+            adapter = new RecyclerViewAdapter(getApplicationContext(), listica, idUser);
+            //showResult(idUser);
+            rv.setAdapter(adapter);
+            eventos = (ArrayList<EventoM>) listica;
 
     }
 
@@ -106,18 +88,6 @@ public class ListaEvento extends AppCompatActivity implements ContractListaEvent
         presenter = new ListaEventoPresenter(this,getApplicationContext());
     }
 
-    public void mapa(View view) {
-
-        if (servicesOk()) {
-            Intent intent = new Intent(this, RealTimeActivity.class);
-            ArrayList<String> dirrecion = new ArrayList<>();
-            for (int i = 0; i < eventos.size(); i++) {
-                dirrecion.add(eventos.get(i).getDireccion().getDireccion() + " Bogotá");
-            }
-            intent.putStringArrayListExtra("direcciones", dirrecion);
-            startActivity(intent);
-        }
-    }
 
     public void cSesion(View view) {
         Intent intent = new Intent(this, LoginActivity.class);

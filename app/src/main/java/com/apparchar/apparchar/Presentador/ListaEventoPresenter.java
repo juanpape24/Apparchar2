@@ -29,7 +29,7 @@ public class ListaEventoPresenter implements ContractListaEvento.EventoPresenter
 
     public ListaEventoPresenter(ContractListaEvento.ViewEvento vista, Context context) {
         this.vista = vista;
-        this.context=context;
+        this.context = context;
         params = new RequestParams();
         params.put("listar", "gg");
         String nameServlet = "SERVEvento";
@@ -51,9 +51,7 @@ public class ListaEventoPresenter implements ContractListaEvento.EventoPresenter
         for (int i = 0; i < arrayList.size(); i++) {
             lista.add(arrayList.get(i));
         }
-        if(lista.isEmpty()){
-            vista.showResult("No hay eventos disponibles para esta categoria");
-        }else
         vista.dato(lista);
+
     }
 }

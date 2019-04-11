@@ -1,4 +1,4 @@
-package com.apparchar.apparchar;
+/*package com.apparchar.apparchar;
 
 import android.Manifest;
 import android.content.Context;
@@ -135,9 +135,9 @@ public class RealTimeActivity extends AppCompatActivity implements OnMapReadyCal
                             moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), ZOOM);
                             Toast.makeText(RealTimeActivity.this, "Su ubicacion", Toast.LENGTH_SHORT).show();
 
-                            /*
+
                             Conexion con el server
-                             */
+
 
                         } else {
                             Log.d(TAG, "onComplete: current location is null");
@@ -155,9 +155,9 @@ public class RealTimeActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
 
-    /*
-    Metodo utilizado para controlar y mover la camara dentro del mapa
-     */
+
+    //Metodo utilizado para controlar y mover la camara dentro del mapa
+
     private void moveCamera(LatLng latLng, float zoom) {
         Log.d(TAG, "Moviendo la camara");
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
@@ -165,9 +165,9 @@ public class RealTimeActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
 
-    /*
-   Metodo utilizado para pedir permisos requeridos por el modulo
-    */
+
+   //Metodo utilizado para pedir permisos requeridos por el modulo
+
     private void getLocationPermission() {
 
         String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
@@ -219,9 +219,9 @@ public class RealTimeActivity extends AppCompatActivity implements OnMapReadyCal
 
     private void Parchame(){
 
-        /*
-           Aqui va la conexion al server
-         */
+
+           //Aqui va la conexion al server
+
         boton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -350,4 +350,4 @@ public class RealTimeActivity extends AppCompatActivity implements OnMapReadyCal
             lista.add(arrayList.get(i));
         }
     }
-}
+}*/

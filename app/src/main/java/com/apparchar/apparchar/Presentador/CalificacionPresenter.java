@@ -57,6 +57,7 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC, O
         calificacionPKM = new CalificacionPKM();
         eventoPKM = new EventoPKM();
         eventoM = new EventoM();
+        cliente= new ClienteM();
         calificacion.setHora(hora);
         calificacion.setFecha(fecha);
         calificacionPKM.setUsuariocliente(user);
@@ -69,6 +70,8 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC, O
         calificacion.setEvento(eventoM);
         calificacion.setCalificacionPK(calificacionPKM);
         calificacion.setComentario(comentario);
+        cliente.setUsuario(user);
+        calificacion.setCliente(cliente);
         params = new RequestParams();
         Gson g = new Gson();
         String alv = g.toJson(calificacion);
