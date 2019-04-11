@@ -67,10 +67,8 @@ public class ListaEvento extends AppCompatActivity implements ContractListaEvent
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_evento);
-        getSupportActionBar().hide();
         idUser = getIntent().getExtras().getString("user");
         cat = getIntent().getExtras().getString("categoria");
-        presenter = new ListaEventoPresenter(this,getApplicationContext());
 
     }
 
