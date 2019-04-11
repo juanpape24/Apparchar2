@@ -56,6 +56,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             myViewHolder.image.setImageBitmap(bmp);
         }
         myViewHolder.titulo.setText(lista.get(i).getNombre());
+        myViewHolder.descripcion.setText(lista.get(i).getDescripcion()+"\n\nDireccion: "+lista.get(i).getDireccion().getDireccion()+"\nFecha: "+lista.get(i).getEventoPK().getFecha());
         myViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,15 +82,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView titulo;
+        TextView titulo,descripcion;
         ImageView image;
         CardView cardView;
+
 
         public MyViewHolder(View itemView) {
             super(itemView);
             titulo = itemView.findViewById(R.id.texto_marimondazo);
             image = itemView.findViewById(R.id.img_marimondazo);
             cardView = itemView.findViewById(R.id.cardv);
+            descripcion=itemView.findViewById(R.id.descripcione);
         }
     }
 }
