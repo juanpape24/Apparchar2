@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/MainR"
+    android:background="@color/Blancox"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_alignParentTop="true"
+        android:id="@+id/topBar"
+        android:background="@color/Cerulean"
+        android:layout_height="40dp"
+
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Apparchar"
+            android:textColor="@color/Blancox"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            />
+
+    </RelativeLayout>
+
+    <ScrollView
+
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/topBar"
+        android:layout_height="match_parent">
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Solo unos detalles mas "
+        android:textColor="@color/Tangarine"
+        android:layout_below="@+id/topBar"
+        android:textSize="50dp"
+        android:id="@+id/t3"
+        android:layout_margin="20dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/t3"
+        android:id="@+id/tx5"
+        android:text="¿Cuando se hará ?"
+        android:textSize="15dp"
+        android:layout_margin="20dp"
+        android:textColor="@color/Cerulean"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_marginHorizontal="20dp"
+        android:id="@+id/e4"
+        android:onClick="Fecha1"
+        android:hint="DD/MM/AA"
+        android:layout_below="@+id/tx5"
+        android:background="@drawable/ggxd"
+
+        />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/e4"
+        android:id="@+id/tx6"
+        android:text="¿Cual es la hora de inicio ?"
+        android:textSize="15dp"
+        android:layout_margin="20dp"
+        android:textColor="@color/Cerulean"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:padding="10dp"
+        android:id="@+id/e5"
+        android:hint="HH:MM:SS"
+        android:onClick="Hora1"
+        android:layout_below="@+id/tx6"
+        android:background="@drawable/ggxd"
+
+        />
+
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/e5"
+        android:id="@+id/tx7"
+        android:text="¿Cual es la hora de finalizacion ?"
+        android:textSize="15dp"
+        android:layout_margin="20dp"
+        android:textColor="@color/Cerulean"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:padding="10dp"
+        android:id="@+id/e6"
+        android:hint="HH:MM:SS"
+        android:onClick="Hora2"
+        android:layout_below="@+id/tx7"
+        android:background="@drawable/ggxd"
+
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:text="siguiente"
+        android:id="@+id/next3"
+        android:padding="20dp"
+        android:onClick="next3"
+        android:gravity="bottom"
+        android:layout_gravity="end"
+        android:layout_marginTop="50dp"
+        android:textColor="#000"
+        android:background="@color/Amarello"
+
+        />
+
+    </LinearLayout>
+
+    </ScrollView>
+
+
+</RelativeLayout>

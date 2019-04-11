@@ -25,13 +25,15 @@ public class ListaEventoPresenter implements ContractListaEvento.EventoPresenter
 
     List<EventoM> lista = new ArrayList<>();
     RequestParams params;
+    Context context;
 
-    public ListaEventoPresenter(ContractListaEvento.ViewEvento vista) {
+    public ListaEventoPresenter(ContractListaEvento.ViewEvento vista, Context context) {
         this.vista = vista;
+        this.context=context;
         params = new RequestParams();
         params.put("listar", "gg");
         String nameServlet = "SERVEvento";
-        MyLoopjTask loopjTask = new MyLoopjTask(params, nameServlet, (Context) vista, this);
+        MyLoopjTask loopjTask = new MyLoopjTask(params, nameServlet, context, this);
         loopjTask.executeLoopjCall();
     }
 
@@ -49,6 +51,9 @@ public class ListaEventoPresenter implements ContractListaEvento.EventoPresenter
         for (int i = 0; i < arrayList.size(); i++) {
             lista.add(arrayList.get(i));
         }
+        if(lista.isEmpty()){
+            vista.showResult("No hay eventos disponibles para esta categoria");
+        }else
         vista.dato(lista);
     }
 }

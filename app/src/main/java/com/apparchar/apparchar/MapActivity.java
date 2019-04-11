@@ -2,6 +2,7 @@ package com.apparchar.apparchar;
 
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -19,6 +20,7 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.apparchar.apparchar.Vista.crearEvento2;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -73,7 +75,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         textobusqueda = (AutoCompleteTextView) findViewById(R.id.buscart);
         boton = (ImageButton) findViewById(R.id.BtnBuscar);
         getLocationPermission();
-        AutoComplete();
     }
 
 
@@ -93,37 +94,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     Metodo utilizado para llevar el control de las busquedas de lugares sobre el mapa
      */
 
-    private void AutoComplete(){
-
-        /* if (!Places.isInitialized()) {
-            Places.initialize(getApplicationContext(), "AIzaSyBNo_-6COlUvdhkCPXFnVKCgVo_AJYdPUQ");
-        }
-
-        AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
-                getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
-
-        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.NAME));
-        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-            @Override
-            public void onPlaceSelected(Place place) {
-                // TODO: Get info about the selected place.
-                Log.i(TAG, "Place: " + place.getName() + ", " + place.getId());
-
-                Toast.makeText(MapActivity.this,"Place: " + place.getName() + ", " + place.getId(),Toast.LENGTH_LONG);
-            }
-
-            @Override
-            public void onError(Status status) {
-                // TODO: Handle the error.
-                Log.i(TAG, "An error occurred: " + status);
-            }
-        });
-
-
-         */
-
-    }
-
 
     private void init() {
 
@@ -132,7 +102,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 geolocalizar(textobusqueda.getText().toString());
-
             }
 
         });
@@ -347,7 +316,18 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                 @Override
                 public void onInfoWindowClick(Marker marker) {
-                    Toast.makeText(MapActivity.this, "Coordenadas :" + marker.getPosition().latitude + "," + marker.getPosition().longitude, Toast.LENGTH_LONG).show();
+                   // Toast.makeText(MapActivity.this, "Coordenadas :" + marker.getPosition().latitude + "," + marker.getPosition().longitude, Toast.LENGTH_LONG).show();
+                    ArrayList<String>info = new ArrayList<>();
+                    info=getIntent().getStringArrayListExtra("info2");
+                    info.add(coordinatesToAddres(marker.getPosition()));
+                    info.add(String.valueOf(marker.getPosition().latitude));
+                    info.add(String.valueOf(marker.getPosition().longitude));
+                    //Retorna a la vista anterior
+                    Intent intent = new Intent(MapActivity.this, crearEvento2.class);
+                    intent.putStringArrayListExtra("info1",info);
+                    intent.putExtra("user",getIntent().getStringExtra("user"));
+                    intent.putExtra("nit",getIntent().getStringExtra("nit"));
+                    startActivity(intent);
                 }
 
             });

@@ -19,8 +19,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Vista.ListaCategoria"></activity>
-        <activity android:name=".lista_categoria" />
+        <activity
+            android:name=".Main"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity android:name=".Vista.ListaCategoria" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -50,7 +54,6 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -61,6 +64,11 @@
             android:name=".MapActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".RealTimeActivity" />
+        <activity android:name=".Vista.crearEvento1">
+        </activity>
+        <activity android:name=".Vista.crearEvento2"/>
+        <activity android:name=".Vista.crearEvento3"/>
+        <activity android:name=".Vista.crearEvento4"/>
     </application>
 
 </manifest>

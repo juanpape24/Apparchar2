@@ -1,25 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="8dp"
-    tools:context=".Vista.ListaCategoria">
+    tools:context=".FragmentEventos">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:text="Lista de categorias"
-        android:textAlignment="center"
-        android:textColor="@color/colorAccent"
-        android:textStyle="bold|italic" />
+    <!-- TODO: Update blank fragment layout -->
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler2"
+        android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
@@ -27,7 +16,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="68dp">
 
@@ -36,7 +25,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="150dp"
-        android:layout_below="@+id/recycler2"
+        android:layout_below="@+id/recycler"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
@@ -47,24 +36,24 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/refrescarevento"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:onClick="refresh"
+            android:onClick="actualizarE"
             android:text="Actualizar" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/cerrarevento"
             style="@android:style/Widget.Material.Light.Button.Toggle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:backgroundTint="@color/quantum_googblue600"
-            android:onClick="finished"
+            android:onClick="cSesionE"
             android:text="Cerrar sesión" />
     </LinearLayout>
 

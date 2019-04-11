@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FragmentRealTime"
+    >
+
+    <!-- TODO: Update blank fragment layout -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/Cerulean"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/WitheBar"
+        android:layout_margin="10dp"
+        android:layout_height="50dp">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="EVENTOS EN TIEMPO REAL"
+            android:textSize="20dp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:id="@+id/RealTimeTittle"
+            android:textColor="@color/Blancox"
+            android:layout_centerHorizontal="true"
+            android:layout_height="match_parent" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/ContentMap"
+        android:layout_centerVertical="true"
+        android:layout_below="@+id/WitheBar"
+        android:layout_height="500dp">
+
+
+
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/map2"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            tools:context=".RealTimeActivity"
+
+            />
+
+    </RelativeLayout>
+
+    <Button
+        android:layout_width="90dp"
+        android:layout_height="70dp"
+        android:background="@color/Amarello"
+        android:textColor="#000"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:padding="1dp"
+        android:text="PARCHAME!"
+        android:textSize="12dp"
+        android:layout_marginBottom="20dp"
+        android:id="@+id/Parchame"
+        />
+
+</RelativeLayout>
