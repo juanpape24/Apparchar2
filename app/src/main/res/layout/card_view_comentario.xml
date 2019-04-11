@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
-    cardview:cardBackgroundColor="@color/colorPrimaryDark"
+    cardview:cardBackgroundColor="@color/common_google_signin_btn_text_dark_default"
     cardview:cardCornerRadius="18sp">
 
     <LinearLayout

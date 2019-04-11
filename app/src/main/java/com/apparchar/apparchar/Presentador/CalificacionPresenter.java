@@ -175,12 +175,11 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC, O
         if (!comentarios.isEmpty()) {
             vista.mostrarComentarios(comentarios);
             comentarios= new ArrayList<>();
-
-        }
+        } else vista.showResult("Aún no hay comentarios");
         if (!fotos.isEmpty()) {
             vista.mostrarFotos(fotos);
             fotos = new ArrayList<>();
-        }
+        } else vista.showResult("Aún no hay fotos");
     }
 
     @Override
@@ -189,7 +188,6 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC, O
         JsonObject jo = (JsonObject) jsonParser.parse(results);
         if (opc == 1) {
             JsonElement lista = jo.get("respuesta");
-            vista.showResult(results.toString());
             String listaR = lista.getAsString();
             Type listType = new TypeToken<ArrayList<CalificacionM>>() {
             }.getType();

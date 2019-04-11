@@ -392,7 +392,7 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
         direccionEvento.setText(evento.getDireccion().getDireccion());
         descripcionEvento.setText(evento.getDescripcion());
         fotoEvento.setImageBitmap(getImage(evento.getFoto()));
-        TableRow.LayoutParams params1 = new TableRow.LayoutParams(400, 400);
+        TableRow.LayoutParams params1 = new TableRow.LayoutParams(300, 300);
         fotoEvento.setLayoutParams(params1);
 
     }
