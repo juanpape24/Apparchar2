@@ -20,7 +20,7 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
-public class Main extends AppCompatActivity implements FragmentCategoria.OnFragmentInteractionListener, FragmentEventos.OnFragmentInteractionListener {
+public class Main extends AppCompatActivity implements FragmentCategoria.OnFragmentInteractionListener, FragmentEventos.OnFragmentInteractionListener, FragmentRealTime.OnFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -51,6 +51,7 @@ public class Main extends AppCompatActivity implements FragmentCategoria.OnFragm
         idUser=getIntent().getExtras().getString("user");
         FragmentCategoria fragmentCategoria=new FragmentCategoria();
         FragmentEventos fragmentEventos=new FragmentEventos();
+        FragmentRealTime fragmentRealTime=new FragmentRealTime();
         fragmentCategoria.setIdUser(idUser);
         fragmentEventos.setIdUser(idUser);
 
@@ -126,6 +127,8 @@ public class Main extends AppCompatActivity implements FragmentCategoria.OnFragm
                 break;
                 case 2:fragment=new FragmentEventos();
                 break;
+                case 3:fragment=new FragmentRealTime();
+                break;
             }
             return fragment;
         }
@@ -160,7 +163,7 @@ public class Main extends AppCompatActivity implements FragmentCategoria.OnFragm
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 2;
+            return 3;
         }
         @Override
         public CharSequence getPageTitle(int position){

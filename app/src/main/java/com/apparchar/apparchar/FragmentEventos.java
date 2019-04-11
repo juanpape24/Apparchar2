@@ -138,10 +138,10 @@ public class FragmentEventos extends Fragment implements ContractListaEvento.Vie
     public void showResult(String mensaje) {
         Toast.makeText(getActivity(), mensaje, Toast.LENGTH_LONG).show();
     }
-    public void actualizar(View view){
+    public void actualizarE(View view){
         presenter = new ListaEventoPresenter(this,getActivity());
     }
-    public void cSesion(View view) {
+    public void cSesionE(View view) {
         Intent intent = new Intent(getActivity(), LoginActivity.class);
         startActivity(intent);
     }

@@ -86,7 +86,7 @@ public class FragmentCategoria extends Fragment implements ContractListaCategori
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         vista=inflater.inflate(R.layout.fragment_fragment_categoria, container, false);
-//        boton1=vista.findViewById(R.id.button);// Inflate the layout for this fragment
+    // Inflate the layout for this fragment
         return vista;
     }
     @Override
@@ -99,13 +99,6 @@ public class FragmentCategoria extends Fragment implements ContractListaCategori
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
-    }
-    public void refresh(View view){
-        presenter=new CategoriaPresenter(this,getActivity());
-    }
-    public void finished(View view){
-        Intent intent=new Intent(getContext(), LoginActivity.class);
-        getActivity().startActivity(intent);
     }
     @Override
     public void onAttach(Context context) {
@@ -152,5 +145,12 @@ public class FragmentCategoria extends Fragment implements ContractListaCategori
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+    public void refreshC(View view){
+        presenter=new CategoriaPresenter(this,getActivity());
+    }
+    public void finishedC(View view){
+        Intent intent=new Intent(getActivity(), LoginActivity.class);
+        getActivity().startActivity(intent);
     }
 }

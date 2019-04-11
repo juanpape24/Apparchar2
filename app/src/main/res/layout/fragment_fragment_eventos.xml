@@ -36,24 +36,24 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/refrescar"
+            android:id="@+id/refrescarevento"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:onClick="actualizar"
+            android:onClick="actualizarE"
             android:text="Actualizar" />
 
         <Button
-            android:id="@+id/cerrar"
+            android:id="@+id/cerrarevento"
             style="@android:style/Widget.Material.Light.Button.Toggle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:backgroundTint="@color/quantum_googblue600"
-            android:onClick="cSesion"
+            android:onClick="cSesionE"
             android:text="Cerrar sesión" />
     </LinearLayout>
 
