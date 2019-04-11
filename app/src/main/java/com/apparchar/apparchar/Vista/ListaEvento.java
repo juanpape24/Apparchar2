@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.apparchar.apparchar.Contract.ContractListaEvento;
+import com.apparchar.apparchar.Modelo.CategoriaM;
 import com.apparchar.apparchar.Modelo.EventoM;
 import com.apparchar.apparchar.Presentador.ListaEventoPresenter;
 import com.apparchar.apparchar.R;
@@ -23,6 +24,7 @@ import com.apparchar.apparchar.Utils;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +32,7 @@ public class ListaEvento extends AppCompatActivity implements ContractListaEvent
     private RecyclerView rv;
     private RecyclerViewAdapter adapter;
     private ContractListaEvento.EventoPresenter presenter;
-    private String idUser="";
+    private String idUser="",cat="";
     private TextView event;
     private ArrayList<EventoM> eventos;
     GridLayoutManager gridLayoutManager;
@@ -68,6 +70,7 @@ public class ListaEvento extends AppCompatActivity implements ContractListaEvent
         event=findViewById(R.id.event);
         getSupportActionBar().hide();
         idUser=getIntent().getExtras().getString("user");
+        cat=getIntent().getExtras().getString("categoria");
         presenter=new ListaEventoPresenter(this);
 
     }
@@ -75,9 +78,13 @@ public class ListaEvento extends AppCompatActivity implements ContractListaEvent
 
     @Override
     public void dato(List<EventoM> lista) {
-        Log.i("info","sasass");
+        ArrayList<CategoriaM> listica=new ArrayList<>();
+        //for (int i=0;i<lista.size();i++){
+        //showResult(l);
+        //}
+        Log.i("info",lista.toString());
         rv= findViewById(R.id.recycler);
-        rv.setLayoutManager(new GridLayoutManager(this,2));
+        rv.setLayoutManager(new GridLayoutManager(this,1));
         adapter=new RecyclerViewAdapter(getApplicationContext(),lista,idUser);
         rv.setAdapter(adapter);
         eventos= (ArrayList<EventoM>) lista;
@@ -87,12 +94,6 @@ public class ListaEvento extends AppCompatActivity implements ContractListaEvent
     @Override
     public void showResult(String mensaje) {
         Toast.makeText(this,mensaje,Toast.LENGTH_LONG).show();
-    }
-    public void onBackPressed() {
-        Intent intent=new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_HOME);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
     }
     public void actualizar(View view){
         presenter=new ListaEventoPresenter(this);
