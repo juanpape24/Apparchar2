@@ -7,6 +7,7 @@ import com.apparchar.apparchar.Conexion.OnLoopjCompleted;
 import com.apparchar.apparchar.Contract.ContractCalificacion;
 import com.apparchar.apparchar.Modelo.CalificacionM;
 import com.apparchar.apparchar.Modelo.CalificacionPKM;
+import com.apparchar.apparchar.Modelo.ClienteM;
 import com.apparchar.apparchar.Modelo.EventoM;
 import com.apparchar.apparchar.Modelo.EventoPKM;
 import com.google.gson.Gson;
@@ -18,20 +19,22 @@ import com.loopj.android.http.RequestParams;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class CalificacionPresenter implements ContractCalificacion.PresenterC, OnLoopjCompleted {
     ContractCalificacion.ViewC vista;
     CalificacionM calificacion;
     RequestParams params;
-    ArrayList<String> comentarios;
     ArrayList<Double> porcentaje;
     ArrayList<byte[]> fotos;
-    ArrayList<CalificacionM> calificaciones;
+    ArrayList<CalificacionM> comentarios;
     String infoEvento = "";
     int opc = 0;
-    CalificacionPKM calificacionPKM;
     EventoPKM eventoPKM;
     EventoM eventoM;
+    ClienteM cliente;
+    CalificacionPKM calificacionPKM;
+    ArrayList<EventoM> eventos;
 
 
     public CalificacionPresenter(ContractCalificacion.ViewC vista) {
@@ -40,9 +43,11 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC, O
         comentarios = new ArrayList<>();
         porcentaje = new ArrayList<>();
         fotos = new ArrayList<>();
-        calificacionPKM = new CalificacionPKM();
         eventoM = new EventoM();
         eventoPKM = new EventoPKM();
+        cliente= new ClienteM();
+        eventos = new ArrayList<>() ;
+        calificacionPKM= new CalificacionPKM();
     }
 
 
@@ -104,6 +109,7 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC, O
 
     @Override
     public void crearMultimedia(byte[] multimedia, String hora, String user, int idEvento, String fecha, String horaI, String horaF, String fechaE) {
+
         calificacion = new CalificacionM();
         calificacionPKM = new CalificacionPKM();
         eventoPKM = new EventoPKM();
@@ -131,26 +137,36 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC, O
     }
 
     @Override
-    public String obtenerInfoEvento() {
+    public String obtenerInfoEvento(int id,String horaI, String horaF, String fecha) {
         params = new RequestParams();
         Gson g = new Gson();
-        params.put("listar", vista.getIdEvento());
-        String nameServlet = "SERVCategoria";
+        EventoPKM e=new EventoPKM();
+        e.setIdevento(id);
+        e.setHoraInicio(horaI);
+        e.setHoraFinal(horaF);
+        e.setFecha(fecha);
+        String dato= g.toJson(e);
+        opc = 3;
+        params.put("consultar", dato);
+        String nameServlet = "SERVEvento";
         MyLoopjTask loopjTask = new MyLoopjTask(params, nameServlet, (Context) vista, this);
         loopjTask.executeLoopjCall();
-        opc = 3;
+
+
+
+
         return infoEvento;
     }
 
     @Override
     public void actualizar(int idEvento) {
+        opc=1;
         params = new RequestParams();
         Gson g = new Gson();
         params.put("listar", String.valueOf(idEvento));
         String nameServlet = "SERVCalificacion";
         MyLoopjTask loopjTask = new MyLoopjTask(params, nameServlet, (Context) vista, this);
         loopjTask.executeLoopjCall();
-        opc = 1;
 
         if (!porcentaje.isEmpty()) {
             vista.mostrarCalificacion(porcentaje);
@@ -158,7 +174,8 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC, O
         }
         if (!comentarios.isEmpty()) {
             vista.mostrarComentarios(comentarios);
-            comentarios = new ArrayList<>();
+            comentarios= new ArrayList<>();
+
         }
         if (!fotos.isEmpty()) {
             vista.mostrarFotos(fotos);
@@ -172,21 +189,20 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC, O
         JsonObject jo = (JsonObject) jsonParser.parse(results);
         if (opc == 1) {
             JsonElement lista = jo.get("respuesta");
-
-
+            vista.showResult(results.toString());
             String listaR = lista.getAsString();
             Type listType = new TypeToken<ArrayList<CalificacionM>>() {
             }.getType();
             Gson a = new Gson();
-            calificaciones = a.fromJson(listaR, listType);
-            for (int i = 0; i < calificaciones.size(); i++) {
-                if (calificaciones.get(i).getComentario() != null)
-                    comentarios.add(calificaciones.get(i).getComentario());
-                if (calificaciones.get(i).getPorcentaje() != null)
-                    porcentaje.add(calificaciones.get(i).getPorcentaje());
+            ArrayList<CalificacionM> arrayList = a.fromJson(listaR, listType);
+            for (int i = 0; i < arrayList.size(); i++) {
+                if (arrayList.get(i).getComentario() != null){
+                    comentarios.add(arrayList.get(i));}
+                if (arrayList.get(i).getPorcentaje() != null)
+                    porcentaje.add(arrayList.get(i).getPorcentaje());
 
-                if (calificaciones.get(i).getMultimedia() != null)
-                    fotos.add(calificaciones.get(i).getMultimedia());
+                if (arrayList.get(i).getMultimedia() != null)
+                    fotos.add(arrayList.get(i).getMultimedia());
             }
 
 
@@ -199,8 +215,12 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC, O
                 vista.showResult("No se realizó correctamente");
             }
         } else if (opc == 3) {
-            JsonElement c = jo.get("evento");
+            infoEvento="";
+            Gson a = new Gson();
+            JsonElement c = jo.get("respuesta");
             infoEvento = c.getAsString();
+            EventoM event = a.fromJson(infoEvento, EventoM.class);
+            vista.mostrarEvento(event);
 
         }
 

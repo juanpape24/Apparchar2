@@ -12,7 +12,7 @@
     <string name="cliente">Cliente</string>
     <string name="empresa">Empresa</string>
     <string name="ib">Imagen</string>
-    <string name="nombre">Nombre</string>
+    <string name="nombre">Nombre: </string>
     <string name="nombre1">Ingrese su nombre</string>
     <string name="apellido">Apellido</string>
     <string name="apellido1">Ingrese su apellido</string>
@@ -34,13 +34,13 @@
     <string name="address1">Ingrese aquí su dirección</string>
     <string name="signup">¿Eres nuevo? Registrate</string>
     <string name="image">Imagen</string>
-    <string name="horaI">Hora de Inicio</string>
-    <string name="horaF">Hora final</string>
-    <string name="direccion">Direccion</string>
-    <string name="descripcion">Descripción</string>
+    <string name="horaI">Hora de Inicio: </string>
+    <string name="horaF">Hora final: </string>
+    <string name="direccion">Direccion: </string>
+    <string name="descripcion">Descripción: </string>
     <string name="idEvento">Id Evento</string>
-    <string name="categorias">Categorias</string>
-    <string name="fecha">Fecha</string>
+    <string name="categorias">Categorias: </string>
+    <string name="fecha">Fecha: </string>
     <string name="Google_API_KEY">AIzaSyBR0X9E8C-9Cbxpxih5tnShis5lkiWbjGg</string>
 
 </resources>
