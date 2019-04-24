@@ -38,16 +38,13 @@ public class LoginPresenter implements ContractLogin.PresenterL, OnLoopjComplete
     }
 
     @Override
-    public void validar(String usuario, String contrasenia, String type) {
+    public void validar(String usuario, String contrasenia) {
         String resultado = "";
         if (usuario.equals("") || contrasenia.equals(""))
             vista.showResult("Llene todos los campos");
-        else if (type.equals(""))
-            vista.showResult("Seleccione si es cliente o empresa");
         else {
             params = new RequestParams();
             Gson g = new Gson();
-            if (type.equals("Cliente")) {
                 cliente.setUsuario(usuario);
                 cliente.setContrasenia(contrasenia);
                 usuarioF = usuario;
@@ -57,18 +54,7 @@ public class LoginPresenter implements ContractLogin.PresenterL, OnLoopjComplete
                 MyLoopjTask loopjTask = new MyLoopjTask(params, nameServlet, (Context) vista, this);
                 loopjTask.executeLoopjCall();
 
-            } else {
-                empresa.setContrasenia(contrasenia);
-                empresaPKM.setUsuario(usuario);
-                empresa.setEmpresaPK(empresaPKM);
-                usuarioF=usuario;
-                String envio = g.toJson(empresa);
-                params.put("login", envio);
 
-                String nameServlet = "SERVEmpresa";
-                MyLoopjTask loopjTask = new MyLoopjTask(params, nameServlet, (Context) vista, this);
-                loopjTask.executeLoopjCall();
-            }
         }
 
     }
@@ -77,9 +63,6 @@ public class LoginPresenter implements ContractLogin.PresenterL, OnLoopjComplete
     public void taskCompleted(String results) {
         JsonParser jsonParser = new JsonParser();
         JsonObject jo = (JsonObject) jsonParser.parse(results);
-        JsonElement tipoE = jo.get("tipo");
-        String tipo = tipoE.getAsString();
-        if (tipo.equals("cliente")) {
             JsonElement count = jo.get("count");
             int countR = count.getAsInt();
             if (countR == 1) {
@@ -87,18 +70,6 @@ public class LoginPresenter implements ContractLogin.PresenterL, OnLoopjComplete
             } else {
                 vista.showResult("Usuario y/o contraseña incorrectos");
             }
-        } else {
-            JsonElement nit = jo.get("nit");
-            JsonElement count = jo.get("count");
-            String nitR = nit.getAsString();
-            int countR = count.getAsInt();
-            if (countR == 1) {
-                vista.showResult("Correcto");
-               vista.crearEvento(nitR,usuarioF);
-            } else {
-                vista.showResult("Usuario y/o contraseña incorrectos");
-            }
-        }
     }
 }
 

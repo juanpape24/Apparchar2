@@ -7,145 +7,101 @@
     tools:context=".Vista.LoginActivity">
 
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Apparchar"
-        />
-
-
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:id="@+id/relativeLayout"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/ver1"
-                android:layout_width="wrap_content"
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="31dp"
-                android:layout_marginTop="66dp"
+                android:text="Apparchar"
+                android:textAlignment="center"
+                android:layout_marginBottom="20dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textColor="#2196F3"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/ver"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:text="@string/d1"
                 android:textAllCaps="false"
                 android:textStyle="italic" />
 
             <EditText
-                android:id="@+id/texto1"
-                android:layout_width="338dp"
+                android:id="@+id/texto"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/ver1"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="85dp"
-                android:layout_marginEnd="25dp"
-                android:ems="10"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
                 android:hint="@string/texto1"
                 android:inputType="textPersonName" />
 
             <TextView
-                android:id="@+id/ver2"
-                android:layout_width="82dp"
+                android:id="@+id/ver3"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/boton1"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="136dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:fontFamily="sans-serif"
                 android:text="@string/d2"
                 android:textAllCaps="false"
                 android:textStyle="italic" />
 
             <EditText
-                android:id="@+id/texto2"
-                android:layout_width="338dp"
+                android:id="@+id/texto3"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ver2"
-                android:layout_alignStart="@+id/ver1"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="-6dp"
-                android:layout_marginEnd="25dp"
-                android:ems="10"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="20dp"
                 android:hint="@string/pass"
                 android:inputType="textPassword" />
 
             <Button
-                android:id="@+id/boton1"
+                android:id="@+id/boton"
                 style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="338dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="28dp"
-                android:layout_marginTop="277dp"
-                android:layout_marginEnd="28dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
                 android:onClick="logIn"
                 android:text="@string/log" />
 
             <Button
-                android:id="@+id/boton2"
+                android:id="@+id/boton4"
                 style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/boton1"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="28dp"
-                android:layout_marginTop="0dp"
-                android:layout_marginEnd="28dp"
+                android:layout_gravity="center"
                 android:text="@string/recordar"
                 android:textAllCaps="false"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="italic" />
 
             <Button
-                android:id="@+id/boton3"
+                android:id="@+id/boton5"
                 style="@android:style/Widget.DeviceDefault.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="89dp"
-                android:layout_marginTop="378dp"
-                android:layout_marginEnd="84dp"
+                android:layout_gravity="center"
                 android:onClick="registrar"
                 android:text="@string/signup"
                 android:textAllCaps="true" />
-
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="31dp"
-                android:layout_marginTop="205dp">
-
-                <RadioButton
-                    android:id="@+id/caja1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/caja1" />
-
-                <RadioButton
-                    android:id="@+id/caja2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/caja2" />
-            </RadioGroup>
-
-        </RelativeLayout>
+        </LinearLayout>
     </ScrollView>
+
 
 </RelativeLayout>

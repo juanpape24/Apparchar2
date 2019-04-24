@@ -22,6 +22,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.apparchar.apparchar.Vista.LoginActivity;
+
 public class Main extends AppCompatActivity implements FragmentCategoria.OnFragmentInteractionListener, FragmentEventos.OnFragmentInteractionListener, FragmentRealTime.OnFragmentInteractionListener {
 
     /**
@@ -92,8 +94,13 @@ public class Main extends AppCompatActivity implements FragmentCategoria.OnFragm
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_actualizar) {
+            finish();
+            startActivity(getIntent());
+        }
+        if(id==R.id.action_cerrar){
+            Intent intent=new Intent(this, LoginActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

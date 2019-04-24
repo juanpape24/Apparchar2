@@ -48,7 +48,7 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.MyView
             myViewHolder.image.setImageResource(R.drawable.lectura);
             myViewHolder.texto.setText(lista.get(i));
         }else if(lista.get(i).equals("rumba")){
-            myViewHolder.image.setImageResource(R.drawable.rumba);
+            myViewHolder.image.setImageResource(R.drawable.fiesta);
             myViewHolder.texto.setText(lista.get(i));
         }else{
             myViewHolder.image.setImageResource(R.drawable.foto);
