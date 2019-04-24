@@ -18,12 +18,19 @@ public class AdapterComentarios extends RecyclerView.Adapter<HolderComentario> {
 
     public AdapterComentarios(Context c) {
         this.c = c;
-        comentarios= new ArrayList<>();
+        comentarios = new ArrayList<>();
     }
 
     public void addC(CalificacionM calificacionM) {
         comentarios.add(calificacionM);
         notifyItemInserted(comentarios.size());
+    }
+
+    public void removeC() {
+        if (!comentarios.isEmpty()) {
+            notifyItemRangeRemoved(0, comentarios.size());
+            comentarios.clear();
+        }
     }
 
 
@@ -39,7 +46,8 @@ public class AdapterComentarios extends RecyclerView.Adapter<HolderComentario> {
         holderComentario.getNombre().setText(comentarios.get(i).getCliente().getUsuario());
         //holderComentario.getNombre().setText("nn");
         holderComentario.getComentario().setText(comentarios.get(i).getComentario());
-        holderComentario.getHora().setText(comentarios.get(i).getHora());
+        holderComentario.getHora().setText(comentarios.get(i).getFecha());
+        System.out.println("DATOS:"+comentarios.get(i).toString());
     }
 
     @Override
