@@ -24,7 +24,9 @@ import com.apparchar.apparchar.Vista.ListaEvento;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
@@ -56,18 +58,33 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             myViewHolder.image.setImageBitmap(bmp);
         }
         myViewHolder.titulo.setText(lista.get(i).getNombre());
-        myViewHolder.descripcion.setText(lista.get(i).getDescripcion()+"\n\nDireccion: "+lista.get(i).getDireccion().getDireccion()+"\nFecha: "+lista.get(i).getEventoPK().getFecha());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+        String currentDateandTime = sdf.format(new Date());
+        String year = currentDateandTime.substring(0, 4);
+        String month = currentDateandTime.substring(4, 6);
+        String day = currentDateandTime.substring(6, 8);
+        final String fechac = day + "/" + month + "/" + year;
+        final String hour = currentDateandTime.substring(9, 11);
+        final String minutos = currentDateandTime.substring(11, 13);
+        String time = hour + ":" + minutos;
+        myViewHolder.descripcion.setText(lista.get(i).getDescripcion()+"\n\nDireccion: "+lista.get(i).getDireccion().getDireccion()+"\nFecha: "+lista.get(i).getEventoPK().getFecha()+"\nHora: "+lista.get(i).getEventoPK().getHoraInicio());
         myViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(context, CalificacionEvento.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("id",lista.get(i).getEventoPK().getIdevento());
-                intent.putExtra("fecha",lista.get(i).getEventoPK().getFecha());
-                intent.putExtra("final",lista.get(i).getEventoPK().getHoraFinal());
-                intent.putExtra("inicio",lista.get(i).getEventoPK().getHoraInicio());
-                intent.putExtra("user",idUser);
-                context.startActivity(intent);
+                String inicio[]=lista.get(i).getEventoPK().getHoraInicio().split(":");
+                String end[]=lista.get(i).getEventoPK().getHoraFinal().split(":");
+                if(lista.get(i).getEventoPK().getFecha().equals(fechac) && (Integer.parseInt(inicio[0])<=Integer.parseInt(hour) && Integer.parseInt(end[0])>=Integer.parseInt(hour)) && (Integer.parseInt(inicio[1])<=Integer.parseInt(minutos) && Integer.parseInt(end[1])>=Integer.parseInt(minutos))) {
+                        Intent intent = new Intent(context, CalificacionEvento.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("id", lista.get(i).getEventoPK().getIdevento());
+                        intent.putExtra("fecha", lista.get(i).getEventoPK().getFecha());
+                        intent.putExtra("final", lista.get(i).getEventoPK().getHoraFinal());
+                        intent.putExtra("inicio", lista.get(i).getEventoPK().getHoraInicio());
+                        intent.putExtra("user", idUser);
+                        context.startActivity(intent);
+                }else{
+                    Toast.makeText(context,"El evento no ha empezado o ya finalizó",Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
