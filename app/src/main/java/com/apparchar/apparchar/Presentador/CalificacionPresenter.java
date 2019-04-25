@@ -45,9 +45,9 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC, O
         fotos = new ArrayList<>();
         eventoM = new EventoM();
         eventoPKM = new EventoPKM();
-        cliente= new ClienteM();
-        eventos = new ArrayList<>() ;
-        calificacionPKM= new CalificacionPKM();
+        cliente = new ClienteM();
+        eventos = new ArrayList<>();
+        calificacionPKM = new CalificacionPKM();
     }
 
 
@@ -57,7 +57,6 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC, O
         calificacionPKM = new CalificacionPKM();
         eventoPKM = new EventoPKM();
         eventoM = new EventoM();
-        cliente= new ClienteM();
         calificacion.setHora(hora);
         calificacion.setFecha(fecha);
         calificacionPKM.setUsuariocliente(user);
@@ -70,8 +69,6 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC, O
         calificacion.setEvento(eventoM);
         calificacion.setCalificacionPK(calificacionPKM);
         calificacion.setComentario(comentario);
-        cliente.setUsuario(user);
-        calificacion.setCliente(cliente);
         params = new RequestParams();
         Gson g = new Gson();
         String alv = g.toJson(calificacion);
@@ -140,15 +137,15 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC, O
     }
 
     @Override
-    public String obtenerInfoEvento(int id,String horaI, String horaF, String fecha) {
+    public String obtenerInfoEvento(int id, String horaI, String horaF, String fecha) {
         params = new RequestParams();
         Gson g = new Gson();
-        EventoPKM e=new EventoPKM();
+        EventoPKM e = new EventoPKM();
         e.setIdevento(id);
         e.setHoraInicio(horaI);
         e.setHoraFinal(horaF);
         e.setFecha(fecha);
-        String dato= g.toJson(e);
+        String dato = g.toJson(e);
         opc = 3;
         params.put("consultar", dato);
         String nameServlet = "SERVEvento";
@@ -156,14 +153,12 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC, O
         loopjTask.executeLoopjCall();
 
 
-
-
         return infoEvento;
     }
 
     @Override
     public void actualizar(int idEvento) {
-        opc=1;
+        opc = 1;
         params = new RequestParams();
         Gson g = new Gson();
         params.put("listar", String.valueOf(idEvento));
@@ -171,18 +166,23 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC, O
         MyLoopjTask loopjTask = new MyLoopjTask(params, nameServlet, (Context) vista, this);
         loopjTask.executeLoopjCall();
 
+
+    }
+
+    @Override
+    public void update() {
         if (!porcentaje.isEmpty()) {
             vista.mostrarCalificacion(porcentaje);
             porcentaje = new ArrayList<>();
         }
         if (!comentarios.isEmpty()) {
             vista.mostrarComentarios(comentarios);
-            comentarios= new ArrayList<>();
-        } else vista.showResult("Aún no hay comentarios");
+            comentarios = new ArrayList<>();
+        }
         if (!fotos.isEmpty()) {
             vista.mostrarFotos(fotos);
             fotos = new ArrayList<>();
-        } else vista.showResult("Aún no hay fotos");
+        }
     }
 
     @Override
@@ -197,14 +197,23 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC, O
             Gson a = new Gson();
             ArrayList<CalificacionM> arrayList = a.fromJson(listaR, listType);
             for (int i = 0; i < arrayList.size(); i++) {
-                if (arrayList.get(i).getComentario() != null){
-                    comentarios.add(arrayList.get(i));}
+                if (arrayList.get(i).getComentario() != null) {
+                    comentarios.add(arrayList.get(i));
+                } else {
+                    vista.showResult("Aún no hay comentarios");
+                }
+
                 if (arrayList.get(i).getPorcentaje() != null)
                     porcentaje.add(arrayList.get(i).getPorcentaje());
 
-                if (arrayList.get(i).getMultimedia() != null)
+                if (arrayList.get(i).getMultimedia() != null) {
                     fotos.add(arrayList.get(i).getMultimedia());
+                } else {
+                    vista.showResult("Aún no hay Fotos");
+                }
+
             }
+            update();
 
 
         } else if (opc == 2) {
@@ -216,7 +225,7 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC, O
                 vista.showResult("No se realizó correctamente");
             }
         } else if (opc == 3) {
-            infoEvento="";
+            infoEvento = "";
             Gson a = new Gson();
             JsonElement c = jo.get("respuesta");
             infoEvento = c.getAsString();

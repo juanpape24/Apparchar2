@@ -1,7 +1,9 @@
 package com.apparchar.apparchar.Vista;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -12,6 +14,9 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -35,11 +40,11 @@ import android.widget.ViewSwitcher;
 import com.apparchar.apparchar.AdapterComentarios;
 import com.apparchar.apparchar.Contract.ContractCalificacion;
 import com.apparchar.apparchar.Modelo.CalificacionM;
-import com.apparchar.apparchar.Modelo.CalificacionPKM;
 import com.apparchar.apparchar.Modelo.ClienteM;
 import com.apparchar.apparchar.Modelo.EventoM;
 import com.apparchar.apparchar.Presentador.CalificacionPresenter;
 import com.apparchar.apparchar.R;
+import com.google.android.gms.dynamic.IFragmentWrapper;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -65,6 +70,7 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
     RatingBar porcentaje;
     ImageButton recargar;
     String ruta = "";
+    boolean star = true;
     private int position;
     private static final Integer DURATION = 2500;
     private Timer timer = null;
@@ -72,12 +78,17 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
     ArrayList a = new ArrayList();
     TextView nombreEvento, horaInicioEvento, horaFinalEvento, fechaEvento, direccionEvento, descripcionEvento;
     ImageView imagenes;
-    String user="";
+    String user;
     String horaFinal;
     String horaInicio;
     String fecha;
     ImageView fotoEvento;
     private ImageSwitcher imageSwitcher;
+    private static final String READ_EXTERNAL_STORAGE = Manifest.permission.READ_EXTERNAL_STORAGE;
+    private static final String WRITE_EXTERNAL_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE;
+    private static final String CAMERA = Manifest.permission.CAMERA;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
+    private Boolean mLocationPermissionsGranted = false;
 
     int j = 0;
 
@@ -104,7 +115,7 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
         comentarios.setLayoutManager(l);
         comentarios.setAdapter(adapterComentarios);
         user = getIntent().getExtras().getString("user");
-        showResult(user);
+        //System.out.println("USUARIO"+user);
         imageSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
 
             public View makeView() {
@@ -123,19 +134,13 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
         horaInicio = getIntent().getExtras().getString("inicio");
         fecha = getIntent().getExtras().getString("fecha");
         calificacionPresenter = new CalificacionPresenter(this);
-        final int id = getIntent().getExtras().getInt("id");
+        int id = getIntent().getExtras().getInt("id");
         calificacionPresenter.obtenerInfoEvento(id, horaInicio, horaFinal, fecha);
         comentar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 CalificacionM calificacionM = new CalificacionM();
                 ClienteM clienteM = new ClienteM();
-                CalificacionPKM calificacionPKM= new CalificacionPKM();
-                calificacionPKM.setIdevento(id);
-                calificacionPKM.setUsuariocliente(user);
-                clienteM.setUsuario(user);
-                calificacionM.setCliente(clienteM);
-                calificacionM.setFecha(fecha);
                 String mensaje = comentario.getText().toString();
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
                 String currentDateandTime = sdf.format(new Date());
@@ -147,13 +152,14 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
                 String minutos = currentDateandTime.substring(11, 13);
                 String time = hour + ":" + minutos;
                 String h = fechac + " " + time;
-                calificacionM.setHora(h);
+                clienteM.setUsuario(user);
+                calificacionM.setCliente(clienteM);
                 calificacionM.setComentario(mensaje);
-
+                calificacionM.setHora(h);
                 adapterComentarios.addC(calificacionM);
                 int id = getIntent().getExtras().getInt("id");
                 calificacionPresenter.crearComentario(mensaje, time, user, id, fechac, horaInicio, horaFinal, fecha);
-                comentario.setText("");
+
             }
         });
         recargar.setOnClickListener(new View.OnClickListener() {
@@ -174,17 +180,25 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 float pcr = porcentaje.getRating();
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
-                String currentDateandTime = sdf.format(new Date());
-                String year = currentDateandTime.substring(0, 4);
-                String month = currentDateandTime.substring(4, 6);
-                String day = currentDateandTime.substring(6, 8);
-                String fechac = day + "/" + month + "/" + year;
-                String hour = currentDateandTime.substring(9, 11);
-                String minutos = currentDateandTime.substring(11, 13);
-                String time = hour + ":" + minutos;
-                int id = getIntent().getExtras().getInt("id");
-                calificacionPresenter.crearCalificacion(pcr, time, user, id, fechac, horaInicio, horaFinal, fecha);
+                if (star) {
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+                    String currentDateandTime = sdf.format(new Date());
+                    String year = currentDateandTime.substring(0, 4);
+                    String month = currentDateandTime.substring(4, 6);
+                    String day = currentDateandTime.substring(6, 8);
+                    String fechac = day + "/" + month + "/" + year;
+                    String hour = currentDateandTime.substring(9, 11);
+                    String minutos = currentDateandTime.substring(11, 13);
+                    String time = hour + ":" + minutos;
+                    int id = getIntent().getExtras().getInt("id");
+                    porcentaje.setEnabled(false);
+                    calificacionPresenter.crearCalificacion(pcr, time, user, id, fechac, horaInicio, horaFinal, fecha);
+                }
+
+
+                star = true;
+
+
             }
         });
 
@@ -211,28 +225,31 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
             public void onClick(DialogInterface dialog, int i) {
                 String nombreImagen = "";
                 if (opc[i].equals("Tomar Foto")) {
-                    File fileImagen = new File(Environment.getExternalStorageDirectory(), rutaImagen);
-                    boolean iscreada = fileImagen.exists();
-                    if (iscreada == false) {
-                        iscreada = fileImagen.mkdirs();
-                    }
-                    if (iscreada) {
-                        nombreImagen = (System.currentTimeMillis() / 1000) + ".jpg";
-                    }
-                    ruta = Environment.getExternalStorageDirectory() + File.separator + rutaImagen + File.separator + nombreImagen;
-                    File imagen = new File(ruta);
-                    Intent in = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    in.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imagen));
-                    startActivityForResult(in, codFoto);
+                    if (mLocationPermissionsGranted) {
+                        File fileImagen = new File(Environment.getExternalStorageDirectory(), rutaImagen);
+                        boolean iscreada = fileImagen.exists();
+                        if (iscreada == false) {
+                            iscreada = fileImagen.mkdirs();
+                        }
+                        if (iscreada) {
+                            nombreImagen = (System.currentTimeMillis() / 1000) + ".jpg";
+                        }
+                        ruta = Environment.getExternalStorageDirectory() + File.separator + rutaImagen + File.separator + nombreImagen;
+                        File imagen = new File(ruta);
+                        Intent in = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
+                        in.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imagen));
+                        startActivityForResult(in, codFoto);
+                    } else getPermission();
 
                 } else {
                     if (opc[i].equals("Cargar Imagen")) {
-                        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                        intent.setType("image/");
-                        startActivityForResult(Intent.createChooser(intent, "Seleccione la aplicacion"), codCarga);
+                        if (mLocationPermissionsGranted) {
+                            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            intent.setType("image/");
+                            startActivityForResult(Intent.createChooser(intent, "Seleccione la aplicacion"), codCarga);
 
-
+                        } else getPermission();
                     } else {
                         dialog.dismiss();
                     }
@@ -319,7 +336,7 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
     public void mostrarFotos(final ArrayList<byte[]> fotos) {
 
         if (fotos.isEmpty()) {
-            showResult("No hay fotos");
+            // showResult("No hay fotos");
         } else {
             if (timer != null) {
                 timer.cancel();
@@ -360,8 +377,7 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
 
     @Override
     public void mostrarComentarios(ArrayList<CalificacionM> com) {
-        //comentarios.removeAllViewsInLayout();
-      //  showResult(com.toString());
+        adapterComentarios.removeC();
         if (com.isEmpty()) {
 
         } else {
@@ -382,7 +398,10 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
             }
             double promedio = suma / calificacion.size();
             String s = String.valueOf(promedio);
+            star = false;
             porcentaje.setRating(Float.valueOf(s));
+
+
         }
     }
 
@@ -417,6 +436,61 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
 
     private void setScroll() {
         comentarios.scrollToPosition(adapterComentarios.getItemCount() - 1);
+    }
+
+
+    private void getPermission() {
+
+        String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
+
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(), READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+
+            if (ContextCompat.checkSelfPermission(this.getApplicationContext(), WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+
+                if (ContextCompat.checkSelfPermission(this.getApplicationContext(), CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                    mLocationPermissionsGranted = true;
+
+                } else {
+                    ActivityCompat.requestPermissions(this, permissions, 1888);
+                }
+            } else {
+                ActivityCompat.requestPermissions(this, permissions, 20);
+            }
+
+        } else {
+            ActivityCompat.requestPermissions(this, permissions, 10);
+        }
+    }
+
+      /*
+      Metodo utilizado para manejar las respuestas a la solicitud de los permisos del usuario
+       */
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        mLocationPermissionsGranted = false;
+
+        switch (requestCode) {
+            case LOCATION_PERMISSION_REQUEST_CODE: {
+                if (grantResults.length > 0) {
+                    for (int i = 0; i < grantResults.length; i++) {
+                        if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                            mLocationPermissionsGranted = false;
+                            return;
+                        }
+
+                    }
+
+                    mLocationPermissionsGranted = false;
+                    //INICIAR EL MAPA
+
+                }
+
+            }
+
+
+        }
+
     }
 }
 
