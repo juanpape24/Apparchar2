@@ -20,7 +20,6 @@
             android:id="@+id/texto_marimondazo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="cursive"
             android:gravity="center"
             android:text="Título"
             android:textColor="@color/colorPrimary"
@@ -55,11 +54,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:fontFamily="sans-serif-smallcaps"
                         android:text="@string/descripcion"
                         android:textAlignment="viewStart"
                         android:textColor="@color/quantum_cyan800"
-                        android:textStyle="italic" />
+                        />
 
                 </LinearLayout>
             </ScrollView>
