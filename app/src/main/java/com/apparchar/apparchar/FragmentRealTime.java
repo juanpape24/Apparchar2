@@ -184,9 +184,9 @@ public class FragmentRealTime extends Fragment implements OnMapReadyCallback, On
                         if (task.isSuccessful()) {
                             Log.d(TAG, "onComplete: found location!");
                             Location currentLocation = (Location) task.getResult();
-                            AddMarker(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), "ESTAS AQUI", "", true);
-                            moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), ZOOM);
-                            Toast.makeText(getActivity(), "Su ubicacion", Toast.LENGTH_SHORT).show();
+                           // AddMarker(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), "ESTAS AQUI", "", true);
+                            moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), 20f);
+                            Toast.makeText(getActivity(), "Parchado", Toast.LENGTH_SHORT).show();
 
                             /*
                             Conexion con el server
@@ -275,6 +275,8 @@ public class FragmentRealTime extends Fragment implements OnMapReadyCallback, On
         /*
            Aqui va la conexion al server
          */
+
+        getDeviceLocation();
         boton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -356,7 +358,7 @@ public class FragmentRealTime extends Fragment implements OnMapReadyCallback, On
 
 
         if (mLocationPermissionsGranted) {
-            // getDeviceLocation();
+           // getDeviceLocation();
             Parchame();
 
             if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)

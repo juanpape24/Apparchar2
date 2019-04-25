@@ -73,7 +73,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             public void onClick(View v) {
                 String inicio[]=lista.get(i).getEventoPK().getHoraInicio().split(":");
                 String end[]=lista.get(i).getEventoPK().getHoraFinal().split(":");
-                if(lista.get(i).getEventoPK().getFecha().equals(fechac) && (Integer.parseInt(inicio[0])<=Integer.parseInt(hour) && Integer.parseInt(end[0])>=Integer.parseInt(hour)) && (Integer.parseInt(inicio[1])<=Integer.parseInt(minutos) && Integer.parseInt(end[1])>=Integer.parseInt(minutos))) {
+                if(lista.get(i).getEventoPK().getFecha().equals(fechac) && (Integer.parseInt(inicio[0])<=Integer.parseInt(hour) && Integer.parseInt(end[0])>=Integer.parseInt(hour)) ) {
                         Intent intent = new Intent(context, CalificacionEvento.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.putExtra("id", lista.get(i).getEventoPK().getIdevento());
