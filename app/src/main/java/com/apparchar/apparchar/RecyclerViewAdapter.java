@@ -51,9 +51,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(final MyViewHolder myViewHolder, final int i) {
         ArrayList<Bitmap> a = new ArrayList<>();
-        if(lista.get(i).getFoto()==null){
+        if (lista.get(i).getFoto() == null) {
             myViewHolder.image.setImageResource(R.drawable.descarga);
-        }else{
+        } else {
             Bitmap bmp = BitmapFactory.decodeByteArray(lista.get(i).getFoto(), 0, lista.get(i).getFoto().length);
             myViewHolder.image.setImageBitmap(bmp);
         }
@@ -67,24 +67,31 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         final String hour = currentDateandTime.substring(9, 11);
         final String minutos = currentDateandTime.substring(11, 13);
         String time = hour + ":" + minutos;
-        myViewHolder.descripcion.setText(lista.get(i).getDescripcion()+"\n\nDireccion: "+lista.get(i).getDireccion().getDireccion()+"\nFecha: "+lista.get(i).getEventoPK().getFecha()+"\nHora: "+lista.get(i).getEventoPK().getHoraInicio());
+        myViewHolder.descripcion.setText(lista.get(i).getDescripcion() + "\n\nDireccion: " + lista.get(i).getDireccion().getDireccion() + "\nFecha: " + lista.get(i).getEventoPK().getFecha() + "\nHora: " + lista.get(i).getEventoPK().getHoraInicio());
         myViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String inicio[]=lista.get(i).getEventoPK().getHoraInicio().split(":");
-                String end[]=lista.get(i).getEventoPK().getHoraFinal().split(":");
-                if(lista.get(i).getEventoPK().getFecha().equals(fechac) && (Integer.parseInt(inicio[0])<=Integer.parseInt(hour) && Integer.parseInt(end[0])>=Integer.parseInt(hour)) ) {
-                        Intent intent = new Intent(context, CalificacionEvento.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        intent.putExtra("id", lista.get(i).getEventoPK().getIdevento());
-                        intent.putExtra("fecha", lista.get(i).getEventoPK().getFecha());
-                        intent.putExtra("final", lista.get(i).getEventoPK().getHoraFinal());
-                        intent.putExtra("inicio", lista.get(i).getEventoPK().getHoraInicio());
-                        intent.putExtra("user", idUser);
-                        context.startActivity(intent);
-                }else{
-                    Toast.makeText(context,"El evento no ha empezado o ya finalizó",Toast.LENGTH_SHORT).show();
+                String inicio[] = lista.get(i).getEventoPK().getHoraInicio().split(":");
+                String end[] = lista.get(i).getEventoPK().getHoraFinal().split(":");
+                String timeS = inicio[0] + inicio[1]; //hora inicio
+                String timeE = end[0] + end[1]; //hora final
+                String timeA = hour + minutos; //hora actual
+                System.out.println("Condicional: "+timeS+"<"+timeA+"-----"+timeE+">"+timeA);
+
+
+                if (lista.get(i).getEventoPK().getFecha().equals(fechac) && Integer.valueOf(timeS) < Integer.valueOf(timeA) && Integer.valueOf(timeE) > Integer.valueOf(timeA)) {
+                    Intent intent = new Intent(context, CalificacionEvento.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("id", lista.get(i).getEventoPK().getIdevento());
+                    intent.putExtra("fecha", lista.get(i).getEventoPK().getFecha());
+                    intent.putExtra("final", lista.get(i).getEventoPK().getHoraFinal());
+                    intent.putExtra("inicio", lista.get(i).getEventoPK().getHoraInicio());
+                    intent.putExtra("user", idUser);
+                    context.startActivity(intent);
+                } else {
+                    Toast.makeText(context, "El evento no ha empezado o ya finalizó", Toast.LENGTH_SHORT).show();
                 }
+
 
             }
         });
@@ -99,7 +106,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView titulo,descripcion;
+        TextView titulo, descripcion;
         ImageView image;
         CardView cardView;
 
@@ -109,7 +116,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             titulo = itemView.findViewById(R.id.texto_marimondazo);
             image = itemView.findViewById(R.id.img_marimondazo);
             cardView = itemView.findViewById(R.id.cardv);
-            descripcion=itemView.findViewById(R.id.descripcione);
+            descripcion = itemView.findViewById(R.id.descripcione);
         }
     }
 }
