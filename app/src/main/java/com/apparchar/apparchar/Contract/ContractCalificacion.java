@@ -24,5 +24,6 @@ public interface ContractCalificacion {
         void crearMultimedia(byte[] multimedia,String hora,String user,int idEvento,String fecha,String horaI,String horaF,String fechaE);
         String obtenerInfoEvento(int id, String horaI, String horaF, String fechaEvento);
         void actualizar(int idEvento);
+        void update();
     }
 }

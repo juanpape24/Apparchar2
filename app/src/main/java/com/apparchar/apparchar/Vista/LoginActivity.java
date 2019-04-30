@@ -23,23 +23,15 @@ import java.util.ArrayList;
 public class LoginActivity extends AppCompatActivity implements ContractLogin.ViewL {
 
     private TextView ver1, ver2;
-    private EditText texto1, texto2;
+    private EditText texto2, texto1;
     private ContractLogin.PresenterL presenter;
-    private RadioButton caja1,caja2;
-    private ImageView image;
-    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        ver1 = findViewById(R.id.ver1);
-        ver2 = findViewById(R.id.ver2);
-        texto1 = findViewById(R.id.texto1);
-        texto2 = findViewById(R.id.texto2);
-        caja1=findViewById(R.id.caja1);
-        caja2=findViewById(R.id.caja2);
-        image=findViewById(R.id.image);
+        texto1=findViewById(R.id.texto);
+        texto2=findViewById(R.id.texto3);
         presenter=new LoginPresenter(this);
 
     }
@@ -47,14 +39,7 @@ public class LoginActivity extends AppCompatActivity implements ContractLogin.Vi
     public void logIn(View view) {
         String usuario=texto1.getText().toString();
         String pass=texto2.getText().toString();
-        String cajita="";
-        if(caja1.isChecked()) {
-            cajita=caja1.getText().toString();
-        }
-        else if(caja2.isChecked()){
-            cajita=caja2.getText().toString();
-        }
-        presenter.validar(usuario,pass,cajita);
+        presenter.validar(usuario,pass);
     }
 
     @Override
@@ -72,7 +57,7 @@ public class LoginActivity extends AppCompatActivity implements ContractLogin.Vi
     }
 
     public void registrar(View view) {
-        Intent next=new Intent(this, TipoLogin.class);
+        Intent next=new Intent(this, Cliente.class);
         startActivity(next);
     }
 
@@ -82,11 +67,4 @@ public class LoginActivity extends AppCompatActivity implements ContractLogin.Vi
         Toast.makeText(this,info,Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void crearEvento(String nit, String usuario) {
-        Intent intent=new Intent(this,crearEvento1.class);
-        intent.putExtra("nit",nit);
-        intent.putExtra("user", usuario);
-        startActivity(intent);
-    }
 }
