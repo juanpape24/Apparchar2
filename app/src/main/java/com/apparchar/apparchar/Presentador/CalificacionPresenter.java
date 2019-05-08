@@ -162,7 +162,6 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC, O
         params = new RequestParams();
         Gson g = new Gson();
         params.put("listar", String.valueOf(idEvento));
-        System.out.println("id:-----"+ idEvento);
         String nameServlet = "SERVCalificacion";
         MyLoopjTask loopjTask = new MyLoopjTask(params, nameServlet, (Context) vista, this);
         loopjTask.executeLoopjCall();

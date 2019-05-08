@@ -186,7 +186,7 @@ public class FragmentRealTime extends Fragment implements OnMapReadyCallback, On
                             Location currentLocation = (Location) task.getResult();
                            // AddMarker(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), "ESTAS AQUI", "", true);
                             moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), 20f);
-                            Toast.makeText(getActivity(), "Parchado", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getActivity(), "Parchado", Toast.LENGTH_SHORT).show();
 
                             /*
                             Conexion con el server

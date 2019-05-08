@@ -2,7 +2,7 @@
     <string name="app_name">Apparchar</string>
     <string name="d1">Nombre usuario</string>
     <string name="d2">Contraseña</string>
-    <string name="texto1">Ingrese su nombre de usuario</string>
+    <string name="texto1">Usuario</string>
     <string name="pass">Ingrese su contraseña</string>
     <string name="log">Iniciar sesión</string>
     <string name="recordar">¿Olvidaste tu contraseña?</string>
@@ -12,7 +12,7 @@
     <string name="cliente">Cliente</string>
     <string name="empresa">Empresa</string>
     <string name="ib">Imagen</string>
-    <string name="nombre">Nombre: </string>
+    <string name="nombre">Nombre</string>
     <string name="nombre1">Ingrese su nombre</string>
     <string name="apellido">Apellido</string>
     <string name="apellido1">Ingrese su apellido</string>
