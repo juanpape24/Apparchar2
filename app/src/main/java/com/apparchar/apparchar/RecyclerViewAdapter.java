@@ -76,10 +76,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 String timeS = inicio[0] + inicio[1]; //hora inicio
                 String timeE = end[0] + end[1]; //hora final
                 String timeA = hour + minutos; //hora actual
-                System.out.println("Condicional: "+timeS+"<"+timeA+"-----"+timeE+">"+timeA);
+                //System.out.println("Condicional: "+timeS+"<"+timeA+"-----"+timeE+">"+timeA);
 
 
-                if (lista.get(i).getEventoPK().getFecha().equals(fechac) && Integer.valueOf(timeS) < Integer.valueOf(timeA) && Integer.valueOf(timeE) > Integer.valueOf(timeA)) {
+               // if (lista.get(i).getEventoPK().getFecha().equals(fechac) && Integer.valueOf(timeS) < Integer.valueOf(timeA) && Integer.valueOf(timeE) > Integer.valueOf(timeA)) {
                     Intent intent = new Intent(context, CalificacionEvento.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("id", lista.get(i).getEventoPK().getIdevento());
@@ -88,9 +88,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     intent.putExtra("inicio", lista.get(i).getEventoPK().getHoraInicio());
                     intent.putExtra("user", idUser);
                     context.startActivity(intent);
-                } else {
-                    Toast.makeText(context, "El evento no ha empezado o ya finalizó", Toast.LENGTH_SHORT).show();
-                }
+                //} else {
+                  //  Toast.makeText(context, "El evento no ha empezado o ya finalizó", Toast.LENGTH_SHORT).show();
+                //}
 
 
             }

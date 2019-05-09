@@ -6,7 +6,6 @@
 package com.apparchar.apparchar.Modelo;
 
 import java.util.Collection;
-import java.util.List;
 
 /**
  *
@@ -20,19 +19,21 @@ public class ClienteM {
     private String telefono;
     private String usuario;
     private String contrasenia;
+    private byte[] foto;
     private Collection<CalificacionM> calificacionCollection;
 
-    public ClienteM() {
-    }
-
-    public ClienteM(String nombre, Integer edad, String correo, String telefono, String usuario, String contrasenia, Collection<CalificacionM> calificacionCollection) {
+    public ClienteM(String nombre, Integer edad, String correo, String telefono, String usuario, String contrasenia, byte[] foto, Collection<CalificacionM> calificacionCollection) {
         this.nombre = nombre;
         this.edad = edad;
         this.correo = correo;
         this.telefono = telefono;
         this.usuario = usuario;
         this.contrasenia = contrasenia;
+        this.foto = foto;
         this.calificacionCollection = calificacionCollection;
+    }
+
+    public ClienteM() {
     }
 
     public String getNombre() {
@@ -83,6 +84,14 @@ public class ClienteM {
         this.contrasenia = contrasenia;
     }
 
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
+    }
+
     public Collection<CalificacionM> getCalificacionCollection() {
         return calificacionCollection;
     }
@@ -93,7 +102,7 @@ public class ClienteM {
 
     @Override
     public String toString() {
-        return "ClienteM{" + "nombre=" + nombre + ", edad=" + edad + ", correo=" + correo + ", telefono=" + telefono + ", usuario=" + usuario + ", contrasenia=" + contrasenia + ", calificacionCollection=" + calificacionCollection + '}';
+        return "ClienteM{" + "nombre=" + nombre + ", edad=" + edad + ", correo=" + correo + ", telefono=" + telefono + ", usuario=" + usuario + ", contrasenia=" + contrasenia + ", foto=" + foto + ", calificacionCollection=" + calificacionCollection + '}';
     }
 
 }
