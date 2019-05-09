@@ -1,9 +1,8 @@
 package com.apparchar.apparchar.Contract;
 
-import android.graphics.Bitmap;
-
 import com.apparchar.apparchar.Modelo.CalificacionM;
 import com.apparchar.apparchar.Modelo.EventoM;
+import com.apparchar.apparchar.Modelo.EventoPKM;
 
 import java.util.ArrayList;
 
@@ -23,7 +22,7 @@ public interface ContractCalificacion {
         void crearCalificacion(double porcentaje,String hora,String user,int idEvento,String fecha,String horaI,String horaF,String fechaE);
         void crearMultimedia(byte[] multimedia,String hora,String user,int idEvento,String fecha,String horaI,String horaF,String fechaE);
         String obtenerInfoEvento(int id, String horaI, String horaF, String fechaEvento);
-        void actualizar(int idEvento);
+        void actualizar(EventoPKM eventoPKM);
         void update();
     }
 }

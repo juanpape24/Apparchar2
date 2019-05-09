@@ -42,6 +42,7 @@ import com.apparchar.apparchar.Contract.ContractCalificacion;
 import com.apparchar.apparchar.Modelo.CalificacionM;
 import com.apparchar.apparchar.Modelo.ClienteM;
 import com.apparchar.apparchar.Modelo.EventoM;
+import com.apparchar.apparchar.Modelo.EventoPKM;
 import com.apparchar.apparchar.Presentador.CalificacionPresenter;
 import com.apparchar.apparchar.R;
 import com.google.android.gms.dynamic.IFragmentWrapper;
@@ -53,8 +54,11 @@ import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import in.goodiebag.carouselpicker.CarouselPicker;
 
 public class CalificacionEvento extends AppCompatActivity implements ContractCalificacion.ViewC {
     final int codFoto = 20;
@@ -84,6 +88,7 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
     String fecha;
     ImageView fotoEvento;
     private ImageSwitcher imageSwitcher;
+    CarouselPicker carouselPicker;
     private static final String READ_EXTERNAL_STORAGE = Manifest.permission.READ_EXTERNAL_STORAGE;
     private static final String WRITE_EXTERNAL_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE;
     private static final String CAMERA = Manifest.permission.CAMERA;
@@ -109,6 +114,7 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
         horaInicioEvento = findViewById(R.id.horaInicioEvento);
         horaFinalEvento = findViewById(R.id.horaFinalEvento);
         fotoEvento = findViewById(R.id.fotoEvento);
+        // carouselPicker = findViewById(R.id.CarouselPicker);
         imageSwitcher = findViewById(R.id.imageSwitcher);
         adapterComentarios = new AdapterComentarios(this);
         LinearLayoutManager l = new LinearLayoutManager(this);
@@ -151,13 +157,13 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
                 String hour = currentDateandTime.substring(9, 11);
                 String minutos = currentDateandTime.substring(11, 13);
                 String time = hour + ":" + minutos;
-                String h = fechac + " " + time;
                 clienteM.setUsuario(user);
-                calificacionM.setCliente(clienteM);
+                calificacionM.setUsuariocliente(clienteM);
                 calificacionM.setComentario(mensaje);
-                calificacionM.setHora(h);
+                calificacionM.setHora(time);
                 adapterComentarios.addC(calificacionM);
                 int id = getIntent().getExtras().getInt("id");
+                comentario.setText("");
                 calificacionPresenter.crearComentario(mensaje, time, user, id, fechac, horaInicio, horaFinal, fecha);
 
             }
@@ -166,7 +172,12 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
             @Override
             public void onClick(View v) {
                 int id = getIntent().getExtras().getInt("id");
-                calificacionPresenter.actualizar(id);
+                EventoPKM eventoPKM = new EventoPKM();
+                eventoPKM.setFecha(fecha);
+                eventoPKM.setHoraFinal(horaFinal);
+                eventoPKM.setHoraInicio(horaInicio);
+                eventoPKM.setIdevento(id);
+                calificacionPresenter.actualizar(eventoPKM);
             }
         });
         adapterComentarios.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
@@ -343,10 +354,35 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
             }
             position = 0;
             startSlider(fotos);
+            /*ArrayList<Bitmap> imagenesBitmap= new ArrayList<>();
+            for (int i=0; i<fotos.size();i++){
+                imagenesBitmap.add(getImage(fotos.get(i)));
+            }
+            llenarCarousel(imagenesBitmap);*/
         }
 
 
     }
+
+   /* private void llenarCarousel(ArrayList<Bitmap> imagenesBitmap) {
+
+        List<CarouselPicker.PickerItem> itemsImages = new ArrayList<>();
+        for (int i=0;i<imagenesBitmap.size();i++){
+            Drawable d= new BitmapDrawable(getResources(),imagenesBitmap.get(i));
+           // itemsImages.add(new CarouselPicker.DrawableItem(d.getAlpha()));
+           // itemsImages.add(new CarouselPicker.DrawableItem(new BitmapDrawable(getResources(),imagenesBitmap.get(i))));
+        }
+        ImageView imageView = new ImageView(this);
+        imageView.setImageBitmap(imagenesBitmap.get(0));
+
+
+        itemsImages.add(new CarouselPicker.DrawableItem(R.mipmap.empresa));
+        itemsImages.add(new CarouselPicker.DrawableItem(R.mipmap.ic_launcher));
+        itemsImages.add(new CarouselPicker.DrawableItem(R.mipmap.picture_default));
+        CarouselPicker.CarouselViewAdapter imageAdapter = new CarouselPicker.CarouselViewAdapter(this,itemsImages,0);
+        carouselPicker.setAdapter(imageAdapter);
+
+    }*/
 
     private void startSlider(final ArrayList<byte[]> fotos) {
         timer = new Timer();
@@ -416,9 +452,10 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
         fechaEvento.setText(evento.getEventoPK().getFecha());
         direccionEvento.setText(evento.getDireccion().getDireccion());
         descripcionEvento.setText(evento.getDescripcion());
-        fotoEvento.setImageBitmap(getImage(evento.getFoto()));
-        TableRow.LayoutParams params1 = new TableRow.LayoutParams(300, 300);
-        fotoEvento.setLayoutParams(params1);
+        if (evento.getFoto() != null)
+            fotoEvento.setImageBitmap(getImage(evento.getFoto()));
+       // TableRow.LayoutParams params1 = new TableRow.LayoutParams(178, 125);
+        //fotoEvento.setLayoutParams(params1);
 
     }
 

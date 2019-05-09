@@ -3,12 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.apparchar.apparchar.Modelo;
+
+import java.util.Collection;
 
 /**
  *
@@ -16,35 +13,35 @@ package com.apparchar.apparchar.Modelo;
  */
 public class CalificacionM {
 
-    private CalificacionPKM calificacionPK;
+    private Integer idcalificacion;
     private Double porcentaje;
     private String comentario;
     private byte[] multimedia;
     private String hora;
     private String fecha;
-    private ClienteM cliente;
-    private EventoM evento;
+    private Collection<EventoM> eventoCollection;
+    private ClienteM usuariocliente;
 
-    public CalificacionM() {
-    }
-
-    public CalificacionM(CalificacionPKM calificacionPK, Double porcentaje, String comentario, byte[] multimedia, String hora, String fecha, ClienteM cliente, EventoM evento) {
-        this.calificacionPK = calificacionPK;
+    public CalificacionM(Integer idcalificacion, Double porcentaje, String comentario, byte[] multimedia, String hora, String fecha, Collection<EventoM> eventoCollection, ClienteM usuariocliente) {
+        this.idcalificacion = idcalificacion;
         this.porcentaje = porcentaje;
         this.comentario = comentario;
         this.multimedia = multimedia;
         this.hora = hora;
         this.fecha = fecha;
-        this.cliente = cliente;
-        this.evento = evento;
+        this.eventoCollection = eventoCollection;
+        this.usuariocliente = usuariocliente;
     }
 
-    public CalificacionPKM getCalificacionPK() {
-        return calificacionPK;
+    public CalificacionM() {
     }
 
-    public void setCalificacionPK(CalificacionPKM calificacionPK) {
-        this.calificacionPK = calificacionPK;
+    public Integer getIdcalificacion() {
+        return idcalificacion;
+    }
+
+    public void setIdcalificacion(Integer idcalificacion) {
+        this.idcalificacion = idcalificacion;
     }
 
     public Double getPorcentaje() {
@@ -87,25 +84,25 @@ public class CalificacionM {
         this.fecha = fecha;
     }
 
-    public ClienteM getCliente() {
-        return cliente;
+    public Collection<EventoM> getEventoCollection() {
+        return eventoCollection;
     }
 
-    public void setCliente(ClienteM cliente) {
-        this.cliente = cliente;
+    public void setEventoCollection(Collection<EventoM> eventoCollection) {
+        this.eventoCollection = eventoCollection;
     }
 
-    public EventoM getEvento() {
-        return evento;
+    public ClienteM getUsuariocliente() {
+        return usuariocliente;
     }
 
-    public void setEvento(EventoM evento) {
-        this.evento = evento;
+    public void setUsuariocliente(ClienteM usuariocliente) {
+        this.usuariocliente = usuariocliente;
     }
 
     @Override
     public String toString() {
-        return "CalificacionM{" + "calificacionPK=" + calificacionPK + ", porcentaje=" + porcentaje + ", comentario=" + comentario + ", multimedia=" + multimedia + ", hora=" + hora + ", fecha=" + fecha + ", cliente=" + cliente + ", evento=" + evento + '}';
+        return "CalificacionM{" + "idcalificacion=" + idcalificacion + ", porcentaje=" + porcentaje + ", comentario=" + comentario + ", multimedia=" + multimedia + ", hora=" + hora + ", fecha=" + fecha + ", eventoCollection=" + eventoCollection + ", usuariocliente=" + usuariocliente + '}';
     }
 
 }

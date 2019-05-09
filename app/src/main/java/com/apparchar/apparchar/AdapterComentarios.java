@@ -43,11 +43,9 @@ public class AdapterComentarios extends RecyclerView.Adapter<HolderComentario> {
 
     @Override
     public void onBindViewHolder(@NonNull HolderComentario holderComentario, int i) {
-        holderComentario.getNombre().setText(comentarios.get(i).getCliente().getUsuario());
-        //holderComentario.getNombre().setText("nn");
+        holderComentario.getNombre().setText(comentarios.get(i).getUsuariocliente().getUsuario());
         holderComentario.getComentario().setText(comentarios.get(i).getComentario());
-        holderComentario.getHora().setText(comentarios.get(i).getFecha());
-        System.out.println("DATOS:"+comentarios.get(i).toString());
+        holderComentario.getHora().setText(comentarios.get(i).getHora());
     }
 
     @Override

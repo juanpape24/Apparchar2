@@ -18,22 +18,22 @@ public class EventoM {
     private String descripcion;
     private byte[] foto;
     private Collection<EmpresaM> empresaCollection;
-    private Collection<CategoriaM> categoriaCollection;
     private Collection<CalificacionM> calificacionCollection;
+    private Collection<CategoriaM> categoriaCollection;
     private LugarM direccion;
 
-    public EventoM(EventoPKM eventoPK, String nombre, String descripcion, byte[] foto, Collection<EmpresaM> empresaCollection, Collection<CategoriaM> categoriaCollection, Collection<CalificacionM> calificacionCollection, LugarM direccion) {
+    public EventoM() {
+    }
+
+    public EventoM(EventoPKM eventoPK, String nombre, String descripcion, byte[] foto, Collection<EmpresaM> empresaCollection, Collection<CalificacionM> calificacionCollection, Collection<CategoriaM> categoriaCollection, LugarM direccion) {
         this.eventoPK = eventoPK;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.foto = foto;
         this.empresaCollection = empresaCollection;
-        this.categoriaCollection = categoriaCollection;
         this.calificacionCollection = calificacionCollection;
+        this.categoriaCollection = categoriaCollection;
         this.direccion = direccion;
-    }
-
-    public EventoM() {
     }
 
     public EventoPKM getEventoPK() {
@@ -76,20 +76,20 @@ public class EventoM {
         this.empresaCollection = empresaCollection;
     }
 
-    public Collection<CategoriaM> getCategoriaCollection() {
-        return categoriaCollection;
-    }
-
-    public void setCategoriaCollection(Collection<CategoriaM> categoriaCollection) {
-        this.categoriaCollection = categoriaCollection;
-    }
-
     public Collection<CalificacionM> getCalificacionCollection() {
         return calificacionCollection;
     }
 
     public void setCalificacionCollection(Collection<CalificacionM> calificacionCollection) {
         this.calificacionCollection = calificacionCollection;
+    }
+
+    public Collection<CategoriaM> getCategoriaCollection() {
+        return categoriaCollection;
+    }
+
+    public void setCategoriaCollection(Collection<CategoriaM> categoriaCollection) {
+        this.categoriaCollection = categoriaCollection;
     }
 
     public LugarM getDireccion() {
@@ -102,6 +102,7 @@ public class EventoM {
 
     @Override
     public String toString() {
-        return "EventoM{" + "eventoPK=" + eventoPK + ", nombre=" + nombre + ", descripcion=" + descripcion + ", foto=" + foto + ", empresaCollection=" + empresaCollection + ", categoriaCollection=" + categoriaCollection + ", calificacionCollection=" + calificacionCollection + ", direccion=" + direccion + '}';
+        return "EventoM{" + "eventoPK=" + eventoPK + ", nombre=" + nombre + ", descripcion=" + descripcion + ", foto=" + foto + ", empresaCollection=" + empresaCollection + ", calificacionCollection=" + calificacionCollection + ", categoriaCollection=" + categoriaCollection + ", direccion=" + direccion + '}';
     }
+
 }
