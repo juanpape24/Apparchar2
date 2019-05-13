@@ -129,7 +129,7 @@
                     <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
                         android:id="@+id/edad1"
                         android:layout_width="match_parent"
-                        android:layout_height="65dp"
+                        android:layout_height="66dp"
                         android:hint="Edad"
                         android:inputType="textNoSuggestions"
                         android:textAlignment="center"
@@ -282,13 +282,13 @@
             <Button
                 android:id="@+id/button4"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginBottom="20dp"
-                android:backgroundTint="#FF9800"
+                android:backgroundTint="@color/colorPrimary"
                 android:onClick="registrar"
                 android:text="@string/registrar"
-                android:textColor="#03A9F4" />
+                android:textColor="@color/colorAccent" />
         </LinearLayout>
     </ScrollView>
 

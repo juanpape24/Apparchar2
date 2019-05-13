@@ -43,9 +43,11 @@ dependencies {
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.android.support:support-v4:28.0.0'
     implementation 'com.google.android.gms:play-services-ads:12.0.1'
-    compile 'com.squareup.okhttp3:okhttp:3.6.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.6.0'
+    implementation 'com.android.support:design:28.0.0-alpha1'
+    implementation 'com.weiwangcn.betterspinner:library-material:1.1.0'
+    implementation 'com.farbod.labelledspinner:labelledspinner:1.1.5'
     // libreria Carrusel
-    compile 'com.github.Vatican-Cameos:CarouselPicker:v1.0'
 
 
 }

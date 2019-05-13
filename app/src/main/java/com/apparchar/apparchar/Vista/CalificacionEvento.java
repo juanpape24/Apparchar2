@@ -58,7 +58,6 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import in.goodiebag.carouselpicker.CarouselPicker;
 
 public class CalificacionEvento extends AppCompatActivity implements ContractCalificacion.ViewC {
     final int codFoto = 20;
@@ -88,7 +87,7 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
     String fecha;
     ImageView fotoEvento;
     private ImageSwitcher imageSwitcher;
-    CarouselPicker carouselPicker;
+
     private static final String READ_EXTERNAL_STORAGE = Manifest.permission.READ_EXTERNAL_STORAGE;
     private static final String WRITE_EXTERNAL_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE;
     private static final String CAMERA = Manifest.permission.CAMERA;

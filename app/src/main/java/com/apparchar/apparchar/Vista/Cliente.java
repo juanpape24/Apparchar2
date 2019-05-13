@@ -53,7 +53,6 @@ public class Cliente extends AppCompatActivity implements ContractClient.View, A
         }
     }
     public void registrar(View view) throws JSONException {
-        showResult(edad1.getText().toString());
         presenter.enviar(nombre1.getText().toString(), apellido1.getText().toString(),edad1.getText().toString(),email1.getText().toString(), cel1.getText().toString(), user1.getText().toString(), pass1.getText().toString(), pass3.getText().toString());
     }
 
