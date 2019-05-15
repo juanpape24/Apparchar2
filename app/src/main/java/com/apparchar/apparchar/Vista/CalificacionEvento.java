@@ -58,6 +58,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import in.goodiebag.carouselpicker.CarouselPicker;
 
 public class CalificacionEvento extends AppCompatActivity implements ContractCalificacion.ViewC {
     final int codFoto = 20;
@@ -87,7 +88,7 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
     String fecha;
     ImageView fotoEvento;
     private ImageSwitcher imageSwitcher;
-
+    CarouselPicker carouselPicker;
     private static final String READ_EXTERNAL_STORAGE = Manifest.permission.READ_EXTERNAL_STORAGE;
     private static final String WRITE_EXTERNAL_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE;
     private static final String CAMERA = Manifest.permission.CAMERA;
@@ -120,8 +121,6 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
         comentarios.setLayoutManager(l);
         comentarios.setAdapter(adapterComentarios);
         user = getIntent().getExtras().getString("user");
-        showResult(user);
-        //System.out.println("USUARIO"+user);
         imageSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
 
             public View makeView() {
@@ -237,7 +236,7 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
                 String nombreImagen = "";
                 if (opc[i].equals("Tomar Foto")) {
                     if (mLocationPermissionsGranted) {
-                        File fileImagen = new File(Environment.getExternalStorageDirectory(), rutaImagen);
+                        /*File fileImagen = new File(Environment.getExternalStorageDirectory(), rutaImagen);
                         boolean iscreada = fileImagen.exists();
                         if (iscreada == false) {
                             iscreada = fileImagen.mkdirs();
@@ -246,10 +245,10 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
                             nombreImagen = (System.currentTimeMillis() / 1000) + ".jpg";
                         }
                         ruta = Environment.getExternalStorageDirectory() + File.separator + rutaImagen + File.separator + nombreImagen;
-                        File imagen = new File(ruta);
+                        File imagen = new File(ruta);*/
                         Intent in = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-                        in.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imagen));
+                       // in.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imagen));
                         startActivityForResult(in, codFoto);
                     } else getPermission();
 
@@ -304,16 +303,20 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
 
                     break;
                 case codFoto:
+
+
+
                     ByteArrayOutputStream b2 = new ByteArrayOutputStream();
-                    MediaScannerConnection.scanFile(this, new String[]{ruta}, null, new MediaScannerConnection.OnScanCompletedListener() {
+                    /*MediaScannerConnection.scanFile(this, new String[]{ruta}, null, new MediaScannerConnection.OnScanCompletedListener() {
                         @Override
                         public void onScanCompleted(String path, Uri uri) {
                             Log.i("Ruta de almacenamiento", "Path: " + path);
                         }
-                    });
+                    });*/
 
-                    Bitmap bitmap = BitmapFactory.decodeFile(ruta);
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 10, b2);
+                    //Bitmap bitmap = BitmapFactory.decodeFile(ruta);
+                    Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                   bitmap.compress(Bitmap.CompressFormat.JPEG, 10, b2);
                     SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMdd_HHmmss");
                     String currentDateandTime2 = sdf2.format(new Date());
                     String year2 = currentDateandTime2.substring(0, 4);
@@ -354,35 +357,11 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
             }
             position = 0;
             startSlider(fotos);
-            /*ArrayList<Bitmap> imagenesBitmap= new ArrayList<>();
-            for (int i=0; i<fotos.size();i++){
-                imagenesBitmap.add(getImage(fotos.get(i)));
-            }
-            llenarCarousel(imagenesBitmap);*/
         }
 
 
     }
 
-   /* private void llenarCarousel(ArrayList<Bitmap> imagenesBitmap) {
-
-        List<CarouselPicker.PickerItem> itemsImages = new ArrayList<>();
-        for (int i=0;i<imagenesBitmap.size();i++){
-            Drawable d= new BitmapDrawable(getResources(),imagenesBitmap.get(i));
-           // itemsImages.add(new CarouselPicker.DrawableItem(d.getAlpha()));
-           // itemsImages.add(new CarouselPicker.DrawableItem(new BitmapDrawable(getResources(),imagenesBitmap.get(i))));
-        }
-        ImageView imageView = new ImageView(this);
-        imageView.setImageBitmap(imagenesBitmap.get(0));
-
-
-        itemsImages.add(new CarouselPicker.DrawableItem(R.mipmap.empresa));
-        itemsImages.add(new CarouselPicker.DrawableItem(R.mipmap.ic_launcher));
-        itemsImages.add(new CarouselPicker.DrawableItem(R.mipmap.picture_default));
-        CarouselPicker.CarouselViewAdapter imageAdapter = new CarouselPicker.CarouselViewAdapter(this,itemsImages,0);
-        carouselPicker.setAdapter(imageAdapter);
-
-    }*/
 
     private void startSlider(final ArrayList<byte[]> fotos) {
         timer = new Timer();
@@ -393,10 +372,14 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
                 // "Only the original thread that created a view hierarchy can touch its views"
                 runOnUiThread(new Runnable() {
                     public void run() {
-                        Drawable d = new BitmapDrawable(getResources(), getImage(fotos.get(position)));
+                        Bitmap fotico= getImage(fotos.get(position));
+                       // fotico.setWidth(500);
+                        //fotico.setHeight(500);
+                        Drawable d = new BitmapDrawable(getResources(), fotico);
                         imageSwitcher.setImageDrawable(d);
-                        LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(800, 500);
-                        imageSwitcher.setLayoutParams(params1);
+
+                      LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(800, 800);
+                      imageSwitcher.setLayoutParams(params1);
 
                         position++;
                         if (position == fotos.size()) {
