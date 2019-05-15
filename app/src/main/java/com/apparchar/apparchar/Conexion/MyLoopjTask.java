@@ -18,10 +18,10 @@ public class MyLoopjTask {
     AsyncHttpClient client;
     RequestParams params;
 
-  String MYURL = "http://192.168.137.1:8080/ServerApparchar/"; //pc jefri
+//String MYURL = "http://192.168.137.1:8080/ServerApparchar/"; //pc jefri
     //String MYURL = "http://ec2-54-173-136-67.compute-1.amazonaws.com:8080/ServerApparchar-19201017617878744913.0-SNAPSHOT/"; //glasfish 5
   // String MYURL="http://ec2-54-146-23-68.compute-1.amazonaws.com:8080/ServerApparchar-1.0-SNAPSHOT/"; //glasfish4
-   //String MYURL= "http://ec2-52-201-217-138.compute-1.amazonaws.com:8080/ServerApparchar-1.0-SNAPSHOT/"; // new Server
+   String MYURL= "http://ec2-52-201-217-138.compute-1.amazonaws.com:8080/ServerApparchar-1.0-SNAPSHOT/"; // new Server
 
     String jsonResponse;
 
