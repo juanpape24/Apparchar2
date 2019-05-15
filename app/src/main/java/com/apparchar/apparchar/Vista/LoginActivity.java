@@ -26,6 +26,7 @@ public class LoginActivity extends AppCompatActivity implements ContractLogin.Vi
     private TextView ver1, ver2;
     private EditText texto2, texto1;
     private ContractLogin.PresenterL presenter;
+    public static String idUser="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,7 @@ public class LoginActivity extends AppCompatActivity implements ContractLogin.Vi
 
     public void eventc(String usuarioF){
         Intent i = new Intent(this, Navigation.class);
-        i.putExtra("user",usuarioF);
+        idUser=usuarioF;
         startActivity(i);
     }
 

@@ -1,6 +1,7 @@
 package com.apparchar.apparchar;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -68,6 +69,7 @@ public class FragmentContenedor extends Fragment {
             if (appBar == null) {
                 appBar = parent.findViewById(R.id.appbar);
                 pestanas = new TabLayout(getActivity());
+                pestanas.setTabTextColors(Color.parseColor("#FFFFFF"),Color.parseColor("#FFFFFF"));
                 appBar.addView(pestanas);
                 viewPager = vista.findViewById(R.id.viewpagerInformacion);
                 llenarViewPager(viewPager);
@@ -104,8 +106,9 @@ public class FragmentContenedor extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (Utilidades.rotacion == 0)
+        if (Utilidades.rotacion == 0){
             appBar.removeView(pestanas);
+            }
     }
 
     @Override

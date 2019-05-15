@@ -120,6 +120,7 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
         comentarios.setLayoutManager(l);
         comentarios.setAdapter(adapterComentarios);
         user = getIntent().getExtras().getString("user");
+        showResult(user);
         //System.out.println("USUARIO"+user);
         imageSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
 

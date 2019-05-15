@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -124,7 +125,8 @@ public class FragmentCategoria extends Fragment implements ContractListaCategori
     public void datos(ArrayList<String> categoria) {
         rv = vista.findViewById(R.id.recycler2);
         rv.setLayoutManager(new GridLayoutManager(getContext(),2));
-        adapter = new AdapterRecycler(getActivity().getApplicationContext(), categoria, Main.idUser);
+        adapter = new AdapterRecycler(getActivity().getApplicationContext(), categoria, LoginActivity.idUser);
+        showResult(LoginActivity.idUser);
         rv.setAdapter(adapter);
         this.categoria = categoria;
 

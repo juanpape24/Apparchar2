@@ -16,27 +16,32 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.apparchar.apparchar.Vista.LoginActivity;
 
 public class Navigation extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,FragmentCategoria.OnFragmentInteractionListener,FragmentEventos.OnFragmentInteractionListener,FragmentRealTime.OnFragmentInteractionListener,FragmentContenedor.OnFragmentInteractionListener  {
     private static String idUser="";
+    private TextView texto;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        idUser=getIntent().getExtras().getString("user");
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        Fragment fragment=new FragmentContenedor();
-        getSupportFragmentManager().beginTransaction().add(R.id.content_navigation,fragment).commit();
+        if(Utilidades.validarPantalla){
+            Fragment fragment=new FragmentContenedor();
+            getSupportFragmentManager().beginTransaction().replace(R.id.content_navigation,fragment).commit();
+            Utilidades.validarPantalla=false;
+        }
         navigationView.setNavigationItemSelectedListener(this);
     }
 

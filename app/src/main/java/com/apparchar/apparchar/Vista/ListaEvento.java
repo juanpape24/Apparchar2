@@ -73,7 +73,7 @@ public class ListaEvento extends AppCompatActivity implements ContractListaEvent
             rv = findViewById(R.id.recycler);
             rv.setLayoutManager(new GridLayoutManager(this, 1));
             adapter = new RecyclerViewAdapter(getApplicationContext(), listica, idUser);
-            //showResult(idUser);
+            showResult(idUser);
             rv.setAdapter(adapter);
             eventos = (ArrayList<EventoM>) listica;
 

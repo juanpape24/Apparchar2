@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -129,7 +130,8 @@ public class FragmentEventos extends Fragment implements ContractListaEvento.Vie
     public void dato(List<EventoM> lista) {
         rv = vista.findViewById(R.id.recycler);
         rv.setLayoutManager(new GridLayoutManager(getActivity(), 1));
-        adapter = new RecyclerViewAdapter(getActivity(), lista, Main.idUser);
+        adapter = new RecyclerViewAdapter(getActivity(), lista, LoginActivity.idUser);
+        showResult(LoginActivity.idUser);
         rv.setAdapter(adapter);
         eventos = (ArrayList<EventoM>) lista;
 
