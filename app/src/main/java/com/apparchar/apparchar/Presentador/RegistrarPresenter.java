@@ -7,6 +7,7 @@ import com.apparchar.apparchar.Conexion.MyLoopjTask;
 import com.apparchar.apparchar.Conexion.OnLoopjCompleted;
 import com.apparchar.apparchar.Contract.ContractClient;
 
+import com.apparchar.apparchar.IO.ApiAdapter;
 import com.apparchar.apparchar.Modelo.ClienteM;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -14,10 +15,15 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.loopj.android.http.RequestParams;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 public class RegistrarPresenter implements ContractClient.Presenter, OnLoopjCompleted {
     ClienteM cliente;
     RequestParams params;
+    ApiAdapter apiAdapter;
 
     private ContractClient.View vista;
 
@@ -29,6 +35,7 @@ public class RegistrarPresenter implements ContractClient.Presenter, OnLoopjComp
     public RegistrarPresenter(ContractClient.View vista) {
         this.vista = vista;
         cliente = new ClienteM();
+        apiAdapter = new ApiAdapter();
     }
 
     @Override
@@ -52,12 +59,29 @@ public class RegistrarPresenter implements ContractClient.Presenter, OnLoopjComp
 
                 String envio = g.toJson(cliente);
 
-                params.put("insertar", envio);
-                String nameServlet = "SERVCliente";
+
+                ApiAdapter.getApiService().registro(cliente).enqueue(new Callback<ClienteM>() {
+                    @Override
+                    public void onResponse(Call<ClienteM> call, Response<ClienteM> response) {
+                        if(response.isSuccessful()) {
+                            vista.showResult("Se registró correctamente");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ClienteM> call, Throwable t) {
+                            vista.showResult("El usuario ya existe");
+                    }
+                });
 
 
-                MyLoopjTask loopjTask = new MyLoopjTask(params, nameServlet, (Context) vista, this);
-                loopjTask.executeLoopjCall();
+
+                //params.put("insertar", envio);
+                //String nameServlet = "SERVCliente";
+
+
+              //  MyLoopjTask loopjTask = new MyLoopjTask(params, nameServlet, (Context) vista, this);
+                //loopjTask.executeLoopjCall();
                 //vista.showResult("Registro op: ");
             }
 
