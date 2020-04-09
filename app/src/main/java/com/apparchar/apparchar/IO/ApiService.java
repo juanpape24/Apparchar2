@@ -2,6 +2,7 @@ package com.apparchar.apparchar.IO;
 
 import com.apparchar.apparchar.Modelo.ClienteM;
 import com.apparchar.apparchar.Response.ResponseCliente;
+import com.google.gson.Gson;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -14,17 +15,8 @@ public interface ApiService {
     @GET("cliente")
     Call<ResponseCliente> getClientes();
 
-    @POST("/posts")
-    @FormUrlEncoded
+    @POST("cliente/")
     Call<ClienteM> registro(@Body ClienteM cliente);
-
-    /*@POST("cliente")
-    @FormUrlEncoded
-    Call<ClienteM> registro(@Field("nombre") String nombre,
-                            @Field("edad") int edad,
-                            @Field("correo") String correo,
-                            @Field("usuario") String usuario,
-                            @Field("contrasenia") String contrasenia);*/
 
 
 }

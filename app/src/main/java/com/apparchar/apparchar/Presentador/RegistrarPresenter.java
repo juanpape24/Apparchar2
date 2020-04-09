@@ -20,7 +20,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class RegistrarPresenter implements ContractClient.Presenter, OnLoopjCompleted {
+public class RegistrarPresenter implements ContractClient.Presenter{
     ClienteM cliente;
     RequestParams params;
     ApiAdapter apiAdapter;
@@ -54,53 +54,30 @@ public class RegistrarPresenter implements ContractClient.Presenter, OnLoopjComp
                 cliente.setContrasenia(pass);
                 vista.swap();
                 params = new RequestParams();
-                Gson g = new Gson();
 
 
-                String envio = g.toJson(cliente);
+
+
 
 
                 ApiAdapter.getApiService().registro(cliente).enqueue(new Callback<ClienteM>() {
                     @Override
                     public void onResponse(Call<ClienteM> call, Response<ClienteM> response) {
-                        if(response.isSuccessful()) {
-                            vista.showResult("Se registró correctamente");
-                        }
+                        vista.showResult("Se registró correctamente");
                     }
 
                     @Override
                     public void onFailure(Call<ClienteM> call, Throwable t) {
-                            vista.showResult("El usuario ya existe");
+                        vista.showResult("El usuario ya existe");
                     }
                 });
 
-
-
-                //params.put("insertar", envio);
-                //String nameServlet = "SERVCliente";
-
-
-              //  MyLoopjTask loopjTask = new MyLoopjTask(params, nameServlet, (Context) vista, this);
-                //loopjTask.executeLoopjCall();
-                //vista.showResult("Registro op: ");
             }
 
         }
     }
 
 
-    @Override
-    public void taskCompleted(String results) {
-        JsonParser jsonParser = new JsonParser();
-        JsonObject jo = (JsonObject) jsonParser.parse(results);
-        JsonElement c = jo.get("respuesta");
-        String r = c.getAsString();
-        vista.showResult(r);
-        if (r.equals("true")) {
-            vista.showResult("Se registró correctamente");
-        } else {
-            vista.showResult("El usuario ya existe");
-        }
-    }
+
 }
 

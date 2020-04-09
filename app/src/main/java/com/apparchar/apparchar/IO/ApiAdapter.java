@@ -20,7 +20,7 @@ public class ApiAdapter {
             httpClient.addInterceptor(logging);
 
             //String baseUrl = "https://api.themoviedb.org/3/movie/popular?api_key=09963e300150f9831c46a1828a82a984&language=en-US";
-            String baseUrl = "http://127.0.0.1:8000/";
+            String baseUrl = "http://192.168.137.138:8000/";
 
             if (API_SERVICE == null) {
                 Retrofit retrofit = new Retrofit.Builder()
