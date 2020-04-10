@@ -23,7 +23,6 @@ import retrofit2.Response;
 public class RegistrarPresenter implements ContractClient.Presenter{
     ClienteM cliente;
     RequestParams params;
-    ApiAdapter apiAdapter;
 
     private ContractClient.View vista;
 
@@ -35,7 +34,6 @@ public class RegistrarPresenter implements ContractClient.Presenter{
     public RegistrarPresenter(ContractClient.View vista) {
         this.vista = vista;
         cliente = new ClienteM();
-        apiAdapter = new ApiAdapter();
     }
 
     @Override
@@ -44,7 +42,7 @@ public class RegistrarPresenter implements ContractClient.Presenter{
             vista.showResult("Llene todos los campos");
         } else {
             if (!pass.equals(pass2)) {
-                vista.showResult("Las contraseñas no coinciden");
+                vista.showResult("Las contrase\u00f1as no coinciden");
             } else {
                 cliente.setNombre(nombre);
                 cliente.setEdad(Integer.parseInt(edad));
@@ -54,16 +52,10 @@ public class RegistrarPresenter implements ContractClient.Presenter{
                 cliente.setContrasenia(pass);
                 vista.swap();
                 params = new RequestParams();
-
-
-
-
-
-
                 ApiAdapter.getApiService().registro(cliente).enqueue(new Callback<ClienteM>() {
                     @Override
                     public void onResponse(Call<ClienteM> call, Response<ClienteM> response) {
-                        vista.showResult("Se registró correctamente");
+                        vista.showResult("Se registr\u00f3 correctamente");
                     }
 
                     @Override
