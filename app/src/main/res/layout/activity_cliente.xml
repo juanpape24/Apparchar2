@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/relativeLayout4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -19,28 +19,50 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0">
+            app:layout_constraintVertical_bias="0.0"
+            android:orientation="vertical">
+
+
+
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/fotoPerfil"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="30dp"
+
+                android:src="@mipmap/picture_default"
+                android:layout_gravity="center"/>
+            <Button
+                android:id="@+id/cargarFoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                android:text="Cargar Foto"
+                android:onClick="upload">
+
+
+            </Button>
+
+
+
+
 
             <TextView
                 android:id="@+id/nombre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="35dp"
-                android:layout_marginTop="41dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginHorizontal="40dp"
                 android:text="@string/nombre" />
 
             <EditText
                 android:id="@+id/nombre1"
                 android:layout_width="346dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="64dp"
-                android:layout_marginEnd="33dp"
+                android:layout_marginHorizontal="40dp"
                 android:ems="10"
                 android:hint="@string/nombre1"
                 android:inputType="textPersonName" />
@@ -49,22 +71,14 @@
                 android:id="@+id/apellido"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="36dp"
-                android:layout_marginTop="122dp"
+                android:layout_marginHorizontal="40dp"
                 android:text="@string/apellido" />
 
             <EditText
                 android:id="@+id/apellido1"
                 android:layout_width="343dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="35dp"
-                android:layout_marginTop="145dp"
-                android:layout_marginEnd="33dp"
+                android:layout_marginHorizontal="40dp"
                 android:ems="10"
                 android:hint="@string/apellido1"
                 android:inputType="textPersonName" />
@@ -73,22 +87,14 @@
                 android:id="@+id/edad"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="35dp"
-                android:layout_marginTop="204dp"
+                android:layout_marginHorizontal="40dp"
                 android:text="@string/edad" />
 
             <EditText
                 android:id="@+id/edad1"
                 android:layout_width="343dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="35dp"
-                android:layout_marginTop="223dp"
-                android:layout_marginEnd="33dp"
+                android:layout_marginHorizontal="40dp"
                 android:ems="10"
                 android:hint="@string/edad1"
                 android:inputType="number" />
@@ -97,22 +103,14 @@
                 android:id="@+id/email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="35dp"
-                android:layout_marginTop="276dp"
+                android:layout_marginHorizontal="40dp"
                 android:text="@string/correo" />
 
             <EditText
                 android:id="@+id/email1"
                 android:layout_width="343dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="35dp"
-                android:layout_marginTop="299dp"
-                android:layout_marginEnd="33dp"
+                android:layout_marginHorizontal="40dp"
                 android:ems="10"
                 android:hint="@string/correo1"
                 android:inputType="textPersonName" />
@@ -121,22 +119,14 @@
                 android:id="@+id/cel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="34dp"
-                android:layout_marginTop="352dp"
+                android:layout_marginHorizontal="40dp"
                 android:text="@string/cel" />
 
             <EditText
                 android:id="@+id/cel1"
                 android:layout_width="342dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="36dp"
-                android:layout_marginTop="374dp"
-                android:layout_marginEnd="33dp"
+                android:layout_marginHorizontal="40dp"
                 android:ems="10"
                 android:hint="@string/cel1"
                 android:inputType="number" />
@@ -145,22 +135,14 @@
                 android:id="@+id/user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="34dp"
-                android:layout_marginTop="427dp"
+                android:layout_marginHorizontal="40dp"
                 android:text="@string/usuario" />
 
             <EditText
                 android:id="@+id/user1"
                 android:layout_width="343dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="35dp"
-                android:layout_marginTop="450dp"
-                android:layout_marginEnd="33dp"
+                android:layout_marginHorizontal="40dp"
                 android:ems="10"
                 android:hint="@string/usuario1"
                 android:inputType="textPersonName" />
@@ -169,22 +151,14 @@
                 android:id="@+id/pass"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="34dp"
-                android:layout_marginTop="508dp"
+                android:layout_marginHorizontal="40dp"
                 android:text="@string/pass1" />
 
             <EditText
                 android:id="@+id/pass1"
                 android:layout_width="343dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="35dp"
-                android:layout_marginTop="528dp"
-                android:layout_marginEnd="33dp"
+                android:layout_marginHorizontal="40dp"
                 android:ems="10"
                 android:hint="@string/pass"
                 android:inputType="textPassword" />
@@ -193,22 +167,14 @@
                 android:id="@+id/pass2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="35dp"
-                android:layout_marginTop="584dp"
+                android:layout_marginHorizontal="40dp"
                 android:text="@string/pass2" />
 
             <EditText
                 android:id="@+id/pass3"
                 android:layout_width="344dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="34dp"
-                android:layout_marginTop="603dp"
-                android:layout_marginEnd="33dp"
+                android:layout_marginHorizontal="40dp"
                 android:ems="10"
                 android:hint="@string/pass3"
                 android:inputType="textPassword" />
@@ -217,14 +183,11 @@
                 android:id="@+id/button4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="107dp"
-                android:layout_marginTop="657dp"
+                android:layout_gravity="center"
                 android:onClick="registrar"
                 android:text="@string/registrar" />
 
-        </RelativeLayout>
+        </LinearLayout>
     </ScrollView>
 
 </android.support.constraint.ConstraintLayout>
