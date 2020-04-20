@@ -34,12 +34,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     private List<EventoM> lista;
     private Context context;
-    private String idUser;
 
-    public RecyclerViewAdapter(Context context, List<EventoM> lista, String id) {
+    public RecyclerViewAdapter(Context context, List<EventoM> lista) {
         this.lista = lista;
         this.context = context;
-        this.idUser = id;
     }
 
     @Override
@@ -67,26 +65,25 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         final String hour = currentDateandTime.substring(9, 11);
         final String minutos = currentDateandTime.substring(11, 13);
         String time = hour + ":" + minutos;
-        myViewHolder.descripcion.setText(lista.get(i).getDescripcion() + "\n\nDireccion: " + lista.get(i).getDireccion().getDireccion() + "\nFecha: " + lista.get(i).getEventoPK().getFecha() + "\nHora: " + lista.get(i).getEventoPK().getHoraInicio());
+        myViewHolder.descripcion.setText(lista.get(i).getDescripcion() + "\nDireccion: "+ lista.get(i).getLugar()+"\nFecha: " + lista.get(i).getFecha() + "\nHora: " + lista.get(i).getHora_inicio());
         myViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String inicio[] = lista.get(i).getEventoPK().getHoraInicio().split(":");
-                String end[] = lista.get(i).getEventoPK().getHoraFinal().split(":");
-                String timeS = inicio[0] + inicio[1]; //hora inicio
-                String timeE = end[0] + end[1]; //hora final
-                String timeA = hour + minutos; //hora actual
+                //String inicio[] = lista.get(i).getEventoPK().getHoraInicio().split(":");
+                //String end[] = lista.get(i).getEventoPK().getHoraFinal().split(":");
+                //String timeS = inicio[0] + inicio[1]; //hora inicio
+                //String timeE = end[0] + end[1]; //hora final
+                //String timeA = hour + minutos; //hora actual
                 //System.out.println("Condicional: "+timeS+"<"+timeA+"-----"+timeE+">"+timeA);
 
 
                // if (lista.get(i).getEventoPK().getFecha().equals(fechac) && Integer.valueOf(timeS) < Integer.valueOf(timeA) && Integer.valueOf(timeE) > Integer.valueOf(timeA)) {
                     Intent intent = new Intent(context, CalificacionEvento.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra("id", lista.get(i).getEventoPK().getIdevento());
+                    /*intent.putExtra("id", lista.get(i).getEventoPK().getIdevento());
                     intent.putExtra("fecha", lista.get(i).getEventoPK().getFecha());
                     intent.putExtra("final", lista.get(i).getEventoPK().getHoraFinal());
-                    intent.putExtra("inicio", lista.get(i).getEventoPK().getHoraInicio());
-                    intent.putExtra("user", idUser);
+                    intent.putExtra("inicio", lista.get(i).getEventoPK().getHoraInicio());*/
                     context.startActivity(intent);
                 //} else {
                   //  Toast.makeText(context, "El evento no ha empezado o ya finalizó", Toast.LENGTH_SHORT).show();

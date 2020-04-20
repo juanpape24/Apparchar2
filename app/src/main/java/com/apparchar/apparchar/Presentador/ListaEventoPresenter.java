@@ -1,57 +1,106 @@
 package com.apparchar.apparchar.Presentador;
 
 import android.content.Context;
+import android.util.Log;
 
+import com.apparchar.apparchar.Conexion.JsonApi;
+import com.apparchar.apparchar.Conexion.JsonEvent;
 import com.apparchar.apparchar.Conexion.MyLoopjTask;
 import com.apparchar.apparchar.Conexion.OnLoopjCompleted;
 import com.apparchar.apparchar.Contract.ContractListaEvento;
 import com.apparchar.apparchar.Modelo.CategoriaM;
+import com.apparchar.apparchar.Modelo.EventoCategoria;
 import com.apparchar.apparchar.Modelo.EventoM;
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.reflect.TypeToken;
-import com.loopj.android.http.RequestParams;
 
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListaEventoPresenter implements ContractListaEvento.EventoPresenter, OnLoopjCompleted {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+public class ListaEventoPresenter implements ContractListaEvento.EventoPresenter {
 
     ContractListaEvento.ViewEvento vista;
 
     List<EventoM> lista = new ArrayList<>();
-    RequestParams params;
+    List<CategoriaM> categoriaM = new ArrayList<>();
+    JsonApi jsonEventApi;
+    JsonApi jsonApi;
     Context context;
 
     public ListaEventoPresenter(ContractListaEvento.ViewEvento vista, Context context) {
         this.vista = vista;
         this.context = context;
-        params = new RequestParams();
-        params.put("listar", "gg");
-        String nameServlet = "SERVEvento";
-        MyLoopjTask loopjTask = new MyLoopjTask(params, nameServlet, context, this);
-        loopjTask.executeLoopjCall();
-    }
+        //jsonEventApi=new JsonEventApi();
 
-
-    @Override
-    public void taskCompleted(String results) {
-        JsonParser jsonParser = new JsonParser();
-        JsonObject jo = (JsonObject) jsonParser.parse(results);
-        JsonElement c = jo.get("respuesta");
-        String r = c.getAsString();
-        Type listType = new TypeToken<ArrayList<EventoM>>() {
-        }.getType();
-        Gson a = new Gson();
-        ArrayList<EventoM> arrayList = a.fromJson(r, listType);
-        for (int i = 0; i < arrayList.size(); i++) {
-            lista.add(arrayList.get(i));
-        }
-        vista.dato(lista);
+        getPost();
 
     }
+
+    private void getPost() {
+        Call<List<EventoM>> call = jsonEventApi.getJsonEvent().getEvento();
+        call.enqueue(new Callback<List<EventoM>>() {
+            @Override
+            public void onResponse(Call<List<EventoM>> call, Response<List<EventoM>> response) {
+                if (!response.isSuccessful()) {
+                    vista.showResult(String.valueOf(response.code()));
+                    return;
+                }
+                List<EventoM> eventoMS = response.body();
+                if (vista.getCat() != null) {
+                    for (EventoM event1 : eventoMS) {
+                            if (vista.getIdentificador().equals(String.valueOf(event1.getEvento().get(event1.getEvento().size()-1).getCategoria()))){
+                                event1.setCategoria(vista.getCat());
+                                lista.add(event1);
+                        }
+                    }
+
+                } else if(vista.getCat()==null){
+                    for (EventoM event1 : eventoMS) {
+                        lista.add(event1);
+                    }
+                }
+                vista.dato(lista);
+            }
+
+            @Override
+            public void onFailure(Call<List<EventoM>> call, Throwable t) {
+                vista.showResult(t.getMessage());
+            }
+        });
+    }
+
+    private void getPostEvCa() {
+        Call<List<CategoriaM>> call = jsonApi.getJsonCategory().getCategoria();
+        Log.i("contract",  "Lo que sea");
+        call.enqueue(new Callback<List<CategoriaM>>() {
+            @Override
+            public void onResponse(Call<List<CategoriaM>> call, Response<List<CategoriaM>> response) {
+                if (!response.isSuccessful()) {
+                    Log.i("contract",  "Lo que sea");
+                    vista.showResult(String.valueOf(response.code()));
+                    return;
+                }
+                Log.i("contract",  "Lo que sea");
+                List<CategoriaM> cate1 = response.body();
+                for (CategoriaM cat : cate1) {
+                    Log.i("contract",  cate1.toString());
+                    categoriaM.add(cat);
+                }
+            }
+
+
+            @Override
+            public void onFailure(Call<List<CategoriaM>> call, Throwable t) {
+                Log.i("contract",  "Lo que sea");
+                vista.showResult(t.getMessage());
+            }
+        });
+    }
+
 }

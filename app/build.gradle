@@ -8,8 +8,8 @@ android {
         applicationId "com.apparchar.apparchar"
         minSdkVersion 22
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -48,6 +48,8 @@ dependencies {
     implementation 'com.android.support:design:28.0.0-alpha1'
     implementation 'com.weiwangcn.betterspinner:library-material:1.1.0'
     implementation 'com.farbod.labelledspinner:labelledspinner:1.1.5'
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
     // libreria Carrusel
 
 

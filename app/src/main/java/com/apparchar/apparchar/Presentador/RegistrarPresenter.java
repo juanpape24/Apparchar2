@@ -90,9 +90,8 @@ public class RegistrarPresenter implements ContractClient.Presenter, OnLoopjComp
         JsonObject jo = (JsonObject) jsonParser.parse(results);
         JsonElement c = jo.get("respuesta");
         String r = c.getAsString();
-        vista.showResult(r);
         if (r.equals("true")) {
-            vista.showResult("Se registró correctamente");
+            vista.showResult("Se registro correctamente");
         } else {
             vista.showResult("El usuario ya existe");
         }

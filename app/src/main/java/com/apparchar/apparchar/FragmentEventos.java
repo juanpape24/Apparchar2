@@ -46,6 +46,7 @@ public class FragmentEventos extends Fragment implements ContractListaEvento.Vie
     private TextView event;
     private ArrayList<EventoM> eventos;
     private View vista;
+    private String id;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -92,7 +93,6 @@ public class FragmentEventos extends Fragment implements ContractListaEvento.Vie
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         vista= inflater.inflate(R.layout.fragment_fragment_eventos, container, false);
-        event=vista.findViewById(R.id.textEvento);
        // Toast.makeText(getActivity(),idUser,Toast.LENGTH_SHORT).show();
         return vista;
     }
@@ -130,8 +130,7 @@ public class FragmentEventos extends Fragment implements ContractListaEvento.Vie
     public void dato(List<EventoM> lista) {
         rv = vista.findViewById(R.id.recycler);
         rv.setLayoutManager(new GridLayoutManager(getActivity(), 1));
-        adapter = new RecyclerViewAdapter(getActivity(), lista, LoginActivity.idUser);
-        showResult(LoginActivity.idUser);
+        adapter = new RecyclerViewAdapter(getActivity(), lista);
         rv.setAdapter(adapter);
         eventos = (ArrayList<EventoM>) lista;
 
@@ -141,6 +140,17 @@ public class FragmentEventos extends Fragment implements ContractListaEvento.Vie
     public void showResult(String mensaje) {
         Toast.makeText(getActivity(), mensaje, Toast.LENGTH_LONG).show();
     }
+
+    @Override
+    public String getCat() {
+        return null;
+    }
+
+    @Override
+    public String getIdentificador() {
+        return null;
+    }
+
     public void actualizarE(View view){
         presenter = new ListaEventoPresenter(this,getActivity());
     }

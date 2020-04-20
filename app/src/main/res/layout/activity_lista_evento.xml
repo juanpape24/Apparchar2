@@ -8,21 +8,10 @@
     tools:context=".Vista.ListaEvento">
 
 
-    <TextView
-        android:id="@+id/textEvento"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:text="Lista de eventos"
-        android:textAlignment="center"
-        android:textColor="@color/colorAccent"
-        android:textStyle="bold|italic" />
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
-        android:layout_height="568dp"
-        android:layout_marginTop="27dp">
+        android:layout_height="match_parent">
 
     </android.support.v7.widget.RecyclerView>
 

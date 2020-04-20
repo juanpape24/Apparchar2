@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public interface ContractListaCategoria {
 
     interface viewCategoria{
-        void datos(ArrayList<String> categoria);
+        void datos(ArrayList<CategoriaM> categoria);
         void showResult(String mensaje);
     }
     interface presenterCategoria{

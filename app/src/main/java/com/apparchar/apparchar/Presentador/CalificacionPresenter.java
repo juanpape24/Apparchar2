@@ -162,7 +162,7 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC, O
         opc = 1;
         params = new RequestParams();
         Gson g = new Gson();
-        EventoM eventoM = new EventoM();
+        EventoM eventoM= new EventoM();
         eventoM.setEventoPK(eventoPKM);
         String alv = g.toJson(eventoM);
         params.put("listar", alv);
@@ -182,14 +182,10 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC, O
         if (!comentarios.isEmpty()) {
             vista.mostrarComentarios(comentarios);
             comentarios = new ArrayList<>();
-        } else {
-            vista.showResult("Aun no hay comentarios");
         }
         if (!fotos.isEmpty()) {
             vista.mostrarFotos(fotos);
             fotos = new ArrayList<>();
-        } else {
-            vista.showResult("Aun no hay Fotos");
         }
     }
 
@@ -204,14 +200,22 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC, O
             }.getType();
             Gson a = new Gson();
             ArrayList<CalificacionM> arrayList = a.fromJson(listaR, listType);
-
             for (int i = 0; i < arrayList.size(); i++) {
-                if (arrayList.get(i).getComentario() != null)
+                if (arrayList.get(i).getComentario() != null) {
                     comentarios.add(arrayList.get(i));
+                } else {
+                    vista.showResult("Aún no hay comentarios");
+                }
+
                 if (arrayList.get(i).getPorcentaje() != null)
                     porcentaje.add(arrayList.get(i).getPorcentaje());
-                if (arrayList.get(i).getMultimedia() != null)
+
+                if (arrayList.get(i).getMultimedia() != null) {
                     fotos.add(arrayList.get(i).getMultimedia());
+                } else {
+                    vista.showResult("Aún no hay Fotos");
+                }
+
             }
             update();
 

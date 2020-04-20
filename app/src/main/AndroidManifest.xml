@@ -23,12 +23,8 @@
         <activity
             android:name=".Navigation"
             android:label="@string/title_activity_navigation"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"></activity>
-        <activity
-            android:name=".SplashScreen"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,10 +32,13 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".SplashScreen"
+            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+        <activity
             android:name=".Main"
             android:label="@string/title_activity_main"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+        ></activity>
         <activity android:name=".Vista.ListaCategoria" />
 
         <meta-data
@@ -61,43 +60,21 @@
                 tools:replace="android:resource" />
         </provider>
 
-        <activity
-            android:name=".Vista.ListaEvento"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Vista.Empresa"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Vista.Cliente"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Vista.CreacionEvento"
-            android:screenOrientation="portrait" />
+        <activity android:name=".Vista.ListaEvento">
+        </activity>
+        <activity android:name=".Vista.Empresa" />
+        <activity android:name=".Vista.Cliente" />
+        <activity android:name=".Vista.CreacionEvento" />
         <activity
             android:name=".Vista.CalificacionEvento"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Vista.LoginActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity
-            android:name=".Vista.TipoLogin"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".MapActivity"
-            android:screenOrientation="portrait" /> <!-- <activity android:name=".RealTimeActivity" /> -->
-        <activity
-            android:name=".Vista.crearEvento1"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Vista.crearEvento2"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Vista.crearEvento3"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Vista.crearEvento4"
-            android:screenOrientation="portrait" />
+            android:label="@string/app_name" />
+        <activity android:name=".Vista.LoginActivity"></activity>
+        <activity android:name=".Vista.TipoLogin" />
+        <activity android:name=".MapActivity" /> <!-- <activity android:name=".RealTimeActivity" /> -->
+        <activity android:name=".Vista.crearEvento1" />
+        <activity android:name=".Vista.crearEvento2" />
+        <activity android:name=".Vista.crearEvento3" />
+        <activity android:name=".Vista.crearEvento4" />
     </application>
 
 </manifest>
