@@ -14,6 +14,6 @@ public interface ContractClient {
         void swap();
     }
     interface Presenter{
-        void enviar(String nombre, String apellido, String edad, String correo, String cel, String user, String pass, String pass2) throws JSONException;
+        void enviar(String nombre, String apellido, String edad, String correo, String cel, String user, String pass, String pass2,byte[] foto) throws JSONException;
     }
 }
