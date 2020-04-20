@@ -22,7 +22,7 @@ public class EmpresaM {
     private String contrasenia;
     private Collection<EventoM> eventoCollection;
 
-    public EmpresaM(EmpresaPKM empresaPK, String nombre, String ubicacion, String telefono, String correo, String descripcion,String contrasenia, Collection<EventoM> eventoCollection) {
+    public EmpresaM(EmpresaPKM empresaPK, String nombre, String ubicacion, String telefono, String correo, String descripcion, String contrasenia, Collection<EventoM> eventoCollection) {
         this.empresaPK = empresaPK;
         this.nombre = nombre;
         this.ubicacion = ubicacion;

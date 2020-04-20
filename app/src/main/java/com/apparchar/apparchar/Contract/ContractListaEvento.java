@@ -10,6 +10,8 @@ public interface ContractListaEvento {
     interface ViewEvento{
         void dato(List<EventoM> lista);
         void showResult(String mensaje);
+        String getCat();
+        String getIdentificador();
     }
     interface EventoPresenter{
     }

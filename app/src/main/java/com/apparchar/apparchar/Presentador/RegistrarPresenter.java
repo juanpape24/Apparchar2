@@ -89,4 +89,3 @@ public class RegistrarPresenter implements ContractClient.Presenter{
 
 
 }
-

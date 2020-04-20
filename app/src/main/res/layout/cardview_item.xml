@@ -56,7 +56,7 @@
                         android:layout_margin="5dp"
                         android:text="@string/descripcion"
                         android:textAlignment="viewStart"
-                        android:textColor="@color/quantum_cyan800"
+                        android:textColor="@color/colorAccent"
                         />
 
                 </LinearLayout>
