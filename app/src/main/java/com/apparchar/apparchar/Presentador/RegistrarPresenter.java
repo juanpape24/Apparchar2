@@ -1,18 +1,10 @@
 package com.apparchar.apparchar.Presentador;
 
 
-import android.content.Context;
-
-import com.apparchar.apparchar.Conexion.MyLoopjTask;
-import com.apparchar.apparchar.Conexion.OnLoopjCompleted;
+import com.apparchar.apparchar.Conexion.JsonApi;
 import com.apparchar.apparchar.Contract.ContractClient;
 
-import com.apparchar.apparchar.IO.ApiAdapter;
 import com.apparchar.apparchar.Modelo.ClienteM;
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.loopj.android.http.RequestParams;
 
 import okhttp3.MediaType;
@@ -59,10 +51,10 @@ public class RegistrarPresenter implements ContractClient.Presenter{
 
                 RequestBody requestBody = RequestBody.create(MediaType.parse("application/octet-stream"),foto);
                 MultipartBody.Part body= MultipartBody.Part.createFormData("foto",user,requestBody);
-                ApiAdapter.getApiService().uploadFile(body).enqueue(new Callback<ClienteM>() {
+                JsonApi.getApiService().uploadFile(body).enqueue(new Callback<ClienteM>() {
                     @Override
                     public void onResponse(Call<ClienteM> call, Response<ClienteM> response) {
-                        ApiAdapter.getApiService().registro(cliente).enqueue(new Callback<ClienteM>() {
+                        JsonApi.getApiService().registro(cliente).enqueue(new Callback<ClienteM>() {
                             @Override
                             public void onResponse(Call<ClienteM> call, Response<ClienteM> response) {
                                 vista.showResult("Se registr\u00f3 correctamente");

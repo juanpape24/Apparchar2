@@ -1,4 +1,4 @@
-package com.apparchar.apparchar.IO;
+package com.apparchar.apparchar.Conexion;
 
 import com.apparchar.apparchar.Modelo.ClienteM;
 import com.apparchar.apparchar.Vista.Cliente;

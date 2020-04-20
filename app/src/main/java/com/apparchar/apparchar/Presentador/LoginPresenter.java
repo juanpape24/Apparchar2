@@ -1,7 +1,9 @@
 package com.apparchar.apparchar.Presentador;
 
+import android.util.Log;
+
+import com.apparchar.apparchar.Conexion.JsonApi;
 import com.apparchar.apparchar.Contract.ContractLogin;
-import com.apparchar.apparchar.IO.ApiAdapter;
 import com.apparchar.apparchar.Modelo.ClienteM;
 
 import retrofit2.Call;
@@ -24,7 +26,7 @@ public class LoginPresenter implements ContractLogin.PresenterL{
         if (usuario.equals("") || contrasenia.equals(""))
             vista.showResult("Llene todos los campos");
         else {
-            ApiAdapter.getApiService().validacion(usuario,contrasenia).enqueue(new Callback<ClienteM>() {
+            JsonApi.getApiService().validacion(usuario,contrasenia).enqueue(new Callback<ClienteM>() {
                 @Override
                 public void onResponse(Call<ClienteM> call, Response<ClienteM> response) {
                     String rta=response.message();
@@ -36,6 +38,7 @@ public class LoginPresenter implements ContractLogin.PresenterL{
 
                 @Override
                 public void onFailure(Call<ClienteM> call, Throwable t) {
+                    Log.i("error",t.getMessage());
                     vista.showResult("No se puede conectar al Servidor");
                 }
             });

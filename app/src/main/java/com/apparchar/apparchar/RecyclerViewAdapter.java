@@ -52,8 +52,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         if (lista.get(i).getFoto() == null) {
             myViewHolder.image.setImageResource(R.drawable.descarga);
         } else {
-            Bitmap bmp = BitmapFactory.decodeByteArray(lista.get(i).getFoto(), 0, lista.get(i).getFoto().length);
-            myViewHolder.image.setImageBitmap(bmp);
+            myViewHolder.image.setImageResource(R.drawable.descarga);
+            //Bitmap bmp = BitmapFactory.decodeByteArray(lista.get(i).getFoto(), 0, lista.get(i).getFoto().length);
+            //myViewHolder.image.setImageBitmap(bmp);
         }
         myViewHolder.titulo.setText(lista.get(i).getNombre());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
