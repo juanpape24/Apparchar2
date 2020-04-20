@@ -42,6 +42,7 @@ import com.apparchar.apparchar.Contract.ContractCalificacion;
 import com.apparchar.apparchar.Modelo.CalificacionM;
 import com.apparchar.apparchar.Modelo.ClienteM;
 import com.apparchar.apparchar.Modelo.EventoM;
+import com.apparchar.apparchar.Modelo.EventoPKM;
 import com.apparchar.apparchar.Presentador.CalificacionPresenter;
 import com.apparchar.apparchar.R;
 import com.google.android.gms.dynamic.IFragmentWrapper;
@@ -53,8 +54,10 @@ import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
 
 public class CalificacionEvento extends AppCompatActivity implements ContractCalificacion.ViewC {
     final int codFoto = 20;
@@ -109,13 +112,13 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
         horaInicioEvento = findViewById(R.id.horaInicioEvento);
         horaFinalEvento = findViewById(R.id.horaFinalEvento);
         fotoEvento = findViewById(R.id.fotoEvento);
+        // carouselPicker = findViewById(R.id.CarouselPicker);
         imageSwitcher = findViewById(R.id.imageSwitcher);
         adapterComentarios = new AdapterComentarios(this);
         LinearLayoutManager l = new LinearLayoutManager(this);
         comentarios.setLayoutManager(l);
         comentarios.setAdapter(adapterComentarios);
         user = getIntent().getExtras().getString("user");
-        //System.out.println("USUARIO"+user);
         imageSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
 
             public View makeView() {
@@ -151,13 +154,13 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
                 String hour = currentDateandTime.substring(9, 11);
                 String minutos = currentDateandTime.substring(11, 13);
                 String time = hour + ":" + minutos;
-                String h = fechac + " " + time;
                 clienteM.setUsuario(user);
-                calificacionM.setCliente(clienteM);
+                calificacionM.setUsuariocliente(clienteM);
                 calificacionM.setComentario(mensaje);
-                calificacionM.setHora(h);
+                calificacionM.setHora(time);
                 adapterComentarios.addC(calificacionM);
                 int id = getIntent().getExtras().getInt("id");
+                comentario.setText("");
                 calificacionPresenter.crearComentario(mensaje, time, user, id, fechac, horaInicio, horaFinal, fecha);
 
             }
@@ -166,7 +169,12 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
             @Override
             public void onClick(View v) {
                 int id = getIntent().getExtras().getInt("id");
-                calificacionPresenter.actualizar(id);
+                EventoPKM eventoPKM = new EventoPKM();
+                eventoPKM.setFecha(fecha);
+                eventoPKM.setHoraFinal(horaFinal);
+                eventoPKM.setHoraInicio(horaInicio);
+                eventoPKM.setIdevento(id);
+                calificacionPresenter.actualizar(eventoPKM);
             }
         });
         adapterComentarios.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
@@ -226,7 +234,7 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
                 String nombreImagen = "";
                 if (opc[i].equals("Tomar Foto")) {
                     if (mLocationPermissionsGranted) {
-                        File fileImagen = new File(Environment.getExternalStorageDirectory(), rutaImagen);
+                        /*File fileImagen = new File(Environment.getExternalStorageDirectory(), rutaImagen);
                         boolean iscreada = fileImagen.exists();
                         if (iscreada == false) {
                             iscreada = fileImagen.mkdirs();
@@ -235,10 +243,10 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
                             nombreImagen = (System.currentTimeMillis() / 1000) + ".jpg";
                         }
                         ruta = Environment.getExternalStorageDirectory() + File.separator + rutaImagen + File.separator + nombreImagen;
-                        File imagen = new File(ruta);
+                        File imagen = new File(ruta);*/
                         Intent in = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-                        in.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imagen));
+                       // in.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imagen));
                         startActivityForResult(in, codFoto);
                     } else getPermission();
 
@@ -293,16 +301,20 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
 
                     break;
                 case codFoto:
+
+
+
                     ByteArrayOutputStream b2 = new ByteArrayOutputStream();
-                    MediaScannerConnection.scanFile(this, new String[]{ruta}, null, new MediaScannerConnection.OnScanCompletedListener() {
+                    /*MediaScannerConnection.scanFile(this, new String[]{ruta}, null, new MediaScannerConnection.OnScanCompletedListener() {
                         @Override
                         public void onScanCompleted(String path, Uri uri) {
                             Log.i("Ruta de almacenamiento", "Path: " + path);
                         }
-                    });
+                    });*/
 
-                    Bitmap bitmap = BitmapFactory.decodeFile(ruta);
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 10, b2);
+                    //Bitmap bitmap = BitmapFactory.decodeFile(ruta);
+                    Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                   bitmap.compress(Bitmap.CompressFormat.JPEG, 10, b2);
                     SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMdd_HHmmss");
                     String currentDateandTime2 = sdf2.format(new Date());
                     String year2 = currentDateandTime2.substring(0, 4);
@@ -348,6 +360,7 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
 
     }
 
+
     private void startSlider(final ArrayList<byte[]> fotos) {
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
@@ -357,10 +370,14 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
                 // "Only the original thread that created a view hierarchy can touch its views"
                 runOnUiThread(new Runnable() {
                     public void run() {
-                        Drawable d = new BitmapDrawable(getResources(), getImage(fotos.get(position)));
+                        Bitmap fotico= getImage(fotos.get(position));
+                       // fotico.setWidth(500);
+                        //fotico.setHeight(500);
+                        Drawable d = new BitmapDrawable(getResources(), fotico);
                         imageSwitcher.setImageDrawable(d);
-                        LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(800, 500);
-                        imageSwitcher.setLayoutParams(params1);
+
+                      LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(800, 800);
+                      imageSwitcher.setLayoutParams(params1);
 
                         position++;
                         if (position == fotos.size()) {
@@ -416,9 +433,10 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
         fechaEvento.setText(evento.getEventoPK().getFecha());
         direccionEvento.setText(evento.getDireccion().getDireccion());
         descripcionEvento.setText(evento.getDescripcion());
-        fotoEvento.setImageBitmap(getImage(evento.getFoto()));
-        TableRow.LayoutParams params1 = new TableRow.LayoutParams(300, 300);
-        fotoEvento.setLayoutParams(params1);
+        if (evento.getFoto() != null)
+            fotoEvento.setImageBitmap(getImage(evento.getFoto()));
+       // TableRow.LayoutParams params1 = new TableRow.LayoutParams(178, 125);
+        //fotoEvento.setLayoutParams(params1);
 
     }
 

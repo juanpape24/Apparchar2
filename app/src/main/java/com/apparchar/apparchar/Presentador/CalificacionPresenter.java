@@ -1,12 +1,12 @@
 package com.apparchar.apparchar.Presentador;
 
 import android.content.Context;
+import android.util.EventLog;
 
 import com.apparchar.apparchar.Conexion.MyLoopjTask;
 import com.apparchar.apparchar.Conexion.OnLoopjCompleted;
 import com.apparchar.apparchar.Contract.ContractCalificacion;
 import com.apparchar.apparchar.Modelo.CalificacionM;
-import com.apparchar.apparchar.Modelo.CalificacionPKM;
 import com.apparchar.apparchar.Modelo.ClienteM;
 import com.apparchar.apparchar.Modelo.EventoM;
 import com.apparchar.apparchar.Modelo.EventoPKM;
@@ -33,7 +33,6 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC, O
     EventoPKM eventoPKM;
     EventoM eventoM;
     ClienteM cliente;
-    CalificacionPKM calificacionPKM;
     ArrayList<EventoM> eventos;
 
 
@@ -47,27 +46,27 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC, O
         eventoPKM = new EventoPKM();
         cliente = new ClienteM();
         eventos = new ArrayList<>();
-        calificacionPKM = new CalificacionPKM();
     }
 
 
     @Override
     public void crearComentario(String comentario, String hora, String user, int idEvento, String fecha, String horaI, String horaF, String fechaE) {
         calificacion = new CalificacionM();
-        calificacionPKM = new CalificacionPKM();
         eventoPKM = new EventoPKM();
         eventoM = new EventoM();
+
+        cliente.setUsuario(user);
         calificacion.setHora(hora);
         calificacion.setFecha(fecha);
-        calificacionPKM.setUsuariocliente(user);
-        calificacionPKM.setIdevento(idEvento);
+        calificacion.setUsuariocliente(cliente);
+
         eventoPKM.setHoraInicio(horaI);
         eventoPKM.setHoraFinal(horaF);
         eventoPKM.setFecha(fechaE);
         eventoPKM.setIdevento(idEvento);
         eventoM.setEventoPK(eventoPKM);
-        calificacion.setEvento(eventoM);
-        calificacion.setCalificacionPK(calificacionPKM);
+        eventos.add(eventoM);
+        calificacion.setEventoCollection(eventos);
         calificacion.setComentario(comentario);
         params = new RequestParams();
         Gson g = new Gson();
@@ -82,20 +81,21 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC, O
     @Override
     public void crearCalificacion(double porcentaje, String hora, String user, int idEvento, String fecha, String horaI, String horaF, String fechaE) {
         calificacion = new CalificacionM();
-        calificacionPKM = new CalificacionPKM();
         eventoPKM = new EventoPKM();
         eventoM = new EventoM();
+
+        cliente.setUsuario(user);
         calificacion.setHora(hora);
         calificacion.setFecha(fecha);
-        calificacionPKM.setUsuariocliente(user);
-        calificacionPKM.setIdevento(idEvento);
+        calificacion.setUsuariocliente(cliente);
+
         eventoPKM.setHoraInicio(horaI);
         eventoPKM.setHoraFinal(horaF);
         eventoPKM.setFecha(fechaE);
         eventoPKM.setIdevento(idEvento);
         eventoM.setEventoPK(eventoPKM);
-        calificacion.setEvento(eventoM);
-        calificacion.setCalificacionPK(calificacionPKM);
+        eventos.add(eventoM);
+        calificacion.setEventoCollection(eventos);
         calificacion.setPorcentaje(porcentaje);
         params = new RequestParams();
         Gson g = new Gson();
@@ -111,20 +111,21 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC, O
     public void crearMultimedia(byte[] multimedia, String hora, String user, int idEvento, String fecha, String horaI, String horaF, String fechaE) {
 
         calificacion = new CalificacionM();
-        calificacionPKM = new CalificacionPKM();
         eventoPKM = new EventoPKM();
         eventoM = new EventoM();
+
+        cliente.setUsuario(user);
         calificacion.setHora(hora);
         calificacion.setFecha(fecha);
-        calificacionPKM.setUsuariocliente(user);
-        calificacionPKM.setIdevento(idEvento);
+        calificacion.setUsuariocliente(cliente);
+
         eventoPKM.setHoraInicio(horaI);
         eventoPKM.setHoraFinal(horaF);
         eventoPKM.setFecha(fechaE);
         eventoPKM.setIdevento(idEvento);
         eventoM.setEventoPK(eventoPKM);
-        calificacion.setEvento(eventoM);
-        calificacion.setCalificacionPK(calificacionPKM);
+        eventos.add(eventoM);
+        calificacion.setEventoCollection(eventos);
         calificacion.setMultimedia(multimedia);
         params = new RequestParams();
         Gson g = new Gson();
@@ -157,12 +158,14 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC, O
     }
 
     @Override
-    public void actualizar(int idEvento) {
+    public void actualizar(EventoPKM eventoPKM) {
         opc = 1;
         params = new RequestParams();
         Gson g = new Gson();
-        params.put("listar", String.valueOf(idEvento));
-        System.out.println("id:-----"+ idEvento);
+        EventoM eventoM= new EventoM();
+        eventoM.setEventoPK(eventoPKM);
+        String alv = g.toJson(eventoM);
+        params.put("listar", alv);
         String nameServlet = "SERVCalificacion";
         MyLoopjTask loopjTask = new MyLoopjTask(params, nameServlet, (Context) vista, this);
         loopjTask.executeLoopjCall();

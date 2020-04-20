@@ -186,7 +186,7 @@ public class FragmentRealTime extends Fragment implements OnMapReadyCallback, On
                             Location currentLocation = (Location) task.getResult();
                            // AddMarker(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), "ESTAS AQUI", "", true);
                             moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), 20f);
-                            Toast.makeText(getActivity(), "Parchado", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getActivity(), "Parchado", Toast.LENGTH_SHORT).show();
 
                             /*
                             Conexion con el server
@@ -287,10 +287,10 @@ public class FragmentRealTime extends Fragment implements OnMapReadyCallback, On
                 //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lista.get(0).getDireccion().getCoordenadaX(),lista.get(0).getDireccion().getCoordenadaY()),15f));
                 for (int i = 0;i<lista.size();i++){
                     EventoM event = lista.get(i);
-                    Double x =event.getDireccion().getCoordenadaX();
-                    Double y = event.getDireccion().getCoordenadaY();
-                    Log.e(TAG,"COORD :"+x+" "+y);
-                    AddMarker(new LatLng(x,y),event.getNombre(),event.getDescripcion(),false);
+                    //Double x =event.getDireccion().getCoordenadaX();
+                    //Double y = event.getDireccion().getCoordenadaY();
+                    //Log.e(TAG,"COORD :"+x+" "+y);
+                    //AddMarker(new LatLng(x,y),event.getNombre(),event.getDescripcion(),false);
                 }
 
 

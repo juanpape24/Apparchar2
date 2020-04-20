@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#F29C07</color>
+    <color name="colorPrimary">#344955</color>
     <color name="colorPrimaryDark">#00574b</color>
-    <color name="colorAccent">#F29C07</color>
+    <color name="colorAccent">#F9AA33</color>
     <color name="Cerulean">#4484CE</color>
     <color name="Amarello">#F9CF00</color>
     <color name="Tangarine">#F19F4D</color>
     <color name="Aluminium">#D9D9D9</color>
     <color name="Bluex">#4ABDAC</color>
-    <color name="Blancox">#FFF</color>
+    <color name="Blancox">#FFFFFF</color>
 </resources>

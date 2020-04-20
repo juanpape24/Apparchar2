@@ -28,6 +28,7 @@ public class CategoriaM {
         this.eventoCollection = eventoCollection;
     }
 
+
     public Integer getId() {
         return id;
     }

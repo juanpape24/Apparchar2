@@ -12,290 +12,308 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp">
 
-        <LinearLayout
+    <LinearLayout
 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:text="INFORMACION DEL EVENTO"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
-            <TextView
+
+        <android.support.v7.widget.CardView xmlns:cardview="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_gap"
+            cardview:cardBackgroundColor="@color/cardview_light_background"
+            cardview:cardCornerRadius="10dp"
+            cardview:contentPadding="@dimen/cardview_compat_inset_shadow">
+
+            <TableLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="INFORMACION DEL EVENTO"
-                android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+                android:layout_height="wrap_content">
 
+                <TableRow android:layout_margin="@dimen/default_gap">
 
-            <android.support.v7.widget.CardView xmlns:cardview="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_gap"
-                cardview:cardBackgroundColor="@color/cardview_light_background"
-                cardview:cardCornerRadius="10dp"
-                cardview:contentPadding="@dimen/cardview_compat_inset_shadow">
-
-                <TableLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TableRow android:layout_margin="@dimen/default_gap">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:orientation="horizontal">
 
-                            <LinearLayout
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Nombre: "
+                                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
+                            <TextView
+                                android:id="@+id/nombreEvento"
+                                android:layout_width="93dp"
+                                android:layout_height="wrap_content"
+                                android:text="yo quiero que a mi me quieran" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/horaI"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
+                            <TextView
+                                android:id="@+id/horaInicioEvento"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal">
+                                android:text=" horainicio" />
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Nombre: "
-                                    android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
-
-                                <TextView
-                                    android:id="@+id/nombreEvento"
-                                    android:layout_width="93dp"
-                                    android:layout_height="wrap_content"
-                                    android:text="yo quiero que a mi me quieran" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/horaI"
-                                    android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
-
-                                <TextView
-                                    android:id="@+id/horaInicioEvento"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text=" horainicio" />
-
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/horaF"
-                                    android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
-
-                                <TextView
-                                    android:id="@+id/horaFinalEvento"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text=" horafinal" />
-
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/fecha"
-                                    android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
-
-                                <TextView
-                                    android:id="@+id/fechaEvento"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text=" fecha" />
-
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/direccion"
-                                    android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
-
-                                <TextView
-                                    android:id="@+id/direccionEvento"
-                                    android:layout_width="95dp"
-                                    android:layout_height="wrap_content"
-                                    android:text=" direccion" />
-
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/descripcion"
-                                    android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
-
-                                <TextView
-                                    android:id="@+id/descripcionEvento"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text=" descripcion" />
-
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-
-                            </LinearLayout>
 
                         </LinearLayout>
 
-                        <ImageView
-                            android:id="@+id/fotoEvento"
-                            android:layout_width="178dp"
-                            android:layout_height="match_parent"
-                            app:srcCompat="@mipmap/picture_default" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
 
-                    </TableRow>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/horaF"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
+                            <TextView
+                                android:id="@+id/horaFinalEvento"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text=" horafinal" />
 
 
-                </TableLayout>
+                        </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/fecha"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
+                            <TextView
+                                android:id="@+id/fechaEvento"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text=" fecha" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/direccion"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
+                            <TextView
+                                android:id="@+id/direccionEvento"
+                                android:layout_width="95dp"
+                                android:layout_height="wrap_content"
+                                android:text=" direccion" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/descripcion"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
+                            <TextView
+                                android:id="@+id/descripcionEvento"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text=" descripcion" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/fotoEvento"
+                        android:layout_width="178dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_margin="10dp"
+
+                        app:srcCompat="@mipmap/picture_default" />
+
+                </TableRow>
+
+
+            </TableLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+            </LinearLayout>
+
+
+        </android.support.v7.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="¿Qué tal está el evento?"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
+
+        <!--in.goodiebag.carouselpicker.CarouselPicker
+                android:id="@+id/CarouselPicker"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="#DDD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:items_visible="three"
+
+            /-->
+
+
+        <ImageSwitcher
+            android:id="@+id/imageSwitcher"
+            android:layout_width="342dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            app:srcCompat="@mipmap/picture_default"></ImageSwitcher>
+
+
+        <RatingBar
+            android:id="@+id/porcentajeStar"
+            style="@android:style/Widget.Holo.RatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:numStars="5"
+            android:stepSize="1.0" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dinos lo que piensas!"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/comentarios"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_weight="1">
+
+
+        </android.support.v7.widget.RecyclerView>
+
+        <android.support.v7.widget.CardView xmlns:cardview="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            cardview:cardBackgroundColor="@color/cardview_light_background"
+            cardview:cardCornerRadius="@dimen/places_autocomplete_progress_size"
+            cardview:contentPadding="@dimen/default_gap">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/comentario"
+                    style="@android:style/Widget.Holo.EditText"
+                    android:layout_width="194dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Ingresar comentario"
+                    android:inputType="text" />
+
+                <ImageButton
+                    android:id="@+id/comentar"
+                    android:layout_width="3dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/cardview_light_background"
+                    android:tint="@color/common_google_signin_btn_text_dark_focused"
+                    app:srcCompat="@android:drawable/ic_menu_send" />
+
+                <ImageButton
+                    android:id="@+id/takePhoto"
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/cardview_light_background"
+                    android:onClick="take"
+                    android:tint="@color/common_google_signin_btn_text_dark_focused"
+                    app:srcCompat="@android:drawable/ic_menu_camera" />
+
+                <ImageButton
+                    android:id="@+id/reload"
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/cardview_light_background"
+                    android:src="@drawable/reload_icono"
+                    android:tint="@color/common_google_signin_btn_text_dark_focused" />
+            </LinearLayout>
 
 
-                </LinearLayout>
+        </android.support.v7.widget.CardView>
 
 
-            </android.support.v7.widget.CardView>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="¿Qué tal está el evento?"
-                android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
-
-
-            <ImageSwitcher
-                android:id="@+id/imageSwitcher"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                app:srcCompat="@mipmap/picture_default"></ImageSwitcher>
-
-
-            <RatingBar
-                android:id="@+id/porcentajeStar"
-                style="@android:style/Widget.Holo.RatingBar"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:numStars="5"
-                android:stepSize="1.0" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Dinos lo que piensas!"
-                android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
-
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/comentarios"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:layout_weight="1">
-
-
-            </android.support.v7.widget.RecyclerView>
-
-            <android.support.v7.widget.CardView xmlns:cardview="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                cardview:cardBackgroundColor="@color/cardview_light_background"
-                cardview:cardCornerRadius="@dimen/places_autocomplete_progress_size"
-                cardview:contentPadding="@dimen/default_gap">
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:orientation="horizontal">
-
-                    <EditText
-                        android:id="@+id/comentario"
-                        style="@android:style/Widget.Holo.EditText"
-                        android:layout_width="194dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:ems="10"
-                        android:hint="Ingresar comentario"
-                        android:inputType="text" />
-
-                    <ImageButton
-                        android:id="@+id/comentar"
-                        android:layout_width="3dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@color/cardview_light_background"
-                        android:tint="@color/common_google_signin_btn_text_dark_focused"
-                        app:srcCompat="@android:drawable/ic_menu_send" />
-
-                    <ImageButton
-                        android:id="@+id/takePhoto"
-                        android:layout_width="5dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@color/cardview_light_background"
-                        android:onClick="take"
-                        android:tint="@color/common_google_signin_btn_text_dark_focused"
-                        app:srcCompat="@android:drawable/ic_menu_camera" />
-
-                    <ImageButton
-                        android:id="@+id/reload"
-                        android:layout_width="5dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@color/cardview_light_background"
-                        android:src="@drawable/reload_icono"
-                        android:tint="@color/common_google_signin_btn_text_dark_focused" />
-                </LinearLayout>
-
-
-            </android.support.v7.widget.CardView>
-
-
-        </LinearLayout>
+    </LinearLayout>
     </ScrollView>
 
 

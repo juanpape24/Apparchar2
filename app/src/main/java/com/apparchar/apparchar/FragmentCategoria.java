@@ -7,12 +7,14 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.apparchar.apparchar.Contract.ContractListaCategoria;
+import com.apparchar.apparchar.Modelo.CategoriaM;
 import com.apparchar.apparchar.Presentador.CategoriaPresenter;
 import com.apparchar.apparchar.Vista.LoginActivity;
 
@@ -42,7 +44,7 @@ public class FragmentCategoria extends Fragment implements ContractListaCategori
     private AdapterRecycler adapter;
     private ContractListaCategoria.presenterCategoria presenter;
     //private String idUser = "";
-    private ArrayList<String> categoria;
+    private ArrayList<CategoriaM> categoria;
     private Bottom boton1,boton2;
     View vista;
 
@@ -121,10 +123,10 @@ public class FragmentCategoria extends Fragment implements ContractListaCategori
     }
 
     @Override
-    public void datos(ArrayList<String> categoria) {
+    public void datos(ArrayList<CategoriaM> categoria) {
         rv = vista.findViewById(R.id.recycler2);
         rv.setLayoutManager(new GridLayoutManager(getContext(),2));
-        adapter = new AdapterRecycler(getActivity().getApplicationContext(), categoria, Main.idUser);
+        adapter = new AdapterRecycler(getActivity().getApplicationContext(), categoria);
         rv.setAdapter(adapter);
         this.categoria = categoria;
 
