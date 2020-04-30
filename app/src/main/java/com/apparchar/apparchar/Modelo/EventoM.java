@@ -22,7 +22,7 @@ public class EventoM{
     private String hora_final;
     private String fecha;
     private String lugar;
-    private byte[] foto;
+    private String foto;
     protected EventoPKM eventoPK;
     private Collection<EmpresaM> empresaCollection;
     private Collection<CalificacionM> calificacionCollection;
@@ -91,7 +91,7 @@ public class EventoM{
         this.lugar = lugar;
     }
 
-    public byte[] getFoto() {
+    public String getFoto() {
         return foto;
     }
 
@@ -111,7 +111,7 @@ public class EventoM{
         this.categoria = categoria;
     }
 
-    public void setFoto(byte[] foto) {
+    public void setFoto(String foto) {
         this.foto = foto;
     }
 

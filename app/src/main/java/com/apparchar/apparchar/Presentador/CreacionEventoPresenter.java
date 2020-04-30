@@ -100,9 +100,9 @@ public class CreacionEventoPresenter implements OnLoopjCompleted, ContractCreaci
             eventoPKM.setHoraFinal(horaFinal);
             evento.setDireccion(direccion);
             evento.setDescripcion(descripcion);
-            if (foto != null) {
+           /* if (foto != null) {
                 evento.setFoto(foto);
-            }
+            }*/
             categoria=new ArrayList<>();
             for (int i = 0; i < categorias.size(); i++) {
                 CategoriaM c = new CategoriaM();

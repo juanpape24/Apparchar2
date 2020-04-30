@@ -7,7 +7,7 @@ public class JsonApi {
 
     private static JsonEvent API_SERVICE;
     private static JsonCategory API_SERVICE2;
-    static String baseUrl = "http://192.168.0.7:8000/";
+    static String baseUrl = "http://ec2-54-161-138-190.compute-1.amazonaws.com:8080/";
     public static JsonEvent getJsonEvent() {
 
         if (API_SERVICE == null) {

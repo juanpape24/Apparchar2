@@ -23,8 +23,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.apparchar.apparchar.Conexion.JsonApi;
 import com.apparchar.apparchar.Conexion.MyLoopjTask;
 import com.apparchar.apparchar.Conexion.OnLoopjCompleted;
+import com.apparchar.apparchar.Modelo.CategoriaM;
 import com.apparchar.apparchar.Modelo.EventoM;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -34,6 +36,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -49,6 +52,12 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static android.widget.Toast.LENGTH_SHORT;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,14 +67,17 @@ import java.util.List;
  * Use the {@link FragmentRealTime#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentRealTime extends Fragment implements OnMapReadyCallback, OnLoopjCompleted {
+public class FragmentRealTime extends Fragment implements OnMapReadyCallback {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final String TAG = "RealTimeActivity";
     private GoogleMap mMap; // Mapa
-
+    List<EventoM> lista;
+    JsonApi jsonEventApi;
+    JsonApi jsonApi;
+    Context context;
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final String COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
@@ -79,7 +91,6 @@ public class FragmentRealTime extends Fragment implements OnMapReadyCallback, On
     private TextView titulo;
 
     private View vista;
-    List<EventoM> lista ;
     RequestParams params;
 
 
@@ -123,50 +134,44 @@ public class FragmentRealTime extends Fragment implements OnMapReadyCallback, On
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        vista=inflater.inflate(R.layout.fragment_fragment_real_time, container, false);
+        vista = inflater.inflate(R.layout.fragment_fragment_real_time, container, false);
         titulo = (TextView) vista.findViewById(R.id.RealTimeTittle);
-        titulo.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),"Fonts/Abel_Regular.ttf"));
+        titulo.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "Fonts/Abel_Regular.ttf"));
         boton = (Button) vista.findViewById(R.id.Parchame);
-        boton.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),"Fonts/Abel_Regular.ttf"));
+        boton.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "Fonts/Abel_Regular.ttf"));
         // Inflate the layout for this fragment
         return vista;
     }
+
     @Override
-    public void onResume(){
+    public void onResume() {
 
         super.onResume();
         getLocationPermission();
-        params=new RequestParams();
-        lista = new ArrayList<>();
-
         params = new RequestParams();
-        params.put("realtime", "gg");
-        String nameServlet = "SERVEvento";
-        MyLoopjTask loopjTask = new MyLoopjTask(params, nameServlet,getActivity(),this);
-        loopjTask.executeLoopjCall();
+        lista = new ArrayList<>();
     }
+
     private void initMap() {
         SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager()
-                .findFragmentById(R.id.map2);;
-        Log.d(TAG,"SE INICIO EL MAPA");
+                .findFragmentById(R.id.map2);
+        ;
+        Log.d(TAG, "SE INICIO EL MAPA");
         mapFragment.getMapAsync(this);
     }
 
 
+    private LocationManager locationManager;
 
-    private LocationManager locationManager ;
-
-    protected boolean isLocationEnabled(){
+    protected boolean isLocationEnabled() {
         String le = Context.LOCATION_SERVICE;
-        locationManager =(LocationManager) getActivity().getSystemService(le);
-        if(!locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
+        locationManager = (LocationManager) getActivity().getSystemService(le);
+        if (!locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
             return false;
         } else {
             return true;
         }
     }
-
-
 
 
     private void getDeviceLocation() {
@@ -184,8 +189,8 @@ public class FragmentRealTime extends Fragment implements OnMapReadyCallback, On
                         if (task.isSuccessful()) {
                             Log.d(TAG, "onComplete: found location!");
                             Location currentLocation = (Location) task.getResult();
-                           // AddMarker(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), "ESTAS AQUI", "", true);
-                            moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), 20f);
+                            //AddMarker(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), "ESTAS AQUI", "", true);
+                            //moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), 20f);
                             //Toast.makeText(getActivity(), "Parchado", Toast.LENGTH_SHORT).show();
 
                             /*
@@ -195,7 +200,7 @@ public class FragmentRealTime extends Fragment implements OnMapReadyCallback, On
                         } else {
                             Log.d(TAG, "onComplete: current location is null");
 
-                            Toast.makeText(getActivity(), "unable to get current location", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "unable to get current location", LENGTH_SHORT).show();
 
                         }
                     }
@@ -269,28 +274,28 @@ public class FragmentRealTime extends Fragment implements OnMapReadyCallback, On
     }
 
 
-
-    private void Parchame(){
+    private void Parchame() {
 
         /*
-           Aqui va la conexion al server
+
          */
 
         getDeviceLocation();
         boton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getPost();
                 CleanInterface(); //Limpia la interfaz
                 // getDeviceLocation();
 //Request
-                Log.e(TAG,"LISTA :"+lista.size());
-                //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lista.get(0).getDireccion().getCoordenadaX(),lista.get(0).getDireccion().getCoordenadaY()),15f));
-                for (int i = 0;i<lista.size();i++){
+                Log.e(TAG, "LISTA :" + lista.size());
+//                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lista.get(0).getDireccion().getCoordenadaX(),lista.get(0).getDireccion().getCoordenadaY()),15f));
+                for (int i = 0; i < lista.size(); i++) {
                     EventoM event = lista.get(i);
-                    //Double x =event.getDireccion().getCoordenadaX();
-                    //Double y = event.getDireccion().getCoordenadaY();
+                    Double x =4.624399;
+                    Double y = -74.077489;
                     //Log.e(TAG,"COORD :"+x+" "+y);
-                    //AddMarker(new LatLng(x,y),event.getNombre(),event.getDescripcion(),false);
+                    AddMarker(new LatLng(x,y),event.getNombre(),event.getDescripcion(),false);
                 }
 
 
@@ -301,7 +306,7 @@ public class FragmentRealTime extends Fragment implements OnMapReadyCallback, On
     }
 
 
-    private LatLng Geocoder(String direccion){
+    private LatLng Geocoder(String direccion) {
         Log.d(TAG, "Geolocalizando");
 
         Geocoder geocoder = new Geocoder(getActivity());
@@ -316,26 +321,24 @@ public class FragmentRealTime extends Fragment implements OnMapReadyCallback, On
 
         if (lista.size() > 0) {
             Address address = lista.get(0);
-            return new LatLng(address.getLatitude(),address.getLongitude());
+            return new LatLng(address.getLatitude(), address.getLongitude());
 
         } else {
-            Toast.makeText(getActivity(), "No se pudo encontrar el lugar", Toast.LENGTH_SHORT).show();
-            return new LatLng(0,0);
+            Toast.makeText(getActivity(), "No se pudo encontrar el lugar", LENGTH_SHORT).show();
+            return new LatLng(0, 0);
         }
 
 
     }
 
 
-    private void AddMarker(LatLng point, String tittle ,String info , boolean isMyLocation) {
+    private void AddMarker(LatLng point, String tittle, String info, boolean isMyLocation) {
+        if (isMyLocation) {
+            MarkerOptions mark = new MarkerOptions().position(point).title(tittle).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+            Marker m = mMap.addMarker(mark);
+            m.setPosition(point);
 
-        if(isMyLocation) {
-            MarkerOptions mark = new MarkerOptions();
-            mark.position(point);
-            mark.title(tittle);
-            mark.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
-            mMap.addMarker(mark);
-        }else{
+        } else {
             MarkerOptions mark = new MarkerOptions();
             mark.position(point);
             mark.title(tittle);
@@ -344,9 +347,6 @@ public class FragmentRealTime extends Fragment implements OnMapReadyCallback, On
             mMap.addMarker(mark);
         }
     }
-
-
-
 
 
     @Override
@@ -358,7 +358,7 @@ public class FragmentRealTime extends Fragment implements OnMapReadyCallback, On
 
 
         if (mLocationPermissionsGranted) {
-           // getDeviceLocation();
+            // getDeviceLocation();
             Parchame();
 
             if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
@@ -384,26 +384,34 @@ public class FragmentRealTime extends Fragment implements OnMapReadyCallback, On
     }
 
 
-    private void CleanInterface(){
+    private void CleanInterface() {
         mMap.clear();
     }
 
 
-    @Override
-    public void taskCompleted(String results) {
+    private void getPost() {
+        Call<List<EventoM>> call = jsonEventApi.getJsonEvent().getEvento();
+        call.enqueue(new Callback<List<EventoM>>() {
+            @Override
+            public void onResponse(Call<List<EventoM>> call, Response<List<EventoM>> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(getActivity(), String.valueOf(response.code()), Toast.LENGTH_LONG).show();
+                    return;
+                }
+                List<EventoM> eventoMS = response.body();
+                for (EventoM event1 : eventoMS) {
+                        lista.add(event1);
 
-        JsonParser jsonParser = new JsonParser();
-        JsonObject jo = (JsonObject) jsonParser.parse(results);
-        JsonElement c = jo.get("respuesta");
-        String r = c.getAsString();
-        Type listType = new TypeToken<ArrayList<EventoM>>() {
-        }.getType();
-        Gson a = new Gson();
-        ArrayList<EventoM> arrayList = a.fromJson(r, listType);
+                }
 
-        for (int i = 0; i < arrayList.size(); i++) {
-            lista.add(arrayList.get(i));
-        }
+            }
+
+
+            @Override
+            public void onFailure(Call<List<EventoM>> call, Throwable t) {
+                Toast.makeText(getActivity(),t.getMessage(), Toast.LENGTH_LONG);
+            }
+        });
     }
 
     // TODO: Rename method, update argument and hook method into UI event

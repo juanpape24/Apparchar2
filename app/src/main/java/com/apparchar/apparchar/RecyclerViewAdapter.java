@@ -49,12 +49,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(final MyViewHolder myViewHolder, final int i) {
         ArrayList<Bitmap> a = new ArrayList<>();
-        if (lista.get(i).getFoto() == null) {
+        if (lista.get(i).getFoto().equals("")) {
             myViewHolder.image.setImageResource(R.drawable.descarga);
-        } else {
+        } /*else {
             Bitmap bmp = BitmapFactory.decodeByteArray(lista.get(i).getFoto(), 0, lista.get(i).getFoto().length);
             myViewHolder.image.setImageBitmap(bmp);
-        }
+        }*/
         myViewHolder.titulo.setText(lista.get(i).getNombre());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
         String currentDateandTime = sdf.format(new Date());
