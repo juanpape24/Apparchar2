@@ -1,9 +1,12 @@
 package com.apparchar.apparchar;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -12,6 +15,8 @@ public class HolderComentario extends RecyclerView.ViewHolder {
     private TextView comentario;
     private TextView hora;
     private CircleImageView foto;
+    private Context context;
+
 
     public HolderComentario(@NonNull View itemView) {
         super(itemView);
@@ -19,6 +24,9 @@ public class HolderComentario extends RecyclerView.ViewHolder {
         comentario = itemView.findViewById(R.id.comentarioComentario);
         hora = itemView.findViewById(R.id.horaComentario);
         foto = itemView.findViewById(R.id.fotoComentario);
+        context= itemView.getContext();
+
+
     }
 
     public TextView getNombre() {
@@ -53,5 +61,11 @@ public class HolderComentario extends RecyclerView.ViewHolder {
         this.foto = foto;
     }
 
+    public Context getContext() {
+        return context;
+    }
 
+    public void setContext(Context context) {
+        this.context = context;
+    }
 }

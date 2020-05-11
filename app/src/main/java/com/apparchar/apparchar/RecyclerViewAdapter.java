@@ -81,8 +81,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                // if (lista.get(i).getEventoPK().getFecha().equals(fechac) && Integer.valueOf(timeS) < Integer.valueOf(timeA) && Integer.valueOf(timeE) > Integer.valueOf(timeA)) {
                     Intent intent = new Intent(context, CalificacionEvento.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    /*intent.putExtra("id", lista.get(i).getEventoPK().getIdevento());
-                    intent.putExtra("fecha", lista.get(i).getEventoPK().getFecha());
+                    //intent.putExtra("id", lista.get(i).getEventoPK().getIdevento());
+                    /*intent.putExtra("fecha", lista.get(i).getEventoPK().getFecha());
                     intent.putExtra("final", lista.get(i).getEventoPK().getHoraFinal());
                     intent.putExtra("inicio", lista.get(i).getEventoPK().getHoraInicio());*/
                     context.startActivity(intent);

@@ -12,308 +12,274 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp">
 
-    <LinearLayout
+        <LinearLayout
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints">
-
-        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="INFORMACION DEL EVENTO"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints">
 
-
-        <android.support.v7.widget.CardView xmlns:cardview="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_gap"
-            cardview:cardBackgroundColor="@color/cardview_light_background"
-            cardview:cardCornerRadius="10dp"
-            cardview:contentPadding="@dimen/cardview_compat_inset_shadow">
-
-            <TableLayout
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:text="INFORMACION DEL EVENTO"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
-                <TableRow android:layout_margin="@dimen/default_gap">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+            <android.support.v7.widget.CardView xmlns:cardview="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_gap"
+                cardview:cardBackgroundColor="@color/cardview_light_background"
+                cardview:cardCornerRadius="10dp"
+                cardview:contentPadding="@dimen/cardview_compat_inset_shadow">
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TableRow android:layout_margin="@dimen/default_gap">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:orientation="vertical">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Nombre: "
-                                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
                             <TextView
                                 android:id="@+id/nombreEvento"
-                                android:layout_width="93dp"
-                                android:layout_height="wrap_content"
-                                android:text="yo quiero que a mi me quieran" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/horaI"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
-
-                            <TextView
-                                android:id="@+id/horaInicioEvento"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text=" horainicio" />
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/horaF"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
-
-                            <TextView
-                                android:id="@+id/horaFinalEvento"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text=" horafinal" />
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/fecha"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
-
+                                android:text="yo quiero que a mi me quieran"
+                                android:layout_gravity="center"
+                                style="@style/TextAppearance.AppCompat.Body2"/>
                             <TextView
                                 android:id="@+id/fechaEvento"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text=" fecha" />
+                                android:text=" fecha"
+                                android:layout_gravity="center"/>
 
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
 
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:id="@+id/horaEvento"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/direccion"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+                                android:text=" horainicio"
+                                android:layout_gravity="center"/>
+
+
+
 
                             <TextView
                                 android:id="@+id/direccionEvento"
-                                android:layout_width="95dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text=" direccion" />
+                                android:text=" direccion"
+                                android:layout_gravity="center"/>
 
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/descripcion"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
                             <TextView
                                 android:id="@+id/descripcionEvento"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text=" descripcion" />
+                                android:text=" descripcion"
+                                android:layout_gravity="center"/>
 
 
                         </LinearLayout>
 
-                        <LinearLayout
+                        <ImageView
+                            android:id="@+id/fotoEvento"
                             android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+
+                            android:layout_margin="10dp"
+
+                            app:srcCompat="@mipmap/picture_default" />
+
+                    </TableRow>
+                    <TableRow>
+
+
+
+                    </TableRow>
+
+
+                </TableLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                </LinearLayout>
+
+
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="¿Qué tal está el evento?"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
+            <com.synnapps.carouselview.CarouselView
+                android:id="@+id/carouselView"
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                app:fillColor="#FFFFFFFF"
+                app:pageColor="#00000000"
+                app:radius="6dp"
+                app:slideInterval="3000"
+                app:strokeColor="#FF777777"
+                app:strokeWidth="1dp" />
+
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                app:cardCornerRadius="@dimen/cardview_default_radius">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:layout_gravity="center"
+                            android:text="Califica el evento!" />
 
+                        <RatingBar
+                            android:id="@+id/porcentajeStar"
+                            style="@android:style/Widget.Holo.RatingBar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:numStars="5"
+                            android:stepSize="1.0" />
 
-                        </LinearLayout>
 
                     </LinearLayout>
 
-                    <ImageView
-                        android:id="@+id/fotoEvento"
-                        android:layout_width="178dp"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:layout_margin="10dp"
+                        android:orientation="vertical">
 
-                        app:srcCompat="@mipmap/picture_default" />
+                        <TextView
+                            android:id="@+id/promedio"
+                            style="@style/TextAppearance.AppCompat.Headline"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="0" />
 
-                </TableRow>
+                        <RatingBar
+                            android:id="@+id/viewStar"
+                            style="@android:style/Widget.Holo.RatingBar.Small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:numStars="5" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
 
-            </TableLayout>
+            </android.support.v7.widget.CardView>
 
-            <LinearLayout
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:text="Dinos lo que piensas!"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
 
-            </LinearLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/comentarios"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_weight="1">
 
 
-        </android.support.v7.widget.CardView>
+            </android.support.v7.widget.RecyclerView>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="¿Qué tal está el evento?"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
-
-
-        <!--in.goodiebag.carouselpicker.CarouselPicker
-                android:id="@+id/CarouselPicker"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:background="#DDD"
+            <android.support.v7.widget.CardView xmlns:cardview="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:items_visible="three"
-
-            /-->
-
-
-        <ImageSwitcher
-            android:id="@+id/imageSwitcher"
-            android:layout_width="342dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="5dp"
-            app:srcCompat="@mipmap/picture_default"></ImageSwitcher>
+                cardview:cardBackgroundColor="@color/cardview_light_background"
+                cardview:cardCornerRadius="@dimen/places_autocomplete_progress_size"
+                cardview:contentPadding="@dimen/default_gap">
 
 
-        <RatingBar
-            android:id="@+id/porcentajeStar"
-            style="@android:style/Widget.Holo.RatingBar"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:numStars="5"
-            android:stepSize="1.0" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Dinos lo que piensas!"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
-
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/comentarios"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_weight="1">
-
-
-        </android.support.v7.widget.RecyclerView>
-
-        <android.support.v7.widget.CardView xmlns:cardview="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            cardview:cardBackgroundColor="@color/cardview_light_background"
-            cardview:cardCornerRadius="@dimen/places_autocomplete_progress_size"
-            cardview:contentPadding="@dimen/default_gap">
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/comentario"
-                    style="@android:style/Widget.Holo.EditText"
-                    android:layout_width="194dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="Ingresar comentario"
-                    android:inputType="text" />
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
 
-                <ImageButton
-                    android:id="@+id/comentar"
-                    android:layout_width="3dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@color/cardview_light_background"
-                    android:tint="@color/common_google_signin_btn_text_dark_focused"
-                    app:srcCompat="@android:drawable/ic_menu_send" />
+                    <EditText
+                        android:id="@+id/comentario"
+                        style="@android:style/Widget.Holo.EditText"
+                        android:layout_width="194dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="Ingresar comentario"
+                        android:inputType="text" />
 
-                <ImageButton
-                    android:id="@+id/takePhoto"
-                    android:layout_width="5dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@color/cardview_light_background"
-                    android:onClick="take"
-                    android:tint="@color/common_google_signin_btn_text_dark_focused"
-                    app:srcCompat="@android:drawable/ic_menu_camera" />
+                    <ImageButton
+                        android:id="@+id/comentar"
+                        android:layout_width="3dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/cardview_light_background"
+                        android:tint="@color/common_google_signin_btn_text_dark_focused"
+                        app:srcCompat="@android:drawable/ic_menu_send" />
 
-                <ImageButton
-                    android:id="@+id/reload"
-                    android:layout_width="5dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@color/cardview_light_background"
-                    android:src="@drawable/reload_icono"
-                    android:tint="@color/common_google_signin_btn_text_dark_focused" />
-            </LinearLayout>
+                    <ImageButton
+                        android:id="@+id/takePhoto"
+                        android:layout_width="5dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/cardview_light_background"
+                        android:onClick="take"
+                        android:tint="@color/common_google_signin_btn_text_dark_focused"
+                        app:srcCompat="@android:drawable/ic_menu_camera" />
+
+                    <ImageButton
+                        android:id="@+id/reload"
+                        android:layout_width="5dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/cardview_light_background"
+                        android:src="@drawable/reload_icono"
+                        android:tint="@color/common_google_signin_btn_text_dark_focused" />
+                </LinearLayout>
 
 
-        </android.support.v7.widget.CardView>
+            </android.support.v7.widget.CardView>
 
 
-    </LinearLayout>
+        </LinearLayout>
     </ScrollView>
 
 

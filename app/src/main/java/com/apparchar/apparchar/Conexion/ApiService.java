@@ -1,7 +1,14 @@
 package com.apparchar.apparchar.Conexion;
 
+import android.graphics.Bitmap;
+import android.media.Image;
+
+import com.apparchar.apparchar.Modelo.CalificacionM;
 import com.apparchar.apparchar.Modelo.ClienteM;
+import com.apparchar.apparchar.Modelo.EventoM;
 import com.apparchar.apparchar.Vista.Cliente;
+
+import java.util.List;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -21,8 +28,22 @@ public interface ApiService {
 
     @Multipart
     @POST("cliente/uploadFoto")
-    Call<ClienteM> uploadFile(@Part MultipartBody.Part file);
+    Call<ClienteM> uploadFile(@Part MultipartBody.Part file, @Query("ruta") String ruta);
 
+    @GET("onlyEvent/")
+    Call<EventoM> getOnlyEvent(@Query("evento") int idEvento);
 
+    @GET("clientes")
+    Call<List<ClienteM>> getClientes();
+
+    @GET("calificacion/")
+    Call<List<CalificacionM>> getCalificaciones(@Query("evento") int idEvento);
+
+    @POST("calificacion/")
+    Call<CalificacionM> doCalification(@Body CalificacionM calificacionM);
+
+    @Multipart
+    @POST("calificacion/uploadFoto")
+    Call<ClienteM> uploadFoto(@Part MultipartBody.Part file, @Query("ruta") String ruta);
 
 }

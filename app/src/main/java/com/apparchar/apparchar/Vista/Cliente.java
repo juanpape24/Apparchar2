@@ -1,9 +1,11 @@
 package com.apparchar.apparchar.Vista;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaScannerConnection;
@@ -31,7 +33,9 @@ import org.json.JSONException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -48,7 +52,7 @@ public class Cliente extends AppCompatActivity implements ContractClient.View {
     private final String rutaImagen = carpetaRaiz + "Apparchar";
     private CircleImageView foto;
     private Button cargarFoto;
-    private byte[] fotobytes;
+    private File fotobytes;
     private static final String READ_EXTERNAL_STORAGE = Manifest.permission.READ_EXTERNAL_STORAGE;
     private static final String WRITE_EXTERNAL_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE;
     private static final String CAMERA = Manifest.permission.CAMERA;
@@ -141,11 +145,19 @@ public class Cliente extends AppCompatActivity implements ContractClient.View {
                     try {
                         bitmap1 = MediaStore.Images.Media.getBitmap(this.getContentResolver(), pathh);
                         bitmap1.compress(Bitmap.CompressFormat.JPEG, 10, b);
-
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    fotobytes=b.toByteArray();
+
+
+                    //String filePath = pathh.getPath();
+                    String filePath = getRealPathFromURIPath(pathh.normalizeScheme(), Cliente.this);
+                    File file = new File(filePath);
+
+                    fotobytes = file;
+
+                    //fotobytes=bitmaptoFile(bitmap1);
+
                     foto.setImageBitmap(bitmap1);
                     fotoExist=true;
 
@@ -162,7 +174,7 @@ public class Cliente extends AppCompatActivity implements ContractClient.View {
                     Bitmap bitmap = BitmapFactory.decodeFile(ruta);
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 10, b2);
 
-                    fotobytes=b2.toByteArray();
+
                     foto.setImageBitmap(bitmap);
                     fotoExist=true;
                     break;
@@ -175,6 +187,7 @@ public class Cliente extends AppCompatActivity implements ContractClient.View {
     public void upload(View view){
         cargarImagen();
     }
+
     public void registrar(View view) throws JSONException {
         if (fotoExist){
             presenter.enviar(nombre1.getText().toString(), apellido1.getText().toString(), edad1.getText().toString(), email1.getText().toString(), cel1.getText().toString(), user1.getText().toString(), pass1.getText().toString(), pass3.getText().toString(),fotobytes);
@@ -182,6 +195,16 @@ public class Cliente extends AppCompatActivity implements ContractClient.View {
 
 
 
+    }
+    private String getRealPathFromURIPath(Uri contentURI, Activity activity) {
+        Cursor cursor = activity.getContentResolver().query(contentURI, null, null, null, null);
+        if (cursor == null) {
+            return contentURI.getPath();
+        } else {
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            return cursor.getString(idx);
+        }
     }
 
     private void getPermission() {
@@ -206,6 +229,7 @@ public class Cliente extends AppCompatActivity implements ContractClient.View {
             ActivityCompat.requestPermissions(this, permissions, 10);
         }
     }
+
 
     @Override
     public void showResult(String info) {
