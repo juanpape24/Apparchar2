@@ -10,8 +10,8 @@ public class JsonApi {
     private static JsonEvent API_SERVICE;
     private static JsonCategory API_SERVICE2;
     private static ApiService API_SERVICE3;
-    static String baseUrl = "http://192.168.0.11:8000/";   //servidor local
-    //static String baseUrl="http://ec2-3-88-8-48.compute-1.amazonaws.com:80/"; //servidor prueba ec2
+    ///static String baseUrl = "http://192.168.0.11:8000/";   //servidor local
+    static String baseUrl="http://ec2-3-84-221-67.compute-1.amazonaws.com:8080/"; //servidor prueba ec2
     //static String baseUrl="http://ec2-54-161-138-190.compute-1.amazonaws.com:8080/"; //Servidor Apparchar EC2
     public static JsonEvent getJsonEvent() {
 

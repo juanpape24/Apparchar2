@@ -86,7 +86,7 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
     TextView nombreEvento, horaInicioEvento, fechaEvento, direccionEvento, descripcionEvento;
     ImageView imagenes;
     String idUser="";
-    String idEvento="1";
+    String idEvento="6";
     ImageView fotoEvento;
     CarouselView carouselView;
     TextView promNumber;
