@@ -28,6 +28,7 @@ import com.apparchar.apparchar.Conexion.MyLoopjTask;
 import com.apparchar.apparchar.Conexion.OnLoopjCompleted;
 import com.apparchar.apparchar.Modelo.CategoriaM;
 import com.apparchar.apparchar.Modelo.EventoM;
+import com.apparchar.apparchar.Modelo.LugarM;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -74,7 +75,8 @@ public class FragmentRealTime extends Fragment implements OnMapReadyCallback {
     private static final String ARG_PARAM2 = "param2";
     private static final String TAG = "RealTimeActivity";
     private GoogleMap mMap; // Mapa
-    List<EventoM> lista;
+    //List<EventoM> lista;
+    List<LugarM> lista;
     JsonApi jsonEventApi;
     JsonApi jsonApi;
     Context context;
@@ -291,11 +293,14 @@ public class FragmentRealTime extends Fragment implements OnMapReadyCallback {
                 Log.e(TAG, "LISTA :" + lista.size());
 //                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lista.get(0).getDireccion().getCoordenadaX(),lista.get(0).getDireccion().getCoordenadaY()),15f));
                 for (int i = 0; i < lista.size(); i++) {
-                    EventoM event = lista.get(i);
-                    Double x =4.624399;
-                    Double y = -74.077489;
+                    LugarM lugar = lista.get(i);
+                    int size=lugar.getEventoCollection().size();
+                    Double x =lugar.getCoordenadaX();
+                    Double y = lugar.getCoordenadaY();
                     //Log.e(TAG,"COORD :"+x+" "+y);
-                    AddMarker(new LatLng(x,y),event.getNombre(),event.getDescripcion(),false);
+                    for (int j=0;j<size;j++) {
+                        AddMarker(new LatLng(x, y), lugar.getEventoCollection().get(j).getNombre(), lugar.getEventoCollection().get(j).getDescripcion(), false);
+                    }
                 }
 
 
@@ -390,16 +395,16 @@ public class FragmentRealTime extends Fragment implements OnMapReadyCallback {
 
 
     private void getPost() {
-        Call<List<EventoM>> call = jsonEventApi.getJsonEvent().getEvento();
-        call.enqueue(new Callback<List<EventoM>>() {
+        Call<List<LugarM>> call = jsonEventApi.getJsonEvent().getLugar();
+        call.enqueue(new Callback<List<LugarM>>() {
             @Override
-            public void onResponse(Call<List<EventoM>> call, Response<List<EventoM>> response) {
+            public void onResponse(Call<List<LugarM>> call, Response<List<LugarM>> response) {
                 if (!response.isSuccessful()) {
                     Toast.makeText(getActivity(), String.valueOf(response.code()), Toast.LENGTH_LONG).show();
                     return;
                 }
-                List<EventoM> eventoMS = response.body();
-                for (EventoM event1 : eventoMS) {
+                List<LugarM> eventoMS = response.body();
+                for (LugarM event1 : eventoMS) {
                         lista.add(event1);
 
                 }
@@ -408,7 +413,7 @@ public class FragmentRealTime extends Fragment implements OnMapReadyCallback {
 
 
             @Override
-            public void onFailure(Call<List<EventoM>> call, Throwable t) {
+            public void onFailure(Call<List<LugarM>> call, Throwable t) {
                 Toast.makeText(getActivity(),t.getMessage(), Toast.LENGTH_LONG);
             }
         });
