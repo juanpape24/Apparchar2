@@ -30,6 +30,9 @@ public class EventoM{
     private LugarM direccion;
     private ArrayList<EventoCategoria> evento;
     private String categoria="";
+  
+  
+  
 
     public EventoM(){
 

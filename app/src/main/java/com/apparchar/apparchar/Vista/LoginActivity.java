@@ -1,7 +1,9 @@
 package com.apparchar.apparchar.Vista;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -54,6 +56,10 @@ public class LoginActivity extends AppCompatActivity implements ContractLogin.Vi
 
     public void eventc(String usuarioF){
         Intent i = new Intent(this, Navigation.class);
+        SharedPreferences sharedPreferences= getSharedPreferences("apparchardata",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("user",usuarioF);
+        editor.commit();
         idUser=usuarioF;
         startActivity(i);
     }

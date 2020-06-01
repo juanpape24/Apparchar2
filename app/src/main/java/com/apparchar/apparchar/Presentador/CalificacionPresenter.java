@@ -2,7 +2,9 @@ package com.apparchar.apparchar.Presentador;
 
 import android.content.Context;
 import android.util.EventLog;
+import android.util.Log;
 
+import com.apparchar.apparchar.Conexion.JsonApi;
 import com.apparchar.apparchar.Conexion.MyLoopjTask;
 import com.apparchar.apparchar.Conexion.OnLoopjCompleted;
 import com.apparchar.apparchar.Contract.ContractCalificacion;
@@ -10,6 +12,7 @@ import com.apparchar.apparchar.Modelo.CalificacionM;
 import com.apparchar.apparchar.Modelo.ClienteM;
 import com.apparchar.apparchar.Modelo.EventoM;
 import com.apparchar.apparchar.Modelo.EventoPKM;
+import com.apparchar.apparchar.Vista.Cliente;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -17,23 +20,34 @@ import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.RequestParams;
 
+import java.io.File;
 import java.lang.reflect.Type;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
 
-public class CalificacionPresenter implements ContractCalificacion.PresenterC, OnLoopjCompleted {
+import cz.msebera.android.httpclient.HttpResponse;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class CalificacionPresenter implements ContractCalificacion.PresenterC {
     ContractCalificacion.ViewC vista;
     CalificacionM calificacion;
     RequestParams params;
     ArrayList<Double> porcentaje;
-    ArrayList<byte[]> fotos;
+    ArrayList<String> fotos;
     ArrayList<CalificacionM> comentarios;
     String infoEvento = "";
-    int opc = 0;
-    EventoPKM eventoPKM;
     EventoM eventoM;
-    ClienteM cliente;
-    ArrayList<EventoM> eventos;
+    int opc = 0;
+    ArrayList<ClienteM> clientes;
 
 
     public CalificacionPresenter(ContractCalificacion.ViewC vista) {
@@ -43,202 +57,218 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC, O
         porcentaje = new ArrayList<>();
         fotos = new ArrayList<>();
         eventoM = new EventoM();
-        eventoPKM = new EventoPKM();
-        cliente = new ClienteM();
-        eventos = new ArrayList<>();
+        clientes = new ArrayList<>();
+
+
     }
 
 
     @Override
-    public void crearComentario(String comentario, String hora, String user, int idEvento, String fecha, String horaI, String horaF, String fechaE) {
+    public void crearComentario(String comentario, String hora, String user, String fecha) {
         calificacion = new CalificacionM();
-        eventoPKM = new EventoPKM();
-        eventoM = new EventoM();
-
-        cliente.setUsuario(user);
-        calificacion.setHora(hora);
-        calificacion.setFecha(fecha);
-        calificacion.setUsuariocliente(cliente);
-
-        eventoPKM.setHoraInicio(horaI);
-        eventoPKM.setHoraFinal(horaF);
-        eventoPKM.setFecha(fechaE);
-        eventoPKM.setIdevento(idEvento);
-        eventoM.setEventoPK(eventoPKM);
-        eventos.add(eventoM);
-        calificacion.setEventoCollection(eventos);
         calificacion.setComentario(comentario);
-        params = new RequestParams();
-        Gson g = new Gson();
-        String alv = g.toJson(calificacion);
-        params.put("insertar", alv);
-        String nameServlet = "SERVCalificacion";
-        MyLoopjTask loopjTask = new MyLoopjTask(params, nameServlet, (Context) vista, this);
-        loopjTask.executeLoopjCall();
-        opc = 2;
+        calificacion.setHora(hora);
+        calificacion.setFecha(fecha);
+        calificacion.setEvento(eventoM.getId());
+        calificacion.setUsuariocliente(user);
+        JsonApi.getApiService().doCalification(calificacion).enqueue(new Callback<CalificacionM>() {
+            @Override
+            public void onResponse(Call<CalificacionM> call, Response<CalificacionM> response) {
+                vista.showResult("Hecho");
+            }
+
+            @Override
+            public void onFailure(Call<CalificacionM> call, Throwable t) {
+                //vista.showResult("No se realizó correctamente");
+                vista.showResult(t.toString());
+            }
+        });
+
     }
 
     @Override
-    public void crearCalificacion(double porcentaje, String hora, String user, int idEvento, String fecha, String horaI, String horaF, String fechaE) {
+    public void crearCalificacion(double porcentaje, String hora, String user, String fecha) {
         calificacion = new CalificacionM();
-        eventoPKM = new EventoPKM();
-        eventoM = new EventoM();
-
-        cliente.setUsuario(user);
-        calificacion.setHora(hora);
-        calificacion.setFecha(fecha);
-        calificacion.setUsuariocliente(cliente);
-
-        eventoPKM.setHoraInicio(horaI);
-        eventoPKM.setHoraFinal(horaF);
-        eventoPKM.setFecha(fechaE);
-        eventoPKM.setIdevento(idEvento);
-        eventoM.setEventoPK(eventoPKM);
-        eventos.add(eventoM);
-        calificacion.setEventoCollection(eventos);
         calificacion.setPorcentaje(porcentaje);
-        params = new RequestParams();
-        Gson g = new Gson();
-        String alv = g.toJson(calificacion);
-        params.put("insertar", alv);
-        String nameServlet = "SERVCalificacion";
-        MyLoopjTask loopjTask = new MyLoopjTask(params, nameServlet, (Context) vista, this);
-        loopjTask.executeLoopjCall();
-        opc = 2;
-    }
-
-    @Override
-    public void crearMultimedia(byte[] multimedia, String hora, String user, int idEvento, String fecha, String horaI, String horaF, String fechaE) {
-
-        calificacion = new CalificacionM();
-        eventoPKM = new EventoPKM();
-        eventoM = new EventoM();
-
-        cliente.setUsuario(user);
         calificacion.setHora(hora);
         calificacion.setFecha(fecha);
-        calificacion.setUsuariocliente(cliente);
+        calificacion.setEvento(eventoM.getId());
+        calificacion.setUsuariocliente(user);
+        JsonApi.getApiService().doCalification(calificacion).enqueue(new Callback<CalificacionM>() {
+            @Override
+            public void onResponse(Call<CalificacionM> call, Response<CalificacionM> response) {
+                vista.showResult("Hecho");
+            }
 
-        eventoPKM.setHoraInicio(horaI);
-        eventoPKM.setHoraFinal(horaF);
-        eventoPKM.setFecha(fechaE);
-        eventoPKM.setIdevento(idEvento);
-        eventoM.setEventoPK(eventoPKM);
-        eventos.add(eventoM);
-        calificacion.setEventoCollection(eventos);
-        calificacion.setMultimedia(multimedia);
-        params = new RequestParams();
-        Gson g = new Gson();
-        String alv = g.toJson(calificacion);
-        params.put("insertar", alv);
-        String nameServlet = "SERVCalificacion";
-        MyLoopjTask loopjTask = new MyLoopjTask(params, nameServlet, (Context) vista, this);
-        loopjTask.executeLoopjCall();
-        opc = 2;
+            @Override
+            public void onFailure(Call<CalificacionM> call, Throwable t) {
+                vista.showResult("No se realizó correctamente");
+            }
+        });
     }
 
     @Override
-    public String obtenerInfoEvento(int id, String horaI, String horaF, String fecha) {
-        params = new RequestParams();
-        Gson g = new Gson();
-        EventoPKM e = new EventoPKM();
-        e.setIdevento(id);
-        e.setHoraInicio(horaI);
-        e.setHoraFinal(horaF);
-        e.setFecha(fecha);
-        String dato = g.toJson(e);
-        opc = 3;
-        params.put("consultar", dato);
-        String nameServlet = "SERVEvento";
-        MyLoopjTask loopjTask = new MyLoopjTask(params, nameServlet, (Context) vista, this);
-        loopjTask.executeLoopjCall();
+    public void crearMultimedia(File multimedia, String hora, String user, String fecha) {
+        calificacion = new CalificacionM();
+        Long tslong = System.currentTimeMillis() / 1000;
+        String ts = tslong.toString();
+        Random r = new Random();
+        String n1 = String.valueOf(r.nextInt(10));
+        String n2 = String.valueOf(r.nextInt(10));
+        String ruta = "FotosCalificacion/" + eventoM.getId() + "/" + tslong + n1 + n2;
+        calificacion.setMultimedia(ruta);
+        calificacion.setHora(hora);
+        calificacion.setFecha(fecha);
+        calificacion.setEvento(eventoM.getId());
+        calificacion.setUsuariocliente(user);
 
+        JsonApi.getApiService().doCalification(calificacion).enqueue(new Callback<CalificacionM>() {
+            @Override
+            public void onResponse(Call<CalificacionM> call, Response<CalificacionM> response) {
+                vista.showResult("Hecho");
+            }
 
-        return infoEvento;
+            @Override
+            public void onFailure(Call<CalificacionM> call, Throwable t) {
+                vista.showResult("No se realizo\u00f3 correctamente");
+            }
+        });
+
+        RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), multimedia);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("foto", user, requestBody);
+
+        JsonApi.getApiService().uploadFoto(body, ruta).enqueue(new Callback<ClienteM>() {
+            @Override
+            public void onResponse(Call<ClienteM> call, Response<ClienteM> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ClienteM> call, Throwable t) {
+                vista.showResult("No se pudo subir la foto");
+            }
+        });
     }
+
 
     @Override
-    public void actualizar(EventoPKM eventoPKM) {
-        opc = 1;
-        params = new RequestParams();
-        Gson g = new Gson();
-        EventoM eventoM= new EventoM();
-        eventoM.setEventoPK(eventoPKM);
-        String alv = g.toJson(eventoM);
-        params.put("listar", alv);
-        String nameServlet = "SERVCalificacion";
-        MyLoopjTask loopjTask = new MyLoopjTask(params, nameServlet, (Context) vista, this);
-        loopjTask.executeLoopjCall();
+    public void actualizar(String idEvento) {
+        getEvento(idEvento);
+        JsonApi.getApiService().getCalificaciones(Integer.parseInt(idEvento)).enqueue(new Callback<List<CalificacionM>>() {
+            @Override
+            public void onResponse(Call<List<CalificacionM>> call, Response<List<CalificacionM>> response) {
+
+                ArrayList<CalificacionM> calificacionMS = (ArrayList<CalificacionM>) response.body();
+                Boolean emptyCom = true;
+                Boolean emptyFotos = true;
+                for (int i = 0; i < calificacionMS.size(); i++) {
+                    if (calificacionMS.get(i).getComentario() != null) {
+                        comentarios.add(calificacionMS.get(i));
+                        emptyCom = false;
+                    } else {
+
+                    }
+
+                    if (calificacionMS.get(i).getPorcentaje() != null)
+                        porcentaje.add(calificacionMS.get(i).getPorcentaje());
+
+                    if (calificacionMS.get(i).getMultimedia() != null) {
+                        fotos.add(calificacionMS.get(i).getMultimedia());
+                        emptyFotos = false;
+                    } else {
+
+                    }
+
+                }
+
+                if (emptyCom) {
+                    vista.showResult("Au\u00f3n no hay comentarios");
+                }
+                if (emptyFotos) {
+                    vista.showResult("Au\u00f3n no hay Fotos");
+                }
+                getClientes();
+
+
+            }
+
+            @Override
+            public void onFailure(Call<List<CalificacionM>> call, Throwable t) {
+                vista.showResult(t.toString());
+            }
+        });
 
 
     }
+
+
 
     @Override
     public void update() {
+
         if (!porcentaje.isEmpty()) {
             vista.mostrarCalificacion(porcentaje);
             porcentaje = new ArrayList<>();
         }
         if (!comentarios.isEmpty()) {
-            vista.mostrarComentarios(comentarios);
+            ClienteM clienteM = new ClienteM();
+
+            vista.mostrarComentarios(comentarios, clientes);
             comentarios = new ArrayList<>();
         }
         if (!fotos.isEmpty()) {
             vista.mostrarFotos(fotos);
             fotos = new ArrayList<>();
         }
+        //vista.mostrarEvento(eventoM);
+
+
     }
 
     @Override
-    public void taskCompleted(String results) {
-        JsonParser jsonParser = new JsonParser();
-        JsonObject jo = (JsonObject) jsonParser.parse(results);
-        if (opc == 1) {
-            JsonElement lista = jo.get("respuesta");
-            String listaR = lista.getAsString();
-            Type listType = new TypeToken<ArrayList<CalificacionM>>() {
-            }.getType();
-            Gson a = new Gson();
-            ArrayList<CalificacionM> arrayList = a.fromJson(listaR, listType);
-            for (int i = 0; i < arrayList.size(); i++) {
-                if (arrayList.get(i).getComentario() != null) {
-                    comentarios.add(arrayList.get(i));
-                } else {
-                    vista.showResult("Aún no hay comentarios");
-                }
+    public void getEvento(String idEvento) {
+        JsonApi.getApiService().getOnlyEvent(Integer.parseInt(idEvento)).enqueue(new Callback<EventoM>() {
 
-                if (arrayList.get(i).getPorcentaje() != null)
-                    porcentaje.add(arrayList.get(i).getPorcentaje());
+            @Override
+            public void onResponse(Call<EventoM> call, Response<EventoM> response) {
+                eventoM = response.body();
 
-                if (arrayList.get(i).getMultimedia() != null) {
-                    fotos.add(arrayList.get(i).getMultimedia());
-                } else {
-                    vista.showResult("Aún no hay Fotos");
-                }
+                vista.mostrarEvento(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<EventoM> call, Throwable t) {
+                Log.e("errorEvento", t.toString());
 
             }
-            update();
+        });
 
 
-        } else if (opc == 2) {
-            JsonElement c = jo.get("respuesta");
-            String r = c.getAsString();
-            if (r.equals("true")) {
-                vista.showResult("Hecho");
-            } else {
-                vista.showResult("No se realizó correctamente");
+    }
+
+
+    private void getClientes() {
+        JsonApi.getApiService().getClientes().enqueue(new Callback<List<ClienteM>>() {
+            @Override
+            public void onResponse(Call<List<ClienteM>> call, Response<List<ClienteM>> response) {
+                ArrayList<ClienteM> lista = (ArrayList<ClienteM>) response.body();
+                clientes = new ArrayList<>();
+                clientes.addAll(lista);
+                update();
+
             }
-        } else if (opc == 3) {
-            infoEvento = "";
-            Gson a = new Gson();
-            JsonElement c = jo.get("respuesta");
-            infoEvento = c.getAsString();
-            EventoM event = a.fromJson(infoEvento, EventoM.class);
-            vista.mostrarEvento(event);
 
-        }
+            @Override
+            public void onFailure(Call<List<ClienteM>> call, Throwable t) {
+
+                vista.showResult(t.toString());
+
+            }
+        });
 
     }
 
 
 }
+
+

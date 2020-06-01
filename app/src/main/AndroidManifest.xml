@@ -36,7 +36,7 @@
             android:name=".Main"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar">
-        ></activity>
+        </activity>
         <activity android:name=".Vista.ListaCategoria" />
         <activity android:name=".Navigation"
             android:theme="@style/AppTheme.NoActionBar"

@@ -5,6 +5,7 @@ import android.text.Editable;
 
 import org.json.JSONException;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public interface ContractClient {
@@ -14,6 +15,6 @@ public interface ContractClient {
         void swap();
     }
     interface Presenter{
-        void enviar(String nombre, String apellido, String edad, String correo, String cel, String user, String pass, String pass2,byte[] foto) throws JSONException;
+        void enviar(String nombre, String apellido, String edad, String correo, String cel, String user, String pass, String pass2, File foto) throws JSONException;
     }
 }

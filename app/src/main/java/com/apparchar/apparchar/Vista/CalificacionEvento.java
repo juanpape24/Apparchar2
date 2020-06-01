@@ -1,9 +1,13 @@
 package com.apparchar.apparchar.Vista;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -42,26 +46,24 @@ import com.apparchar.apparchar.Contract.ContractCalificacion;
 import com.apparchar.apparchar.Modelo.CalificacionM;
 import com.apparchar.apparchar.Modelo.ClienteM;
 import com.apparchar.apparchar.Modelo.EventoM;
-import com.apparchar.apparchar.Modelo.EventoPKM;
 import com.apparchar.apparchar.Presentador.CalificacionPresenter;
 import com.apparchar.apparchar.R;
-import com.google.android.gms.dynamic.IFragmentWrapper;
+import com.squareup.picasso.Picasso;
+import com.synnapps.carouselview.CarouselView;
+import com.synnapps.carouselview.ImageListener;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
 
 
 public class CalificacionEvento extends AppCompatActivity implements ContractCalificacion.ViewC {
     final int codFoto = 20;
     final int codCarga = 10;
+    final String s3Bucket="https://apparchar.s3.amazonaws.com/";
     private final String carpetaRaiz = "Apparchar/";
     private final String rutaImagen = carpetaRaiz + "Apparchar";
     AdapterComentarios adapterComentarios;
@@ -71,6 +73,8 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
     RecyclerView comentarios;
     ImageButton takePhoto;
     RatingBar porcentaje;
+    RatingBar viewPorcentaje;
+    File fotobytes;
     ImageButton recargar;
     String ruta = "";
     boolean star = true;
@@ -79,14 +83,14 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
     private Timer timer = null;
     ContractCalificacion.PresenterC calificacionPresenter;
     ArrayList a = new ArrayList();
-    TextView nombreEvento, horaInicioEvento, horaFinalEvento, fechaEvento, direccionEvento, descripcionEvento;
+    TextView nombreEvento, horaInicioEvento, fechaEvento, direccionEvento, descripcionEvento;
     ImageView imagenes;
-    String user;
-    String horaFinal;
-    String horaInicio;
-    String fecha;
+    String idUser="";
+    String idEvento="6";
     ImageView fotoEvento;
-    private ImageSwitcher imageSwitcher;
+    CarouselView carouselView;
+    TextView promNumber;
+    //private ImageSwitcher imageSwitcher;
     private static final String READ_EXTERNAL_STORAGE = Manifest.permission.READ_EXTERNAL_STORAGE;
     private static final String WRITE_EXTERNAL_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE;
     private static final String CAMERA = Manifest.permission.CAMERA;
@@ -99,6 +103,10 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vista_calificacion);
+        SharedPreferences sharedPreferences= getSharedPreferences("apparchardata", Context.MODE_PRIVATE);
+        idUser=sharedPreferences.getString("user","null");
+        //idEvento=sharedPreferences.getString("evento","null");
+        idEvento= "1";
         comentario = findViewById(R.id.comentario);
         comentar = findViewById(R.id.comentar);
         comentarios = findViewById(R.id.comentarios);
@@ -109,36 +117,20 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
         descripcionEvento = findViewById(R.id.descripcionEvento);
         direccionEvento = findViewById(R.id.direccionEvento);
         fechaEvento = findViewById(R.id.fechaEvento);
-        horaInicioEvento = findViewById(R.id.horaInicioEvento);
-        horaFinalEvento = findViewById(R.id.horaFinalEvento);
+        horaInicioEvento = findViewById(R.id.horaEvento);
+        promNumber= findViewById(R.id.promedio);
+        viewPorcentaje= findViewById(R.id.viewStar);
         fotoEvento = findViewById(R.id.fotoEvento);
-        // carouselPicker = findViewById(R.id.CarouselPicker);
-        imageSwitcher = findViewById(R.id.imageSwitcher);
+        carouselView = findViewById(R.id.carouselView);
         adapterComentarios = new AdapterComentarios(this);
         LinearLayoutManager l = new LinearLayoutManager(this);
         comentarios.setLayoutManager(l);
         comentarios.setAdapter(adapterComentarios);
-        user = getIntent().getExtras().getString("user");
-        imageSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
 
-            public View makeView() {
-                return new ImageView(CalificacionEvento.this);
-            }
-        });
-        // Set animations
-        // http://danielme.com/2013/08/18/diseno-android-transiciones-entre-activities/
-        Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
-        Animation fadeOut = AnimationUtils.loadAnimation(this, R.anim.fade_out);
-        imageSwitcher.setInAnimation(fadeIn);
-        imageSwitcher.setOutAnimation(fadeOut);
-
-
-        horaFinal = getIntent().getExtras().getString("final");
-        horaInicio = getIntent().getExtras().getString("inicio");
-        fecha = getIntent().getExtras().getString("fecha");
         calificacionPresenter = new CalificacionPresenter(this);
-        int id = getIntent().getExtras().getInt("id");
-        calificacionPresenter.obtenerInfoEvento(id, horaInicio, horaFinal, fecha);
+
+        calificacionPresenter.getEvento(idEvento);
+        calificacionPresenter.actualizar(idEvento);
         comentar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,35 +138,26 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
                 ClienteM clienteM = new ClienteM();
                 String mensaje = comentario.getText().toString();
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
-                String currentDateandTime = sdf.format(new Date());
+                String currentDateandTime = sdf.format(new java.util.Date());
                 String year = currentDateandTime.substring(0, 4);
                 String month = currentDateandTime.substring(4, 6);
                 String day = currentDateandTime.substring(6, 8);
-                String fechac = day + "/" + month + "/" + year;
+                String fechac = year+"-"+month+"-"+day;
                 String hour = currentDateandTime.substring(9, 11);
                 String minutos = currentDateandTime.substring(11, 13);
                 String time = hour + ":" + minutos;
-                clienteM.setUsuario(user);
-                calificacionM.setUsuariocliente(clienteM);
-                calificacionM.setComentario(mensaje);
-                calificacionM.setHora(time);
-                adapterComentarios.addC(calificacionM);
-                int id = getIntent().getExtras().getInt("id");
+
+                //Time time = new Time(Integer.parseInt(hour),Integer.parseInt(minutos),0);
+                //Date date = new Date(Integer.parseInt(year),Integer.parseInt(month),Integer.parseInt(day));
                 comentario.setText("");
-                calificacionPresenter.crearComentario(mensaje, time, user, id, fechac, horaInicio, horaFinal, fecha);
+                calificacionPresenter.crearComentario(mensaje, time, idUser, fechac);
 
             }
         });
         recargar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int id = getIntent().getExtras().getInt("id");
-                EventoPKM eventoPKM = new EventoPKM();
-                eventoPKM.setFecha(fecha);
-                eventoPKM.setHoraFinal(horaFinal);
-                eventoPKM.setHoraInicio(horaInicio);
-                eventoPKM.setIdevento(id);
-                calificacionPresenter.actualizar(eventoPKM);
+                calificacionPresenter.actualizar(idEvento);
             }
         });
         adapterComentarios.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
@@ -190,17 +173,20 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
                 float pcr = porcentaje.getRating();
                 if (star) {
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
-                    String currentDateandTime = sdf.format(new Date());
+                    String currentDateandTime = sdf.format(new java.util.Date());
                     String year = currentDateandTime.substring(0, 4);
                     String month = currentDateandTime.substring(4, 6);
                     String day = currentDateandTime.substring(6, 8);
-                    String fechac = day + "/" + month + "/" + year;
+                    //String fechac = day + "/" + month + "/" + year;
                     String hour = currentDateandTime.substring(9, 11);
                     String minutos = currentDateandTime.substring(11, 13);
                     String time = hour + ":" + minutos;
-                    int id = getIntent().getExtras().getInt("id");
+                    String fechac = year+"-"+month+"-"+day;
+                    //int id = getIntent().getExtras().getInt("id");
+                    //Time time = new Time(Integer.parseInt(hour),Integer.parseInt(minutos),0);
+                    //Date date = new Date(Integer.parseInt(year),Integer.parseInt(month),Integer.parseInt(day));
                     porcentaje.setEnabled(false);
-                    calificacionPresenter.crearCalificacion(pcr, time, user, id, fechac, horaInicio, horaFinal, fecha);
+                    calificacionPresenter.crearCalificacion(pcr, time, idUser, fechac);
                 }
 
 
@@ -246,7 +232,7 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
                         File imagen = new File(ruta);*/
                         Intent in = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-                       // in.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imagen));
+                        // in.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imagen));
                         startActivityForResult(in, codFoto);
                     } else getPermission();
 
@@ -279,11 +265,11 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
                     ByteArrayOutputStream b = new ByteArrayOutputStream();
                     Uri pathh = data.getData();
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
-                    String currentDateandTime = sdf.format(new Date());
+                    String currentDateandTime = sdf.format(new java.util.Date());
                     String year = currentDateandTime.substring(0, 4);
                     String month = currentDateandTime.substring(4, 6);
                     String day = currentDateandTime.substring(6, 8);
-                    String fechac = day + "/" + month + "/" + year;
+                    //String fechac = day + "/" + month + "/" + year;
                     String hour = currentDateandTime.substring(9, 11);
                     String minutos = currentDateandTime.substring(11, 13);
                     String time = hour + ":" + minutos;
@@ -295,13 +281,19 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    String filePath = getRealPathFromURIPath(pathh.normalizeScheme(), CalificacionEvento.this);
+                    File file = new File(filePath);
 
-                    int id = getIntent().getExtras().getInt("id");
-                    calificacionPresenter.crearMultimedia(b.toByteArray(), time, user, id, fechac, horaInicio, horaFinal, fecha);
+                    fotobytes = file;
+
+                    //Time time = new Time(Integer.parseInt(hour),Integer.parseInt(minutos),0);
+                    //Date date = new Date(Integer.parseInt(year),Integer.parseInt(month),Integer.parseInt(day));
+                    String fechac = year+"-"+month+"-"+day;
+                    //int id = getIntent().getExtras().getInt("id");
+                    calificacionPresenter.crearMultimedia(fotobytes, time, idUser,fechac);
 
                     break;
                 case codFoto:
-
 
 
                     ByteArrayOutputStream b2 = new ByteArrayOutputStream();
@@ -314,18 +306,25 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
 
                     //Bitmap bitmap = BitmapFactory.decodeFile(ruta);
                     Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-                   bitmap.compress(Bitmap.CompressFormat.JPEG, 10, b2);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 10, b2);
                     SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMdd_HHmmss");
-                    String currentDateandTime2 = sdf2.format(new Date());
+                    String currentDateandTime2 = sdf2.format(new java.util.Date());
                     String year2 = currentDateandTime2.substring(0, 4);
                     String month2 = currentDateandTime2.substring(4, 6);
                     String day2 = currentDateandTime2.substring(6, 8);
-                    String fechac2 = day2 + "/" + month2 + "/" + year2;
+                    String fechac2 = year2+"-"+month2+"-"+day2;
                     String hour2 = currentDateandTime2.substring(9, 11);
                     String minutos2 = currentDateandTime2.substring(11, 13);
                     String time2 = hour2 + ":" + minutos2;
-                    id = getIntent().getExtras().getInt("id");
-                    calificacionPresenter.crearMultimedia(b2.toByteArray(), time2, user, id, fechac2, horaInicio, horaFinal, fecha);
+                    //id = getIntent().getExtras().getInt("id");
+
+                    //String filePath = getRealPathFromURIPath(pathh.normalizeScheme(), Cliente.this);
+                    //File file = new File(filePath);
+
+                    //fotobytes = file;
+                    //Time time2 = new Time(Integer.parseInt(hour2),Integer.parseInt(minutos2),0);
+                    //Date date2 = new Date(Integer.parseInt(year2),Integer.parseInt(month2),Integer.parseInt(day2));
+                    calificacionPresenter.crearMultimedia(fotobytes, time2, idUser, fechac2);
 
                     break;
             }
@@ -345,64 +344,54 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
     }
 
     @Override
-    public void mostrarFotos(final ArrayList<byte[]> fotos) {
-
+    public void mostrarFotos(final ArrayList<String> fotos) {
+        final Context c = this;
         if (fotos.isEmpty()) {
             // showResult("No hay fotos");
         } else {
-            if (timer != null) {
-                timer.cancel();
-            }
-            position = 0;
-            startSlider(fotos);
+
+
+            carouselView.setImageListener(new ImageListener() {
+                @Override
+                public void setImageForPosition(int position, ImageView imageView) {
+                    String url=s3Bucket+fotos.get(position)+".jpg";
+                    Log.i("fotosxd",url);
+                    Picasso.with(c).load(url).fit().into(imageView);
+
+                }
+            });
+            carouselView.setPageCount(fotos.size());
+
         }
 
 
     }
 
 
-    private void startSlider(final ArrayList<byte[]> fotos) {
-        timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-
-            public void run() {
-                // avoid exception:
-                // "Only the original thread that created a view hierarchy can touch its views"
-                runOnUiThread(new Runnable() {
-                    public void run() {
-                        Bitmap fotico= getImage(fotos.get(position));
-                       // fotico.setWidth(500);
-                        //fotico.setHeight(500);
-                        Drawable d = new BitmapDrawable(getResources(), fotico);
-                        imageSwitcher.setImageDrawable(d);
-
-                      LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(800, 800);
-                      imageSwitcher.setLayoutParams(params1);
-
-                        position++;
-                        if (position == fotos.size()) {
-                            position = 0;
-                        }
-                    }
-                });
-            }
-
-        }, 0, DURATION);
-
-
-    }
-
     @Override
-    public void mostrarComentarios(ArrayList<CalificacionM> com) {
+    public void mostrarComentarios(ArrayList<CalificacionM> com, ArrayList<ClienteM> clientes) {
         adapterComentarios.removeC();
         if (com.isEmpty()) {
 
         } else {
             for (int i = 0; i < com.size(); i++) {
-                adapterComentarios.addC(com.get(i));
+                ClienteM clienteM= new ClienteM();
+                clienteM=getCliente(clientes,com.get(i).getUsuariocliente());
+                adapterComentarios.addC(com.get(i),clienteM);
             }
         }
 
+    }
+
+    private ClienteM getCliente(ArrayList<ClienteM> clientes, String user) {
+        int index = 0;
+        for (int i = 0; i < clientes.size(); i++) {
+            if (clientes.get(i).getUsuario().equals(user)) {
+                index=i;
+            }
+        }
+
+        return clientes.get(index);
     }
 
     @Override
@@ -413,43 +402,36 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
             for (int i = 0; i < calificacion.size(); i++) {
                 suma = suma + calificacion.get(i);
             }
-            double promedio = suma / calificacion.size();
+            double promedio = (suma / calificacion.size());
             String s = String.valueOf(promedio);
             star = false;
+            viewPorcentaje.setRating(Float.valueOf(s));
             porcentaje.setRating(Float.valueOf(s));
+            promNumber.setText(s);
+
 
 
         }
     }
 
+
     @Override
     public void mostrarEvento(EventoM evento) {
         String catxd = "";
         ArrayList lista = new ArrayList();
-        lista = (ArrayList) evento.getCategoriaCollection();
+        //lista = (ArrayList) evento.getCategoriaCollection();
         nombreEvento.setText(evento.getNombre());
-        horaFinalEvento.setText(evento.getEventoPK().getHoraFinal());
-        horaInicioEvento.setText(evento.getEventoPK().getHoraInicio());
-        fechaEvento.setText(evento.getEventoPK().getFecha());
-        direccionEvento.setText(evento.getDireccion().getDireccion());
+        String horaE= evento.getHora_inicio()+"-"+evento.getHora_final();
+        horaInicioEvento.setText(horaE);
+        fechaEvento.setText(evento.getFecha());
+        direccionEvento.setText(evento.getLugar());
         descripcionEvento.setText(evento.getDescripcion());
-        /*if (evento.getFoto() != null)
-            fotoEvento.setImageBitmap(getImage(evento.getFoto()));*/
-       // TableRow.LayoutParams params1 = new TableRow.LayoutParams(178, 125);
+        if (evento.getFoto() != null) {
+        }
+        //fotoEvento.setImageBitmap(getImage(evento.getFoto()));
+        // TableRow.LayoutParams params1 = new TableRow.LayoutParams(178, 125);
         //fotoEvento.setLayoutParams(params1);
 
-    }
-
-    @Override
-    public String getIdEvento() {
-        String idEvento = getIntent().getExtras().getString("idEvento");
-        return idEvento;
-    }
-
-    public Bitmap getImage(byte[] byteArray) {
-        ArrayList<Bitmap> a = new ArrayList<>();
-        Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-        return bmp;
     }
 
     private void setScroll() {
@@ -480,8 +462,39 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
         }
     }
 
+   /* public static Bitmap getBitmap(String url) {
+        try {
+            URL url1 = new URL(url);
+            HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream inputStream = connection.getInputStream();
+            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+            return bitmap;
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }*/
+
+    private String getRealPathFromURIPath(Uri contentURI, Activity activity) {
+        Cursor cursor = activity.getContentResolver().query(contentURI, null, null, null, null);
+        if (cursor == null) {
+            return contentURI.getPath();
+        } else {
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            return cursor.getString(idx);
+        }
+    }
+
       /*
       Metodo utilizado para manejar las respuestas a la solicitud de los permisos del usuario
+
        */
 
     @Override
@@ -511,5 +524,3 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
 
     }
 }
-
-
