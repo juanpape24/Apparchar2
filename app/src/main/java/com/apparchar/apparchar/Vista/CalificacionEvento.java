@@ -524,5 +524,3 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
 
     }
 }
-
-

@@ -6,6 +6,7 @@
 package com.apparchar.apparchar.Modelo;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  *
@@ -15,18 +16,18 @@ public class LugarM {
 
     private String direccion;
     private String nombre;
-    private Double coordenadaX;
-    private Double coordenadaY;
+    private Double coordenada_x;
+    private Double coordenada_y;
     private String descripcion;
-    private Collection<EventoM> eventoCollection;
+    private List<EventoM> lugar;
 
-    public LugarM(String direccion, String nombre, Double coordenadaX, Double coordenadaY, String descripcion, Collection<EventoM> eventoCollection) {
+    public LugarM(String direccion, String nombre, Double coordenadaX, Double coordenadaY, String descripcion, List<EventoM> eventoCollection) {
         this.direccion = direccion;
         this.nombre = nombre;
-        this.coordenadaX = coordenadaX;
-        this.coordenadaY = coordenadaY;
+        this.coordenada_x = coordenadaX;
+        this.coordenada_y = coordenadaY;
         this.descripcion = descripcion;
-        this.eventoCollection = eventoCollection;
+        this.lugar = eventoCollection;
     }
 
     public LugarM() {
@@ -49,19 +50,19 @@ public class LugarM {
     }
 
     public Double getCoordenadaX() {
-        return coordenadaX;
+        return coordenada_x;
     }
 
     public void setCoordenadaX(Double coordenadaX) {
-        this.coordenadaX = coordenadaX;
+        this.coordenada_x= coordenadaX;
     }
 
     public Double getCoordenadaY() {
-        return coordenadaY;
+        return coordenada_y;
     }
 
     public void setCoordenadaY(Double coordenadaY) {
-        this.coordenadaY = coordenadaY;
+        this.coordenada_y = coordenadaY;
     }
 
     public String getDescripcion() {
@@ -72,17 +73,17 @@ public class LugarM {
         this.descripcion = descripcion;
     }
 
-    public Collection<EventoM> getEventoCollection() {
-        return eventoCollection;
+    public List<EventoM> getEventoCollection() {
+        return lugar;
     }
 
-    public void setEventoCollection(Collection<EventoM> eventoCollection) {
-        this.eventoCollection = eventoCollection;
+    public void setEventoCollection(List<EventoM> eventoCollection) {
+        this.lugar = eventoCollection;
     }
 
     @Override
     public String toString() {
-        return "LugarM{" + "direccion=" + direccion + ", nombre=" + nombre + ", coordenadaX=" + coordenadaX + ", coordenadaY=" + coordenadaY + ", descripcion=" + descripcion + ", eventoCollection=" + eventoCollection + '}';
+        return "LugarM{" + "direccion=" + direccion + ", nombre=" + nombre + ", coordenadaX=" + coordenada_x + ", coordenadaY=" + coordenada_y + ", descripcion=" + descripcion + ", eventoCollection=" + lugar + '}';
     }
 
 }

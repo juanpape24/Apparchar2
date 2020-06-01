@@ -24,7 +24,7 @@ import android.widget.Toast;
 
 import com.apparchar.apparchar.Vista.LoginActivity;
 
-public class Main extends AppCompatActivity implements FragmentCategoria.OnFragmentInteractionListener, FragmentEventos.OnFragmentInteractionListener{ //FragmentRealTime.OnFragmentInteractionListener {
+public class Main extends AppCompatActivity implements FragmentCategoria.OnFragmentInteractionListener, FragmentEventos.OnFragmentInteractionListener,FragmentRealTime.OnFragmentInteractionListener{ //FragmentRealTime.OnFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -93,14 +93,14 @@ public class Main extends AppCompatActivity implements FragmentCategoria.OnFragm
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_actualizar) {
-            finish();
-            startActivity(getIntent());
+        /*if (id == R.id.action_actualizar) {
+            Toast.makeText(getApplication(),"Hola",Toast.LENGTH_SHORT).show();
+            //getFragmentManager().beginTransaction().remove(getFragmentManager().findFragmentById(R.id.main_content)).commit();
         }
         if(id==R.id.action_cerrar){
             Intent intent=new Intent(this, LoginActivity.class);
             startActivity(intent);
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }
@@ -141,8 +141,8 @@ public class Main extends AppCompatActivity implements FragmentCategoria.OnFragm
                 break;
                 case 2:fragment=new FragmentEventos();
                 break;
-              /*  case 3:fragment=new FragmentRealTime();
-                break;*/
+                case 3:fragment=new FragmentRealTime();
+                break;
             }
             return fragment;
         }
@@ -177,7 +177,7 @@ public class Main extends AppCompatActivity implements FragmentCategoria.OnFragm
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 2;
+            return 3;
         }
         @Override
         public CharSequence getPageTitle(int position){

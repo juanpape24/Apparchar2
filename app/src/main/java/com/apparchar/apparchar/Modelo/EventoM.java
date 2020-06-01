@@ -25,12 +25,14 @@ public class EventoM{
     private String foto;
     protected EventoPKM eventoPK;
     private Collection<EmpresaM> empresaCollection;
-
     private Collection<CalificacionM> calificacionCollection;
     private Collection<CategoriaM> categoriaCollection;
     private LugarM direccion;
     private ArrayList<EventoCategoria> evento;
     private String categoria="";
+  
+  
+  
 
     public EventoM(){
 

@@ -54,13 +54,13 @@ public class ListaEventoPresenter implements ContractListaEvento.EventoPresenter
                 List<EventoM> eventoMS = response.body();
                 if (vista.getCat() != null) {
                     for (EventoM event1 : eventoMS) {
-                            if (vista.getIdentificador().equals(String.valueOf(event1.getEvento().get(event1.getEvento().size()-1).getCategoria()))){
-                                event1.setCategoria(vista.getCat());
-                                lista.add(event1);
+                        if (vista.getIdentificador().equals(String.valueOf(event1.getEvento().get(event1.getEvento().size() - 1).getCategoria()))) {
+                            event1.setCategoria(vista.getCat());
+                            lista.add(event1);
                         }
                     }
 
-                } else if(vista.getCat()==null){
+                } else if (vista.getCat() == null) {
                     for (EventoM event1 : eventoMS) {
                         lista.add(event1);
                     }
@@ -77,19 +77,19 @@ public class ListaEventoPresenter implements ContractListaEvento.EventoPresenter
 
     private void getPostEvCa() {
         Call<List<CategoriaM>> call = jsonApi.getJsonCategory().getCategoria();
-        Log.i("contract",  "Lo que sea");
+        Log.i("contract", "Lo que sea");
         call.enqueue(new Callback<List<CategoriaM>>() {
             @Override
             public void onResponse(Call<List<CategoriaM>> call, Response<List<CategoriaM>> response) {
                 if (!response.isSuccessful()) {
-                    Log.i("contract",  "Lo que sea");
+                    Log.i("contract", "Lo que sea");
                     vista.showResult(String.valueOf(response.code()));
                     return;
                 }
-                Log.i("contract",  "Lo que sea");
+                Log.i("contract", "Lo que sea");
                 List<CategoriaM> cate1 = response.body();
                 for (CategoriaM cat : cate1) {
-                    Log.i("contract",  cate1.toString());
+                    Log.i("contract", cate1.toString());
                     categoriaM.add(cat);
                 }
             }
@@ -97,7 +97,7 @@ public class ListaEventoPresenter implements ContractListaEvento.EventoPresenter
 
             @Override
             public void onFailure(Call<List<CategoriaM>> call, Throwable t) {
-                Log.i("contract",  "Lo que sea");
+                Log.i("contract", "Lo que sea");
                 vista.showResult(t.getMessage());
             }
         });

@@ -15,13 +15,13 @@ public class CategoriaM {
 
     private Integer id;
     private String nombre;
-    private byte[] icono;
+    private String icono;
     private Collection<EventoM> eventoCollection;
 
     public CategoriaM() {
     }
 
-    public CategoriaM(Integer id, String nombre, byte[] icono, Collection<EventoM> eventoCollection) {
+    public CategoriaM(Integer id, String nombre, String icono, Collection<EventoM> eventoCollection) {
         this.id = id;
         this.nombre = nombre;
         this.icono = icono;
@@ -45,11 +45,11 @@ public class CategoriaM {
         this.nombre = nombre;
     }
 
-    public byte[] getIcono() {
+    public String getIcono() {
         return icono;
     }
 
-    public void setIcono(byte[] icono) {
+    public void setIcono(String icono) {
         this.icono = icono;
     }
 
