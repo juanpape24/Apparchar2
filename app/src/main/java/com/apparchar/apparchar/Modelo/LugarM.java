@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author jeffe
  */
-public class LugarM {
+public class LugarM{
 
     private String direccion;
     private String nombre;

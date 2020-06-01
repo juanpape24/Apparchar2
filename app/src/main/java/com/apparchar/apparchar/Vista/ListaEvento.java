@@ -18,7 +18,7 @@ import com.apparchar.apparchar.RecyclerViewAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListaEvento extends AppCompatActivity implements ContractListaEvento.ViewEvento {
+public class ListaEvento extends AppCompatActivity implements ContractListaEvento.ViewEvento{
     private static final String TAG = "LISTA EVENTO";
     private static final int ERROR_DIALOG_REQUEST = 9001;
     GridLayoutManager gridLayoutManager;

@@ -41,7 +41,7 @@ import java.util.Date;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class Cliente extends AppCompatActivity implements ContractClient.View {
+public class Cliente extends AppCompatActivity implements ContractClient.View{
     private TextView nombre, apellido, edad, email, cel, user, pass, pass2;
     private EditText nombre1, apellido1, edad1, email1, cel1, user1, pass1, pass3;
     private boolean fotoExist=false;

@@ -11,7 +11,7 @@ import java.util.Collection;
  *
  * @author jeffe
  */
-public class ClienteM {
+public class ClienteM{
 
     private String nombre;
     private Integer edad;

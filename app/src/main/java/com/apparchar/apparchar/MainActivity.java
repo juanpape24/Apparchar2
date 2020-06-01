@@ -1,18 +1,9 @@
 package com.apparchar.apparchar;
 
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
-
-import com.apparchar.apparchar.Conexion.OnLoopjCompleted;
 //import com.example.loginregisterapp.Conexion.MyLoopjTask;
 //import com.example.loginregisterapp.Conexion.OnLoopjCompleted;
-import com.loopj.android.http.*;
+
 
 /*
 public class MainActivity extends AppCompatActivity implements OnLoopjCompleted,View.OnClickListener {

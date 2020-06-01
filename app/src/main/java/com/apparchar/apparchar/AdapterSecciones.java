@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdapterSecciones extends FragmentStatePagerAdapter {
+public class AdapterSecciones extends FragmentStatePagerAdapter{
 
     private final List<Fragment> fragmentList=new ArrayList<>();
     private final List<String> titulos=new ArrayList<>();

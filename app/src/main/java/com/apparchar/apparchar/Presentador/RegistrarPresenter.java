@@ -63,7 +63,7 @@ public class RegistrarPresenter implements ContractClient.Presenter{
                 vista.swap();
                 params = new RequestParams();
 
-               // RequestBody requestBody = RequestBody.create(MediaType.parse("application/octet-stream"),foto);
+                // RequestBody requestBody = RequestBody.create(MediaType.parse("application/octet-stream"),foto);
                 RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), foto);
                 MultipartBody.Part body= MultipartBody.Part.createFormData("foto",user,requestBody);
 
@@ -78,14 +78,14 @@ public class RegistrarPresenter implements ContractClient.Presenter{
                     @Override
                     public void onFailure(Call<ClienteM> call, Throwable t) {
                         Log.i("error",t.getMessage());
-                                //vista.showResult("No se pudo subir la foto");
+                        //vista.showResult("No se pudo subir la foto");
                     }
                 });
 
                 JsonApi.getApiService().registro(cliente).enqueue(new Callback<ClienteM>() {
                     @Override
                     public void onResponse(Call<ClienteM> call, Response<ClienteM> response) {
-                        vista.showResult("Se registro\u00f3 correctamente");
+                        vista.showResult("Se registr\u00f3 correctamente");
                     }
 
                     @Override

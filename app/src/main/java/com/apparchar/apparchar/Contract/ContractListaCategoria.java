@@ -4,7 +4,7 @@ import com.apparchar.apparchar.Modelo.CategoriaM;
 
 import java.util.ArrayList;
 
-public interface ContractListaCategoria {
+public interface ContractListaCategoria{
 
     interface viewCategoria{
         void datos(ArrayList<CategoriaM> categoria);

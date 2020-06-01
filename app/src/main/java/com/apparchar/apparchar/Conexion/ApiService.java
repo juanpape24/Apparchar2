@@ -19,7 +19,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Query;
 
-public interface ApiService {
+public interface ApiService{
     @GET("cliente/")
     Call<ClienteM> validacion(@Query("usuario") String usuario, @Query("contrasenia") String contrasenia);
 
@@ -45,5 +45,8 @@ public interface ApiService {
     @Multipart
     @POST("calificacion/uploadFoto")
     Call<ClienteM> uploadFoto(@Part MultipartBody.Part file, @Query("ruta") String ruta);
+
+    @POST("sentiments_analisis/")
+    Call<String> sendComentariotoAnalisis(@Query("comentario") String comentario, @Query("id_user") String id_user,@Query("id_evento") int id_evento);
 
 }

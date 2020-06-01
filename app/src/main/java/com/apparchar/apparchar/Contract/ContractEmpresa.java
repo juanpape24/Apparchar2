@@ -1,6 +1,6 @@
 package com.apparchar.apparchar.Contract;
 
-public interface ContractEmpresa {
+public interface ContractEmpresa{
     interface ViewE{
         void showResultE(String info);
         void cambiar();

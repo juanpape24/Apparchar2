@@ -60,7 +60,7 @@ import java.util.ArrayList;
 import java.util.Timer;
 
 
-public class CalificacionEvento extends AppCompatActivity implements ContractCalificacion.ViewC {
+public class CalificacionEvento extends AppCompatActivity implements ContractCalificacion.ViewC{
     final int codFoto = 20;
     final int codCarga = 10;
     final String s3Bucket="https://apparchar.s3.amazonaws.com/";
@@ -86,7 +86,8 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
     TextView nombreEvento, horaInicioEvento, fechaEvento, direccionEvento, descripcionEvento;
     ImageView imagenes;
     String idUser="";
-    String idEvento="6";
+
+    int idEvento= -1;
     ImageView fotoEvento;
     CarouselView carouselView;
     TextView promNumber;
@@ -105,8 +106,9 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
         setContentView(R.layout.vista_calificacion);
         SharedPreferences sharedPreferences= getSharedPreferences("apparchardata", Context.MODE_PRIVATE);
         idUser=sharedPreferences.getString("user","null");
-        //idEvento=sharedPreferences.getString("evento","null");
-        idEvento= "1";
+        Intent intent= getIntent();
+        idEvento= intent.getIntExtra("id",-1);
+        Log.i("i","idEvento-->"+idEvento);
         comentario = findViewById(R.id.comentario);
         comentar = findViewById(R.id.comentar);
         comentarios = findViewById(R.id.comentarios);
@@ -427,6 +429,7 @@ public class CalificacionEvento extends AppCompatActivity implements ContractCal
         direccionEvento.setText(evento.getLugar());
         descripcionEvento.setText(evento.getDescripcion());
         if (evento.getFoto() != null) {
+            Picasso.with(this).load(evento.getFoto()).fit().into(fotoEvento);
         }
         //fotoEvento.setImageBitmap(getImage(evento.getFoto()));
         // TableRow.LayoutParams params1 = new TableRow.LayoutParams(178, 125);

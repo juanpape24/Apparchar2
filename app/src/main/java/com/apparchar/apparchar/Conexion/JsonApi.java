@@ -11,8 +11,9 @@ public class JsonApi {
     private static JsonCategory API_SERVICE2;
     private static ApiService API_SERVICE3;
     ///static String baseUrl = "http://192.168.0.11:8000/";   //servidor local
-    static String baseUrl="http://ec2-3-84-221-67.compute-1.amazonaws.com:8080/"; //servidor prueba ec2
+    //static String baseUrl="http://ec2-3-84-221-67.compute-1.amazonaws.com:8080/"; //servidor prueba ec2
     //static String baseUrl="http://ec2-54-161-138-190.compute-1.amazonaws.com:8080/"; //Servidor Apparchar EC2
+    static String baseUrl="http://balanceador-743789745.us-east-1.elb.amazonaws.com:8080/";  //balanceador server
     public static JsonEvent getJsonEvent() {
 
         if (API_SERVICE == null) {

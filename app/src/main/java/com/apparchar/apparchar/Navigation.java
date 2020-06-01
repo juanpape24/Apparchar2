@@ -22,7 +22,7 @@ import android.widget.TextView;
 import com.apparchar.apparchar.Vista.LoginActivity;
 
 public class Navigation extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,FragmentCategoria.OnFragmentInteractionListener,FragmentEventos.OnFragmentInteractionListener,FragmentRealTime.OnFragmentInteractionListener,FragmentContenedor.OnFragmentInteractionListener  {
+        implements NavigationView.OnNavigationItemSelectedListener,FragmentCategoria.OnFragmentInteractionListener,FragmentEventos.OnFragmentInteractionListener,FragmentRealTime.OnFragmentInteractionListener,FragmentContenedor.OnFragmentInteractionListener{
     private static String idUser="";
     private TextView texto;
     @Override

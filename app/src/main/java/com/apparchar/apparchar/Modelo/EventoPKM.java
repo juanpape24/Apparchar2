@@ -9,7 +9,7 @@ package com.apparchar.apparchar.Modelo;
  *
  * @author jeffe
  */
-public class EventoPKM {
+public class EventoPKM{
 
     private String horaInicio;
     private String horaFinal;

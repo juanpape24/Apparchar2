@@ -5,7 +5,7 @@ import com.apparchar.apparchar.Modelo.EventoM;
 import java.util.List;
 
 
-public interface ContractListaEvento {
+public interface ContractListaEvento{
 
     interface ViewEvento{
         void dato(List<EventoM> lista);

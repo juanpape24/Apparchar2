@@ -24,7 +24,7 @@ import android.support.v7.widget.Toolbar;
  * Use the {@link FragmentContenedor#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentContenedor extends Fragment {
+public class FragmentContenedor extends Fragment{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 

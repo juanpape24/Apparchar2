@@ -23,7 +23,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdapterComentarios extends RecyclerView.Adapter<HolderComentario> {
+public class AdapterComentarios extends RecyclerView.Adapter<HolderComentario>{
     private ArrayList<CalificacionM> comentarios;
     private Context c;
     final String s3Bucket="https://apparchar.s3.amazonaws.com/";

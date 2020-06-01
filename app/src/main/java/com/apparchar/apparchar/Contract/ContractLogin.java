@@ -2,7 +2,7 @@ package com.apparchar.apparchar.Contract;
 
 import java.util.ArrayList;
 
-public interface ContractLogin {
+public interface ContractLogin{
 
     interface ViewL{
         void showResult(String info);

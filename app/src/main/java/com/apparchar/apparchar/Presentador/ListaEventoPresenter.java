@@ -4,24 +4,17 @@ import android.content.Context;
 import android.util.Log;
 
 import com.apparchar.apparchar.Conexion.JsonApi;
-import com.apparchar.apparchar.Conexion.JsonEvent;
-import com.apparchar.apparchar.Conexion.MyLoopjTask;
-import com.apparchar.apparchar.Conexion.OnLoopjCompleted;
 import com.apparchar.apparchar.Contract.ContractListaEvento;
 import com.apparchar.apparchar.Modelo.CategoriaM;
-import com.apparchar.apparchar.Modelo.EventoCategoria;
 import com.apparchar.apparchar.Modelo.EventoM;
 
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ListaEventoPresenter implements ContractListaEvento.EventoPresenter {
 

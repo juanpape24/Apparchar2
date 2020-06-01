@@ -20,7 +20,7 @@ import com.apparchar.apparchar.Vista.ListaEvento;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.MyViewHolder> {
+public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.MyViewHolder>{
 
 
     private List<CategoriaM> lista;

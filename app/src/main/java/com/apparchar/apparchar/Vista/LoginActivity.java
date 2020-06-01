@@ -23,7 +23,7 @@ import com.apparchar.apparchar.R;
 
 import java.util.ArrayList;
 
-public class LoginActivity extends AppCompatActivity implements ContractLogin.ViewL {
+public class LoginActivity extends AppCompatActivity implements ContractLogin.ViewL{
 
     private TextView ver1, ver2;
     private EditText texto2, texto1;

@@ -4,28 +4,16 @@ import android.content.Context;
 import android.util.EventLog;
 import android.util.Log;
 
+import com.apparchar.apparchar.Conexion.ApiAnalisis;
 import com.apparchar.apparchar.Conexion.JsonApi;
-import com.apparchar.apparchar.Conexion.MyLoopjTask;
-import com.apparchar.apparchar.Conexion.OnLoopjCompleted;
 import com.apparchar.apparchar.Contract.ContractCalificacion;
 import com.apparchar.apparchar.Modelo.CalificacionM;
 import com.apparchar.apparchar.Modelo.ClienteM;
 import com.apparchar.apparchar.Modelo.EventoM;
-import com.apparchar.apparchar.Modelo.EventoPKM;
-import com.apparchar.apparchar.Vista.Cliente;
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.RequestParams;
 
 import java.io.File;
-import java.lang.reflect.Type;
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -81,6 +69,18 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC {
             public void onFailure(Call<CalificacionM> call, Throwable t) {
                 //vista.showResult("No se realizó correctamente");
                 vista.showResult(t.toString());
+            }
+        });
+
+        ApiAnalisis.getApiService().sendComentariotoAnalisis(comentario,user,eventoM.getId()).enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                vista.showResult("No se pudo analizar el comentario");
             }
         });
 
@@ -152,9 +152,9 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC {
 
 
     @Override
-    public void actualizar(String idEvento) {
+    public void actualizar(int idEvento) {
         getEvento(idEvento);
-        JsonApi.getApiService().getCalificaciones(Integer.parseInt(idEvento)).enqueue(new Callback<List<CalificacionM>>() {
+        JsonApi.getApiService().getCalificaciones(idEvento).enqueue(new Callback<List<CalificacionM>>() {
             @Override
             public void onResponse(Call<List<CalificacionM>> call, Response<List<CalificacionM>> response) {
 
@@ -182,10 +182,10 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC {
                 }
 
                 if (emptyCom) {
-                    vista.showResult("Au\u00f3n no hay comentarios");
+                    vista.showResult("A\u00FAn no hay comentarios");
                 }
                 if (emptyFotos) {
-                    vista.showResult("Au\u00f3n no hay Fotos");
+                    vista.showResult("A\u00FAn no hay Fotos");
                 }
                 getClientes();
 
@@ -226,8 +226,9 @@ public class CalificacionPresenter implements ContractCalificacion.PresenterC {
     }
 
     @Override
-    public void getEvento(String idEvento) {
-        JsonApi.getApiService().getOnlyEvent(Integer.parseInt(idEvento)).enqueue(new Callback<EventoM>() {
+    public void getEvento(int idEvento) {
+
+        JsonApi.getApiService().getOnlyEvent(idEvento).enqueue(new Callback<EventoM>() {
 
             @Override
             public void onResponse(Call<EventoM> call, Response<EventoM> response) {

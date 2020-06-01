@@ -10,7 +10,7 @@ import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class HolderComentario extends RecyclerView.ViewHolder {
+public class HolderComentario extends RecyclerView.ViewHolder{
     private TextView nombre;
     private TextView comentario;
     private TextView hora;

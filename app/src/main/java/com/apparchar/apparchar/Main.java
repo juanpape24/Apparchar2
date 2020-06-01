@@ -138,11 +138,11 @@ public class Main extends AppCompatActivity implements FragmentCategoria.OnFragm
             Fragment fragment=null;
             switch (sectionNumber){
                 case 1:fragment=new FragmentCategoria();
-                break;
+                    break;
                 case 2:fragment=new FragmentEventos();
-                break;
+                    break;
                 case 3:fragment=new FragmentRealTime();
-                break;
+                    break;
             }
             return fragment;
         }

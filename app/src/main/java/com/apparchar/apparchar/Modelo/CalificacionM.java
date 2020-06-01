@@ -13,7 +13,7 @@ import java.util.Date;
  *
  * @author jeffe
  */
-public class CalificacionM {
+public class CalificacionM{
 
     private Integer idcalificacion;
     private Double porcentaje;

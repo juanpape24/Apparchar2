@@ -3,8 +3,6 @@ package com.apparchar.apparchar.Presentador;
 import android.content.Context;
 
 import com.apparchar.apparchar.Conexion.JsonApi;
-import com.apparchar.apparchar.Conexion.MyLoopjTask;
-import com.apparchar.apparchar.Conexion.OnLoopjCompleted;
 import com.apparchar.apparchar.Contract.ContractListaCategoria;
 import com.apparchar.apparchar.Modelo.CategoriaM;
 import com.apparchar.apparchar.Modelo.EventoM;

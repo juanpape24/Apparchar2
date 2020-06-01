@@ -9,7 +9,7 @@ package com.apparchar.apparchar.Modelo;
  *
  * @author jeffe
  */
-public class EmpresaPKM {
+public class EmpresaPKM{
 
     private String nitempresa;
     private String usuario;

@@ -11,7 +11,7 @@ import java.util.Collection;
  *
  * @author jeffe
  */
-public class EmpresaM {
+public class EmpresaM{
 
     private EmpresaPKM empresaPK;
     private String nombre;

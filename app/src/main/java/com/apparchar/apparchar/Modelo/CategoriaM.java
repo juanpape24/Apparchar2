@@ -11,7 +11,7 @@ import java.util.Collection;
  *
  * @author jeffe
  */
-public class CategoriaM {
+public class CategoriaM{
 
     private Integer id;
     private String nombre;

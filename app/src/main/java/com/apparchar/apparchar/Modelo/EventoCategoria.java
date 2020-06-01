@@ -1,6 +1,6 @@
 package com.apparchar.apparchar.Modelo;
 
-public class EventoCategoria {
+public class EventoCategoria{
 
     private int id;
     private int categoria;

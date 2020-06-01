@@ -8,7 +8,7 @@ import org.json.JSONException;
 import java.io.File;
 import java.util.ArrayList;
 
-public interface ContractClient {
+public interface ContractClient{
 
     interface View{
         void showResult(String info);
