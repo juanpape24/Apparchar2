@@ -19,10 +19,10 @@ public class ClienteM {
     private String telefono;
     private String usuario;
     private String contrasenia;
-    private byte[] foto;
+    private String foto;
     private Collection<CalificacionM> calificacionCollection;
 
-    public ClienteM(String nombre, Integer edad, String correo, String telefono, String usuario, String contrasenia, byte[] foto, Collection<CalificacionM> calificacionCollection) {
+    public ClienteM(String nombre, Integer edad, String correo, String telefono, String usuario, String contrasenia, String foto, Collection<CalificacionM> calificacionCollection) {
         this.nombre = nombre;
         this.edad = edad;
         this.correo = correo;
@@ -84,11 +84,11 @@ public class ClienteM {
         this.contrasenia = contrasenia;
     }
 
-    public byte[] getFoto() {
+    public String getFoto() {
         return foto;
     }
 
-    public void setFoto(byte[] foto) {
+    public void setFoto(String foto) {
         this.foto = foto;
     }
 

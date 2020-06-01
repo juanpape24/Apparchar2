@@ -5,7 +5,9 @@
  */
 package com.apparchar.apparchar.Modelo;
 
+import java.sql.Time;
 import java.util.Collection;
+import java.util.Date;
 
 /**
  *
@@ -16,21 +18,23 @@ public class CalificacionM {
     private Integer idcalificacion;
     private Double porcentaje;
     private String comentario;
-    private byte[] multimedia;
+    private String multimedia;
     private String hora;
+    //private String hora;
     private String fecha;
-    private Collection<EventoM> eventoCollection;
-    private ClienteM usuariocliente;
+    //private String fecha;
+    private String usuariocliente;
+    private int evento;
 
-    public CalificacionM(Integer idcalificacion, Double porcentaje, String comentario, byte[] multimedia, String hora, String fecha, Collection<EventoM> eventoCollection, ClienteM usuariocliente) {
+    public CalificacionM(Integer idcalificacion, Double porcentaje, String comentario, String multimedia, String hora, String fecha, String usuariocliente, int evento) {
         this.idcalificacion = idcalificacion;
         this.porcentaje = porcentaje;
         this.comentario = comentario;
         this.multimedia = multimedia;
         this.hora = hora;
         this.fecha = fecha;
-        this.eventoCollection = eventoCollection;
         this.usuariocliente = usuariocliente;
+        this.evento = evento;
     }
 
     public CalificacionM() {
@@ -60,11 +64,11 @@ public class CalificacionM {
         this.comentario = comentario;
     }
 
-    public byte[] getMultimedia() {
+    public String getMultimedia() {
         return multimedia;
     }
 
-    public void setMultimedia(byte[] multimedia) {
+    public void setMultimedia(String multimedia) {
         this.multimedia = multimedia;
     }
 
@@ -84,25 +88,34 @@ public class CalificacionM {
         this.fecha = fecha;
     }
 
-    public Collection<EventoM> getEventoCollection() {
-        return eventoCollection;
-    }
-
-    public void setEventoCollection(Collection<EventoM> eventoCollection) {
-        this.eventoCollection = eventoCollection;
-    }
-
-    public ClienteM getUsuariocliente() {
+    public String getUsuariocliente() {
         return usuariocliente;
     }
 
-    public void setUsuariocliente(ClienteM usuariocliente) {
+    public void setUsuariocliente(String usuariocliente) {
         this.usuariocliente = usuariocliente;
     }
 
-    @Override
-    public String toString() {
-        return "CalificacionM{" + "idcalificacion=" + idcalificacion + ", porcentaje=" + porcentaje + ", comentario=" + comentario + ", multimedia=" + multimedia + ", hora=" + hora + ", fecha=" + fecha + ", eventoCollection=" + eventoCollection + ", usuariocliente=" + usuariocliente + '}';
+    public int getEvento() {
+        return evento;
     }
 
+    public void setEvento(int evento) {
+        this.evento = evento;
+    }
+
+
+    @Override
+    public String toString() {
+        return "CalificacionM{" +
+                "idcalificacion=" + idcalificacion +
+                ", porcentaje=" + porcentaje +
+                ", comentario='" + comentario + '\'' +
+                ", multimedia='" + multimedia + '\'' +
+                ", hora='" + hora + '\'' +
+                ", fecha='" + fecha + '\'' +
+                ", usuariocliente=" + usuariocliente +
+                ", evento=" + evento +
+                '}';
+    }
 }
